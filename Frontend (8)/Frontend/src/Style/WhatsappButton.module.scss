@@ -1,0 +1,104 @@
+/* WhatsApp Floating Button */
+.whatsapp_float {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  bottom: 20px;
+  right: 22px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  animation: zoomPulse 1.5s infinite ease-in-out;
+  cursor: pointer;
+}
+
+/* Chat Support Button */
+.chat_support {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  bottom: 90px;
+  left: 22px;
+  background-color:#d65a05;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  font-size: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Scroll Button */
+.scroll_top {
+  position: fixed;
+  bottom: 160px;
+  right: 33px;
+  width: 40px;
+  height: 40px;
+  background-color: #d35400;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* -------- MODAL STYLE --------- */
+
+/* TRANSPARENT OVERLAY – NO BACKGROUND */
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 20px;
+  height: 100%;
+  background: transparent !important;   /* ❌ No BLACK ✔ Fully Transparent */
+  backdrop-filter: none !important;     /* ❌ No blur */
+  z-index: 2000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_content {
+  background: white;
+  width: 90%;
+  max-width: 450px;
+  height: 550px;
+  border-radius: 15px;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  animation: popupScale 0.3s ease;
+}
+
+.modal_close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #333;
+}
+
+@keyframes popupScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

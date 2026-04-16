@@ -1,0 +1,100 @@
+@import '../../Style/variables';
+
+.AdminTheme {
+  padding: 40px;
+  background: $bg-light;
+  min-height: calc(100vh - 80px);
+
+  .header {
+    margin-bottom: 40px;
+    h1 { font-size: 32px; font-weight: 800; color: $text-dark; margin-bottom: 8px; }
+    p { color: $text-light; font-size: 16px; }
+  }
+
+  .form {
+    max-width: 1200px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: $bg-white;
+    padding: 30px;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-md;
+    border: 1px solid rgba(0,0,0,0.05);
+
+    h3 { font-size: 20px; font-weight: 700; color: $text-dark; margin-bottom: 24px; border-bottom: 2px solid $bg-light; padding-bottom: 12px; }
+  }
+
+  .inputGroup {
+    margin-bottom: 24px;
+    label { display: block; font-size: 14px; font-weight: 600; color: $text-main; margin-bottom: 10px; }
+    
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: $radius-md;
+      border: 1px solid #e2e8f0;
+      font-size: 15px;
+      &:focus { outline: none; border-color: $primary; }
+    }
+  }
+
+  .colorPicker {
+    display: flex;
+    gap: 12px;
+    
+    input[type="color"] {
+      width: 50px;
+      height: 50px;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      border-radius: $radius-md;
+      overflow: hidden;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border-radius: $radius-md;
+      border: 1px solid #e2e8f0;
+      font-family: monospace;
+      font-size: 15px;
+    }
+  }
+
+  .preview {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f1f5f9;
+    border-radius: $radius-md;
+    p { font-size: 16px; color: $text-main; }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    
+    button {
+      padding: 16px 40px;
+      background: $primary;
+      color: $text-white;
+      border-radius: $radius-full;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 10px 20px rgba($primary, 0.2);
+      transition: $transition-base;
+      cursor: pointer;
+
+      &:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba($primary, 0.3); }
+      &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+  }
+}

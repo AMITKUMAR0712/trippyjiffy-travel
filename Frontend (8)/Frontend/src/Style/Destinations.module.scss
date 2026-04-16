@@ -1,0 +1,268 @@
+@import './variables';
+
+.destinationsContainer {
+  padding: $spacing-3xl 0;
+  background-color: $bg-light;
+  overflow: hidden;
+
+  &.dark {
+    background: $bg-dark;
+    .DestinationCard {
+      background: #1e293b;
+      border-color: rgba(255, 255, 255, 0.05);
+      .DestinationCardtext h3 { color: $text-white; }
+    }
+    .DestinationCardBlock h2 { color: $text-white; }
+  }
+
+  .wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .DestinationCardBlock {
+    margin-bottom: $spacing-xl;
+    text-align: left;
+
+    h2 {
+      font-size: 36px;
+      font-weight: 800;
+      color: $text-dark;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: $primary;
+        border-radius: $radius-full;
+      }
+
+      span {
+        color: $primary;
+      }
+    }
+  }
+
+  :global(.swiper) {
+    padding: 20px 0 40px;
+    overflow: visible;
+  }
+
+  :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    background: $bg-white;
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-full;
+    box-shadow: $shadow-lg;
+    color: $primary;
+    transition: $transition-base;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &::after {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    &:hover {
+      background: $primary;
+      color: $text-white;
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+
+  :global(.swiper-button-prev) { left: -24px; }
+  :global(.swiper-button-next) { right: -24px; }
+
+  .DestinationCard {
+    display: flex;
+    flex-direction: column;
+    background: $bg-white;
+    border-radius: 20px; /* More rounded, modern */
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Softer shadow */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother hover */
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+
+    &:hover {
+      transform: translateY(-12px);
+      box-shadow: $shadow-xl;
+      border-color: rgba($primary, 0.2);
+
+      .DestinationCardImg img {
+        transform: scale(1.1);
+      }
+      
+      .DestinationCardtext h3 {
+        color: $primary;
+      }
+    }
+
+    .DestinationCardImg {
+      height: 240px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1);
+      }
+
+      .placeholderImg {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #e2e8f0;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        opacity: 0.8;
+        transition: opacity 0.3s;
+      }
+    }
+
+    .DestinationCardtext {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1; /* ✅ This fixes sizes */
+
+      h3 {
+        font-size: 19px;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: 8px;
+        transition: $transition-base;
+        /* Clamp text to strictly 2 lines so cards remain uniform height */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 52px; /* Force consistent height for 1 or 2 lines */
+        line-height: 1.4;
+      }
+
+      .DestinationInfo {
+        font-size: 14px;
+        color: #64748b;
+        margin-bottom: 16px;
+        font-weight: 500;
+      }
+
+      .DestinationActions {
+        margin-top: auto; /* Pushes the actions to the exact bottom */
+        display: flex;
+        gap: 12px;
+        align-items: center;
+
+        button, a {
+          flex: 1;
+          text-align: center;
+          padding: 10px 0;
+          font-size: 14px;
+          font-weight: 600;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .ActionPrimary {
+          background: var(--primary-color, $primary);
+          color: #fff;
+          border: none;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+          &:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+          }
+        }
+
+        .ActionGhost {
+          background: #f1f5f9;
+          color: #475569;
+          border: 1px solid #e2e8f0;
+
+          &:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+          }
+        }
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+
+        li {
+          font-size: 11px;
+          font-weight: 700;
+          color: $text-light;
+          background: #f1f5f9;
+          padding: 4px 12px;
+          border-radius: $radius-full;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+
+  .skeletonCard {
+    height: 380px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: $radius-xl;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 1200px) {
+  .destinationsContainer {
+    .wrapper { padding: 0 40px; }
+    :global(.swiper-button-prev) { left: 0; }
+    :global(.swiper-button-next) { right: 0; }
+  }
+}
+
+@media (max-width: 768px) {
+  .destinationsContainer {
+    padding: 60px 0;
+    .wrapper { padding: 0 20px; }
+    .DestinationCardBlock h2 { font-size: 28px; }
+    .DestinationCard .DestinationCardImg { height: 200px; }
+    :global(.swiper-button-next),
+    :global(.swiper-button-prev) { display: none; }
+  }
+}

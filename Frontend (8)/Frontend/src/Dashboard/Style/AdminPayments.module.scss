@@ -1,0 +1,143 @@
+.AdminPaymentsWrapper {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  min-height: 100vh;
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 25px;
+    text-align: center;
+    color: #d9630c;
+    font-weight: 700;
+  }
+
+  .noPayments,
+  .loading {
+    text-align: center;
+    color: #555;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .tableWrapper {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .paymentsTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+    background-color: #fff;
+
+    th,
+    td {
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: linear-gradient(90deg, #d9630c, #f39c12);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fff7f0;
+    }
+
+    tr:hover {
+      background-color: #ffe6cc;
+      transition: all 0.3s ease;
+    }
+
+    .screenshot {
+      width: 80px;
+      height: auto;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+    }
+
+    .status {
+      font-weight: 600;
+      padding: 5px 8px;
+      border-radius: 6px;
+      text-align: center;
+
+      &.paid {
+        color: #155724;
+        background-color: #d4edda;
+      }
+
+      &.pending {
+        color: #856404;
+        background-color: #fff3cd;
+      }
+
+      &.failed {
+        color: #721c24;
+        background-color: #f8d7da;
+      }
+    }
+  }
+
+  // ---------------- Responsive ----------------
+  @media (max-width: 1024px) {
+    .paymentsTable {
+      min-width: 0;
+      th,
+      td {
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      .screenshot {
+        width: 60px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 22px;
+    }
+
+    .paymentsTable {
+      font-size: 13px;
+
+      th,
+      td {
+        padding: 6px;
+      }
+
+      .screenshot {
+        width: 50px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 20px;
+    }
+
+    .paymentsTable {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      th,
+      td {
+        padding: 4px 6px;
+        font-size: 12px;
+      }
+
+      .screenshot {
+        width: 40px;
+      }
+    }
+  }
+}

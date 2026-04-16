@@ -1,0 +1,47 @@
+.AdminEdit {
+  padding: 20px;
+
+  h1,
+  h2 {
+    margin-bottom: 15px;
+  }
+
+  .form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      background: linear-gradient(90deg, #d9630c, #f39c12);
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+}

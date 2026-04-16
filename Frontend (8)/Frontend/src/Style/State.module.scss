@@ -1,0 +1,530 @@
+.StatePage {
+  display: block;
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  background: #fff;
+  transition: all 0.3s ease;
+
+  /* 🌙 DARK MODE */
+  &.dark {
+    background: #000;
+    color: #fff;
+
+    .StateImage::after {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .StateText {
+      color: #fff;
+
+      h2 {
+        color: #ffd700;
+        text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.3);
+      }
+
+      .EnquiryBtn {
+        background: #ffd700;
+        color: #000;
+
+        &:hover {
+          background: #fff700;
+        }
+      }
+
+      .LandingBtn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 12px 26px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 999px;
+        background: #f97316;
+        color: #fff;
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(249, 115, 22, 0.35);
+        }
+      }
+    }
+
+    .StateFlexLeftBox {
+      background-color: #111;
+
+      .StateBlockFlex {
+        background: #222;
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+
+        h3 {
+          color: #fff;
+        }
+
+        a {
+          background: linear-gradient(45deg, #ff9800, #ff5722);
+          color: #fff;
+        }
+
+        a:hover {
+          background: linear-gradient(45deg, #ff5722, #ff9800);
+        }
+      }
+    }
+
+    .StateFAQ {
+      background-color: #111;
+      color: #fff;
+
+      h3 {
+        color: #ffd700;
+      }
+
+      .noDescription {
+        color: gray;
+        font-size: 14px;
+        text-align: justify;
+      }
+
+      .FAQItem {
+        background: #222;
+        border-left: 4px solid #ff9800;
+
+        h2 {
+          color: #fff;
+
+          b {
+            color: #ffd700;
+          }
+        }
+
+        .FAQAnswer p {
+          color: #ccc;
+        }
+
+        &:hover {
+          background: #333;
+        }
+      }
+    }
+
+    .modalContent {
+      background: #111;
+      color: #fff;
+
+      .closeBtn {
+        background: #ff9800;
+        color: #000;
+
+        &:hover {
+          background: #fff700;
+        }
+      }
+    }
+  }
+
+  /* ====================== IMAGE SECTION ====================== */
+  .StateImage {
+    width: 100%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 650px;
+      object-fit: cover;
+      display: block;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .StateText {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      color: #fff;
+      text-align: center;
+      width: 100%;
+      padding: 0 10px;
+
+      h2 {
+        font-size: 60px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        text-transform: uppercase;
+      }
+
+      .EnquiryBtn {
+        padding: 12px 25px;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        background: #ffd700;
+        color: #000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #fff700;
+          transform: scale(1.05);
+        }
+      }
+
+      .LandingBtn {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 12px 26px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 999px;
+        background: #f97316;
+        color: #fff;
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(249, 115, 22, 0.35);
+        }
+      }
+    }
+  }
+
+  /* ====================== WRAPPER ====================== */
+  .wrapper {
+    width: 1300px;
+    margin: 50px auto;
+
+    .StateFlex {
+      display: flex;
+      justify-content: space-between;
+
+      .StateFlexLeft {
+        width: 65%;
+
+        .StateFlexLeftBox {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 20px;
+          padding: 20px;
+          background-color: #f9f9f9;
+
+          .StateBlockFlex {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: translateY(-4px);
+              box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            }
+
+            .StateBlockLeft {
+              flex: 0 0 220px;
+              border-radius: 10px;
+              overflow: hidden;
+
+              img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+                border-radius: 10px;
+              }
+            }
+
+            .StateBlockRight {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              h1 {
+                font-size: 20px;
+                font-weight: 600;
+                margin: 0;
+                color: #555;
+                margin-bottom: 30px;
+              }
+
+              .TourBox {
+
+                display: block;
+
+                p {
+                  margin: 0;
+                  font-size: 15px;
+                  line-height: 1.6;
+                  color: #555;
+                }
+              }
+
+              a {
+                text-decoration: none;
+                display: inline-block;
+                padding: 15px 25px;
+                background: linear-gradient(45deg, #ff9800, #ff5722);
+                color: #fff;
+                font-size: 15px;
+                font-weight: 500;
+                text-align: center;
+                border-radius: 50px;
+                width: 170px;
+                transition: all 0.3s ease-in-out;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+                margin-top: 30px;
+
+                &:hover {
+                  transform: translateY(-5px) scale(1.05);
+                  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+                  background: linear-gradient(45deg, #ff5722, #ff9800);
+                }
+              }
+            }
+          }
+        }
+
+        .StateFAQ {
+          margin-top: 40px;
+          padding: 25px;
+          background-color: #fff;
+          border-radius: 16px;
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+
+          h3 {
+            margin-bottom: 25px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #222;
+            text-align: center;
+            letter-spacing: 0.5px;
+          }
+
+          .FAQItem {
+            margin-bottom: 18px;
+            padding: 15px 20px;
+            border-left: 4px solid #ffd700;
+            background: #fdfdfd;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.8s ease;
+            cursor: pointer;
+            overflow: hidden;
+
+            &:hover {
+              background: #fff8e5;
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .FAQQuestion {
+              display: flex;
+              justify-content: space-between;
+
+              h2 {
+                font-size: 16px;
+                font-weight: 500;
+                color: #222;
+                margin: 0;
+
+                b {
+                  margin-right: 6px;
+                  color: darkorange;
+                }
+              }
+
+              .arrow {
+                font-size: 18px;
+                color: #ffd700;
+                transition: transform 0.6s ease, color 0.6s ease;
+              }
+
+              .down {
+                transform: rotate(180deg);
+                color: darkorange;
+              }
+            }
+
+            .FAQAnswer {
+              max-height: 0;
+              overflow: hidden;
+              transition: max-height 0.8s ease, opacity 0.8s ease;
+              margin-top: 10px;
+              opacity: 0;
+
+              p {
+                margin: 0;
+                font-size: 15px;
+                color: #555;
+                line-height: 1.6;
+
+                b {
+                  color: darkorange;
+                }
+              }
+            }
+
+            &.open {
+              .FAQAnswer {
+                max-height: 700px;
+              }
+            }
+          }
+        }
+      }
+
+      .StateFlexRight {
+        width: 30%;
+        position: sticky;
+        top: 100px;
+        align-self: flex-start;
+      }
+    }
+  }
+
+  /* ====================== MODAL ====================== */
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+
+  .modalContent {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 500px;
+    position: relative;
+    animation: scaleIn 0.3s forwards;
+
+    .closeBtn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: #ffd700;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #fff700;
+      }
+    }
+  }
+}
+
+/* Animation */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .StatePage .wrapper {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .StatePage {
+    display: block;
+
+    .StateImage {
+      display: block;
+      width: 100%;
+
+      img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+      }
+
+      .StateText {
+        display: block;
+        top: 60px;
+
+        h2 {
+          font-size: 25px;
+        }
+      }
+
+      .EnquiryBtn {
+        display: block;
+      }
+    }
+
+    .wrapper {
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+
+      .StateFlex {
+        display: block;
+        width: 100%;
+
+        .StateFlexLeft {
+          display: block;
+          width: 100%;
+
+          .StateFlexLeftBox {
+            display: block;
+
+            .StateBlockFlex {
+              display: block;
+              margin-top: 30px;
+
+              .StateBlockLeft {
+                margin-bottom: 30px;
+              }
+
+              .StateBlockRight {
+                h1 {
+                  font-size: 17px;
+                  color: #555;
+                }
+              }
+            }
+          }
+        }
+
+        .StateFlexRight {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

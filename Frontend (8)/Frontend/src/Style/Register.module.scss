@@ -1,0 +1,153 @@
+@import './variables';
+
+.Register {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.4), rgba(249, 115, 22, 0.2));
+    z-index: 1;
+  }
+
+  &.dark {
+    &::before { background: rgba(0, 0, 0, 0.7); }
+    .wrapper {
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(255, 255, 255, 0.05);
+      h2 { color: $text-white; }
+      .RegisterInput input { 
+        background: rgba(15, 23, 42, 0.5); 
+        color: $text-white;
+        border-color: rgba(255, 255, 255, 0.1); 
+      }
+    }
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 550px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: $radius-xl;
+    padding: 60px 40px;
+    box-shadow: $shadow-premium;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 10;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+    h2 {
+      font-size: 32px;
+      font-weight: 800;
+      color: $text-dark;
+      margin-bottom: 30px;
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      .RegisterInput {
+        position: relative;
+        grid-column: span 1;
+
+        &.fullWidth { grid-column: span 2; }
+
+        input {
+          width: 100%;
+          padding: 14px 18px;
+          background: rgba(255, 255, 255, 0.5);
+          border: 2px solid transparent;
+          border-radius: $radius-lg;
+          font-size: 14px;
+          font-weight: 500;
+          color: $text-dark;
+          transition: $transition-base;
+
+          &:focus {
+            outline: none;
+            background: $bg-white;
+            border-color: $primary;
+            box-shadow: 0 0 0 4px rgba($primary, 0.1);
+          }
+        }
+      }
+
+      .RegisterSubmit {
+        grid-column: span 2;
+        margin-top: 10px;
+
+        button {
+          width: 100%;
+          padding: 16px;
+          background: linear-gradient(135deg, $primary, $primary-dark);
+          color: $text-white;
+          border-radius: $radius-lg;
+          font-size: 16px;
+          font-weight: 700;
+          box-shadow: 0 10px 20px rgba($primary, 0.2);
+          transition: $transition-base;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba($primary, 0.3);
+          }
+        }
+      }
+    }
+
+    .LoginLink {
+      grid-column: span 2;
+      text-align: center;
+      margin-top: 24px;
+
+      a {
+        font-size: 14px;
+        font-weight: 600;
+        color: $text-light;
+        transition: $transition-base;
+        &:hover { color: $primary; }
+      }
+    }
+
+    .Message {
+      grid-column: span 2;
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .Register {
+    .wrapper {
+      padding: 40px 24px;
+      form {
+        grid-template-columns: 1fr;
+        .RegisterInput { grid-column: span 1 !important; }
+        .RegisterSubmit { grid-column: span 1; }
+      }
+    }
+  }
+}

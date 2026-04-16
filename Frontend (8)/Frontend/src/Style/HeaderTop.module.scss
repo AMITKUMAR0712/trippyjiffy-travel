@@ -1,0 +1,39 @@
+.HeaderTop {
+  width: 100%;
+  background-color: #f8f9fa; // light neutral color
+  display: flex;
+  justify-content: flex-end; // align translate dropdown to the right
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // subtle shadow
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 100;
+
+  #google_translate_element {
+    display: inline-block;
+
+    select {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 5px 10px;
+      background-color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: #888;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center; // center the dropdown on small screens
+    padding: 8px 10px;
+
+    #google_translate_element select {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
+}

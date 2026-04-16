@@ -1,0 +1,253 @@
+@import './variables';
+
+.Header {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 30px;
+  z-index: $z-header;
+  transition: $transition-smooth;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+  &.active {
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: $shadow-md;
+    padding: 2px 0;
+  }
+
+  .wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    .HeaderFlex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+
+      .HeaderLeft {
+        img {
+          height: 60px;
+          width: auto;
+          transition: transform 0.3s ease;
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .HeaderRight {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .PlanTripBtn {
+          padding: 10px 24px;
+          background: linear-gradient(135deg, $primary, $primary-dark);
+          color: $text-white;
+          border-radius: $radius-full;
+          font-size: 14px;
+          font-weight: 600;
+          box-shadow: 0 4px 15px rgba($primary, 0.3);
+          transition: $transition-base;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba($primary, 0.4);
+          }
+        }
+
+        .Payment {
+          a {
+            color: $text-main;
+            font-weight: 500;
+            font-size: 14px;
+            position: relative;
+
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -4px;
+              left: 0;
+              width: 0;
+              height: 2px;
+              background: $primary;
+              transition: $transition-base;
+            }
+
+            &:hover {
+              color: $primary;
+
+              &::after {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .HeaderUser {
+          color: $text-light;
+          transition: $transition-base;
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            color: $primary;
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
+
+  .scrollBar {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, $primary, $secondary);
+    border-radius: 0 2px 2px 0;
+    transition: width 0.1s linear;
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Changed from center to top */
+  padding-top: 50px; /* Added spacing from top */
+  z-index: $z-modal;
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto; /* Ensure overlay itself is scrollable if content is long */
+}
+
+.modalContent {
+  background-color: $bg-white;
+  padding: 48px;
+  border-radius: $radius-xl;
+  position: relative;
+  max-width: 650px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: $shadow-premium;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Scrollbar for long forms */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-full;
+    background: $bg-light;
+    color: $text-light;
+    transition: $transition-base;
+
+    &:hover {
+      background: #fee2e2;
+      color: #ef4444;
+    }
+  }
+}
+
+.Headertoggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  padding: 8px;
+
+  span {
+    width: 24px;
+    height: 2px;
+    background-color: $text-dark;
+    border-radius: 2px;
+    transition: $transition-base;
+  }
+
+  &.open {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .Header {
+    top: 0;
+
+    .wrapper {
+      padding: 0 20px;
+
+      .HeaderFlex {
+        height: 60px;
+
+        .HeaderRight {
+          display: none;
+        }
+
+        .Headertoggle {
+          display: flex;
+        }
+      }
+    }
+  }
+}

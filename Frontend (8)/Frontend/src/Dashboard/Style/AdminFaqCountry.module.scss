@@ -1,0 +1,286 @@
+.AdminFaqCountry {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  .wrapper {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 15px;
+
+      button {
+        background: linear-gradient(90deg, #d9630c, #f39c12);
+        color: #fff;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background 0.3s;
+
+        &:hover {
+          background: #0056b3;
+        }
+      }
+    }
+
+    .Table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+        vertical-align: top;
+      }
+
+      th {
+        background: linear-gradient(90deg, #d9630c, #f39c12);
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      button {
+        margin-right: 6px;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+
+        &:first-of-type {
+          background: #ffc107;
+          color: #fff;
+          &:hover {
+            background: #e0a800;
+          }
+        }
+
+        &:last-of-type {
+          background: #dc3545;
+          color: #fff;
+          &:hover {
+            background: #c82333;
+          }
+        }
+      }
+    }
+  }
+
+  .EditorBox {
+    min-height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fafafa;
+    overflow-y: auto;
+
+    &:focus-within {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+  }
+
+  .PopupOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+
+    .PopupBox {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      width: 420px;
+      max-width: 95%;
+      max-height: 90%;
+      overflow-y: auto;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+      h2 {
+        margin-bottom: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        select,
+        input,
+        textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          font-size: 14px;
+          outline: none;
+          background: #fff;
+
+          &:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 80px;
+        }
+
+        .Actions {
+          display: flex;
+          justify-content: flex-end;
+          gap: 10px;
+          margin-top: 10px;
+
+          button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+
+            &:first-of-type {
+              background: #28a745;
+              color: #fff;
+              &:hover {
+                background: #218838;
+              }
+            }
+
+            &:last-of-type {
+              background: #6c757d;
+              color: #fff;
+              &:hover {
+                background: #5a6268;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive
+  @media (max-width: 576px) {
+    padding: 10px;
+
+    .wrapper {
+      padding: 15px;
+
+      .top button {
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .Table {
+        display: block;
+        overflow-x: auto;
+        font-size: 12px;
+
+        th,
+        td {
+          padding: 6px 8px;
+          font-size: 12px;
+        }
+
+        button {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+      }
+    }
+
+    .PopupOverlay .PopupBox {
+      width: 95%;
+      padding: 15px;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      form {
+        gap: 10px;
+
+        select,
+        input,
+        textarea {
+          font-size: 13px;
+          padding: 8px;
+        }
+
+        .Actions {
+          flex-direction: column;
+          gap: 8px;
+
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 577px) and (max-width: 992px) {
+    .wrapper .top button {
+      font-size: 14px;
+      padding: 8px 14px;
+    }
+
+    .wrapper .Table {
+      font-size: 13px;
+
+      th,
+      td {
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+
+      button {
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+    }
+
+    .PopupOverlay .PopupBox {
+      width: 80%;
+      padding: 20px;
+
+      h2 {
+        font-size: 18px;
+      }
+    }
+  }
+
+  @media (min-width: 993px) {
+    .wrapper {
+      max-width: 1000px;
+    }
+
+    .PopupOverlay .PopupBox {
+      width: 420px;
+    }
+  }
+}

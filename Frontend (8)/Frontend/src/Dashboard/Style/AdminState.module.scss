@@ -1,0 +1,240 @@
+.StateIndia {
+  padding: 20px;
+
+  .wrapper {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 15px;
+
+      button {
+        padding: 8px 16px;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+          background: #0056b3;
+        }
+      }
+    }
+
+    .Table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background: linear-gradient(90deg, #d9630c, #f39c12);
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background: #fafafa;
+      }
+
+      button {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-size: 13px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:first-child {
+          background: #ffc107;
+          color: #000;
+
+          &:hover {
+            background: #e0a800;
+          }
+        }
+
+        &:last-child {
+          background: #dc3545;
+          color: #fff;
+
+          &:hover {
+            background: #a71d2a;
+          }
+        }
+      }
+    }
+  }
+
+  .PopupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .PopupBox {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 95%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      input,
+      select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        outline: none;
+
+        &:focus {
+          border-color: #007bff;
+        }
+      }
+
+      .Actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+
+        button {
+          padding: 8px 16px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: 0.3s;
+
+          &:first-child {
+            background: #28a745;
+            color: #fff;
+
+            &:hover {
+              background: #1e7e34;
+            }
+          }
+
+          &:last-child {
+            background: #6c757d;
+            color: #fff;
+
+            &:hover {
+              background: #545b62;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .StateIndia {
+    padding: 10px;
+
+    .wrapper {
+      padding: 15px;
+
+      .top {
+        justify-content: center;
+
+        button {
+          width: 100%;
+          font-size: 13px;
+        }
+      }
+
+      .Table {
+        font-size: 12px;
+
+        th,
+        td {
+          padding: 8px;
+        }
+
+        button {
+          padding: 4px 8px;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .PopupBox {
+      width: 90%;
+      padding: 15px;
+
+      h2 {
+        font-size: 16px;
+      }
+
+      form {
+        input,
+        select {
+          font-size: 13px;
+        }
+
+        .Actions {
+          flex-direction: column;
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .StateIndia {
+    .Table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      th,
+      td {
+        font-size: 11px;
+        padding: 6px;
+      }
+    }
+
+    .PopupBox {
+      padding: 10px;
+      h2 {
+        font-size: 14px;
+      }
+    }
+  }
+}

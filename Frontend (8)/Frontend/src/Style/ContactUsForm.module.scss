@@ -1,0 +1,101 @@
+@import './variables';
+
+.contactFormWrapper {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: $radius-xl;
+  padding: 32px;
+  box-shadow: $shadow-lg;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  width: 100%;
+
+  &.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: $shadow-premium;
+
+    input, select, textarea {
+      background: rgba(255, 255, 255, 0.5);
+      &:focus { background: $bg-white; }
+    }
+  }
+}
+
+.formTitle {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  color: $text-dark;
+  text-align: center;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-main;
+  }
+
+  input, select, textarea {
+    padding: 14px 18px;
+    border-radius: $radius-lg;
+    border: 1px solid #e2e8f0;
+    font-size: 15px;
+    background: $bg-white;
+    transition: $transition-base;
+    color: $text-dark;
+
+    &::placeholder { color: $text-muted; }
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba($primary, 0.1);
+    }
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
+.phoneInputGroup {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+}
+
+.submitBtn {
+  margin-top: 10px;
+  background: linear-gradient(135deg, $primary, $primary-dark);
+  color: $text-white;
+  padding: 16px;
+  border-radius: $radius-full;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 8px 20px rgba($primary, 0.2);
+  transition: $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba($primary, 0.3);
+  }
+  
+  &:active { transform: translateY(1px); }
+}
+
+@media (max-width: 600px) {
+  .contactFormWrapper { padding: 24px; }
+  .phoneInputGroup { grid-template-columns: 1fr; }
+}

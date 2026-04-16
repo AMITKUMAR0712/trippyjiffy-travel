@@ -1,0 +1,147 @@
+@import './variables';
+
+.Choose {
+  padding: 60px 0; /* Thoda chota in vertical padding */
+  background-color: $bg-white;
+
+  &.dark {
+    background: $bg-dark;
+    .Chooseleft h2, .ChooseExpert h3, .ChooseDisk h2 { color: $text-white; }
+    .ChooseKnow { 
+      background: #1e293b; 
+      border-color: rgba(255, 255, 255, 0.05); 
+      p { color: $text-light; }
+    }
+  }
+
+  .wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .ChooseDisk {
+    margin-bottom: 30px;
+    h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: $text-dark;
+      span { color: $primary; }
+    }
+  }
+
+  .ChooseFlex {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Reduced gap */
+    margin-bottom: 40px; /* Reduced bottom margin */
+
+    .Chooseleft {
+      flex: 1;
+      h2 {
+        font-size: 34px; /* Reduced font size */
+        font-weight: 800;
+        line-height: 1.25;
+        margin-bottom: 16px;
+        color: $text-dark;
+      }
+      p {
+        font-size: 16px; /* Reduced font size */
+        color: $text-main;
+        line-height: 1.6;
+      }
+    }
+
+    .ChooseRight {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+
+      .imgWrapper {
+        width: 85%; /* Scaled down the size of the image container to make it smaller visually */
+        position: relative;
+
+        img {
+          width: 100%;
+          display: block;
+          border-radius: 20px; /* Premium radius */
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12); /* Emphasized floating shadow */
+          transition: transform 0.4s ease;
+        }
+      }
+    }
+  }
+
+  .ChooseExpert {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Smaller gap */
+
+    .ChooseKnow {
+      background: #f8fafc;
+      padding: 24px; /* Reduced padding for smaller layout */
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+
+      &:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06); /* Advanced modern shadow */
+        border-color: rgba($primary, 0.15);
+        background: #ffffff;
+        
+        h2 { 
+          background: $primary; 
+          color: #ffffff;
+          transform: scale(1.05);
+        }
+      }
+
+      h2 {
+        width: 48px; /* Tighter circle */
+        height: 48px;
+        background: rgba($primary, 0.08); /* Primary subtle wash */
+        color: $primary;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px; /* Smaller icon size */
+        margin: 0 auto 16px;
+        transition: $transition-base;
+      }
+
+      h3 {
+        font-size: 17.5px;
+        font-weight: 700;
+        color: $text-dark;
+        margin-bottom: 8px;
+        letter-spacing: -0.2px;
+      }
+
+      p {
+        font-size: 14.5px;
+        color: #64748b;
+        line-height: 1.5;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .Choose {
+    .ChooseFlex { flex-direction: column; gap: 40px; }
+    .ChooseExpert { grid-template-columns: 1fr; }
+  }
+}
+
+@media (max-width: 768px) {
+  .Choose {
+    padding: 60px 0;
+    .wrapper { padding: 0 20px; }
+    .Chooseleft h2 { font-size: 32px; }
+  }
+}

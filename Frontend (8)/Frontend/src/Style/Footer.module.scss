@@ -1,0 +1,242 @@
+@import './variables';
+
+.Footer {
+  background: radial-gradient(circle at 80% 0%, rgba(20, 30, 48, 1) 0%, rgba(15, 23, 42, 1) 100%);
+  color: $text-white;
+  padding: $spacing-3xl 0 0;
+  overflow: hidden;
+  position: relative;
+
+  /* Subtle World Map/Dot Matrix Travel Aesthetic */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  /* Animated Airplane Track container */
+  .airplaneTrack {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+
+    .airplane, .airplane2, .airplane3 {
+      position: absolute;
+      top: -14px;
+      left: 0;
+      color: var(--primary-color, $primary);
+      filter: drop-shadow(0 4px 6px rgba(211, 84, 0, 0.4));
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-right: 4px;
+        height: 2px;
+        background: linear-gradient(to left, rgba(211, 84, 0, 0.4), transparent);
+        border-radius: 4px;
+      }
+    }
+
+    .airplane {
+      font-size: 24px;
+      z-index: 3;
+      &::after { width: 150px; }
+    }
+
+    .airplane2 {
+      font-size: 16px;
+      opacity: 0.6;
+      top: -30px;
+      filter: drop-shadow(0 2px 4px rgba(211, 84, 0, 0.2));
+      z-index: 2;
+      &::after { width: 80px; background: linear-gradient(to left, rgba(211, 84, 0, 0.2), transparent); }
+    }
+
+    .airplane3 {
+      font-size: 12px;
+      opacity: 0.3;
+      top: 10px;
+      filter: none;
+      z-index: 1;
+      &::after { width: 40px; background: linear-gradient(to left, rgba(211, 84, 0, 0.1), transparent); }
+    }
+  }
+
+  .wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .FooterFlex {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    padding-bottom: 60px;
+  }
+
+  .FooterWrap {
+    .FooterImage {
+      margin-bottom: 24px;
+      position: relative;
+      display: inline-block;
+      
+      img { 
+        height: 60px; /* Large visible logo */
+        max-width: 100%;
+        position: relative;
+        z-index: 2;
+        object-fit: contain;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120%; height: 120%;
+        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+        z-index: 1;
+        pointer-events: none;
+      }
+    }
+    p { 
+      color: $text-light; 
+      margin-bottom: 30px; 
+      font-size: 15px;
+      max-width: 280px;
+      line-height: 1.6;
+    }
+
+    .FooterInsta {
+      h2 { font-size: 18px; margin-bottom: 16px; font-weight: 700; color: $text-white; }
+      ul { 
+        display: flex; gap: 14px; padding: 0;
+        li a {
+          width: 44px; height: 44px;
+          background: rgba(255, 255, 255, 0.05);
+          color: $text-white;
+          display: flex; align-items: center; justify-content: center;
+          border-radius: $radius-full;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary-color, $primary);
+            transform: scale(0);
+            border-radius: 50%;
+            transition: transform 0.4s ease;
+            z-index: -1;
+          }
+
+          &:hover { 
+            color: #fff;
+            transform: translateY(-5px) rotate(8deg); 
+            border-color: transparent;
+            box-shadow: 0 10px 20px rgba(211, 84, 0, 0.3);
+            &::before { transform: scale(1); }
+          }
+        }
+      }
+    }
+  }
+
+  .FooterWrap1, .FooterWrap2, .FooterWrap3 {
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: $text-white;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background: $primary;
+      }
+    }
+    ul {
+      padding: 0;
+      li {
+        margin-bottom: 12px;
+        font-size: 14px;
+        color: $text-light;
+        transition: $transition-base;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        
+        a {
+          color: $text-light;
+          position: relative;
+          &::before {
+            content: "→";
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            color: var(--primary-color, $primary);
+            transition: all 0.3s ease;
+          }
+          &:hover { 
+            color: #fff; 
+            padding-left: 15px; 
+            &::before { left: 0; opacity: 1; }
+          }
+        }
+
+        svg { color: $primary; margin-top: 4px; flex-shrink: 0; }
+        span { line-height: 1.4; }
+      }
+    }
+  }
+
+  .FooterBottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 30px 0;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+    p { 
+      font-size: 14.5px; 
+      color: rgba(255, 255, 255, 0.6); 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .Footer .FooterFlex { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .Footer {
+    .wrapper { padding: 0 20px; }
+    .FooterFlex { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .FooterWrap { grid-column: span 2; }
+  }
+}
+
+@media (max-width: 480px) {
+  .Footer .FooterFlex { grid-template-columns: 1fr; }
+  .FooterWrap { grid-column: span 1; }
+}

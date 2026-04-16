@@ -1,0 +1,116 @@
+@import './variables';
+
+.NavList {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &.dark {
+    .MenuLink span, .MenuLink a { color: $text-white; }
+  }
+}
+
+.NavItem {
+  position: relative;
+  padding: 10px 0;
+
+  .MenuLink {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-main;
+    cursor: pointer;
+    transition: $transition-base;
+    padding: 8px 12px;
+    border-radius: $radius-md;
+
+    span, a {
+      color: inherit;
+      position: relative;
+    }
+
+    &:hover {
+      color: $primary;
+      background: $primary-light;
+    }
+
+    .DropArrow {
+      font-size: 8px;
+      transition: transform 0.3s ease;
+      &.open { transform: rotate(180deg); }
+    }
+  }
+}
+
+.DropdownWrapper {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: $bg-white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  padding: 15px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  &.showDropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(5px);
+  }
+
+  &.IndiaWrapper, &.AsiaWrapper {
+    min-width: 260px;
+  }
+}
+
+.Dropdown {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.DropItem {
+  padding: 0 10px;
+
+  a, .CategoryLink {
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: $text-main;
+    border-radius: $radius-md;
+    transition: $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      background: $primary-light;
+      color: $primary;
+      padding-left: 20px;
+    }
+  }
+}
+
+.StateList {
+  list-style: none;
+  padding-left: 15px;
+  margin: 5px 0;
+  border-left: 2px solid #f1f5f9;
+
+  li a {
+    font-size: 13px;
+    padding: 6px 15px;
+    color: $text-light;
+    &:hover { color: $primary; background: none; }
+  }
+}

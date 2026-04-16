@@ -1,0 +1,44 @@
+.dashboardLayout {
+  display: flex;
+  height: 100vh;
+  justify-content: space-between;
+
+  .dashboardLayoutLeft {
+    width: 250px;
+    display: block;
+    transition: width 0.3s ease;
+  }
+
+  .dashboardLayoutLeft.closed {
+    width: 250px;
+  }
+
+  .rightContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .pageContent {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardLayout {
+    flex-direction: column;
+
+    .dashboardLayoutLeft {
+      width: 100%;
+      height: auto;
+    }
+
+    .rightContent {
+      width: 100%;
+    }
+  }
+}

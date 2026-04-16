@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://trippyjiffy.com/sitemap.xml
+
+# Disallow admin and user panels from search engines
+Disallow: /admin/
+Disallow: /user/
+Disallow: /dashboard/

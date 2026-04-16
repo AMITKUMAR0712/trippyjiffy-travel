@@ -1,0 +1,60 @@
+.DeshboardHeader {
+  display: block;
+  background: linear-gradient(90deg, #d9630c, #f39c12);
+
+  .wrapper {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+
+    .DeshboardHeaderFlex {
+      display: flex;
+      justify-content: space-between;
+
+      .DeshboardHeaderLeft {
+        display: block;
+        h2 {
+          font-size: 25px;
+          font-weight: 600;
+          color: #333;
+        }
+      }
+
+      .DeshboardHeaderRight {
+        display: block;
+
+        .logoutButton {
+          padding: 8px 16px;
+          font-size: 16px;
+          background-color: #ff4d4f;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #ff7875;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .DeshboardHeader {
+    .wrapper {
+      .DeshboardHeaderFlex {
+        display: flex;
+        .DeshboardHeaderLeft {
+          display: none;
+        }
+        .DeshboardHeaderRight {
+          display: block;
+        }
+      }
+    }
+  }
+}

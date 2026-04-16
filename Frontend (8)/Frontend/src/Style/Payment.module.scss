@@ -1,0 +1,600 @@
+@import './variables';
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* ================================================
+   Payment Page — Split Layout
+   Left: Form  |  Right: Image Slider
+   ================================================ */
+
+.PaymentPage {
+  min-height: 88vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: 'Inter', sans-serif;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── RIGHT IMAGE SLIDER PANEL ── */
+.SliderPanel {
+  position: relative;
+  overflow: hidden;
+  min-height: 88vh;
+
+  @media (max-width: 900px) {
+    height: 300px;
+    min-height: unset;
+  }
+}
+
+.Slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.SlideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.SlideOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0.55) 55%,
+    rgba(0,0,0,0.82) 100%
+  );
+}
+
+/* Location chip at middle-top area */
+.LocationLabel {
+  position: absolute;
+  top: 110px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  z-index: 4;
+
+  svg { width: 14px; height: 14px; }
+}
+
+/* Arrow buttons */
+.Arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.25s ease;
+
+  &:hover { background: rgba(255,255,255,0.35); }
+}
+
+.ArrowLeft  { left: 14px; }
+.ArrowRight { right: 14px; }
+
+/* Dots */
+.Dots {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.Dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.DotActive {
+  width: 24px;
+  background: #fff;
+}
+
+/* Stats row at bottom */
+.FloatingStats {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.TravelImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 8s ease-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.ImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.65) 60%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+/* Top branding block */
+.TopBrand {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  right: 28px;
+  z-index: 3;
+  text-align: left;
+}
+
+.BrandLogo {
+  display: inline-block;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+  /* Plane emoji extra weight */
+  font-family: 'Inter', sans-serif;
+}
+
+.BrandTagline {
+  margin: 4px 0 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.BrandLine {
+  width: 48px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, $primary, #f39c12);
+}
+
+/* Floating chips at top */
+.FloatingStats {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  z-index: 3;
+}
+
+.StatChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  svg { width: 13px; height: 13px; }
+}
+
+/* Quote block at bottom */
+.QuoteBox {
+  position: absolute;
+  bottom: 36px;
+  left: 28px;
+  right: 28px;
+  z-index: 3;
+}
+
+.QuoteMark {
+  font-size: 72px;
+  line-height: 0.6;
+  color: $primary;
+  font-family: Georgia, serif;
+  margin-bottom: 8px;
+}
+
+.QuoteText {
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.35;
+  margin: 0 0 12px 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.QuoteAuthor {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.65);
+  font-style: italic;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* ── RIGHT FORM PANEL ── */
+.FormPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8faff;
+  padding: 40px 24px;
+
+  @media (max-width: 900px) {
+    padding: 32px 20px;
+  }
+}
+
+.FormInner {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 36px 32px 28px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.04),
+    0 24px 48px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e8edf5;
+  position: relative;
+  overflow: hidden;
+
+  /* Top accent bar */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary, #f39c12);
+    border-radius: 24px 24px 0 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 28px 20px 22px;
+  }
+}
+
+/* Form Header */
+.FormHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.IconRing {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba($primary, 0.12), rgba($primary, 0.22));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $primary;
+  flex-shrink: 0;
+}
+
+.FormTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.FormSubtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.Divider {
+  height: 1px;
+  background: #e8edf5;
+  margin-bottom: 20px;
+}
+
+/* Step indicator */
+.StepBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.Step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+
+  span {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  &.StepActive {
+    color: $primary;
+
+    span {
+      background: $primary;
+      color: #fff;
+    }
+  }
+}
+
+.StepLine {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+/* Form Body */
+.FormBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.InputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    letter-spacing: 0.2px;
+  }
+
+  input, select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 16px;
+    font-size: 15px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    outline: none;
+    transition: all 0.25s ease;
+    background: #f8fafc;
+    color: #1e293b;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+
+    &::placeholder { color: #94a3b8; font-weight: 400; }
+
+    &:focus {
+      background: #fff;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.12);
+    }
+  }
+
+  select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1em;
+    background-color: #f8fafc;
+    padding-right: 2.5rem;
+  }
+}
+
+/* Amount with currency prefix */
+.AmountWrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  overflow: hidden;
+  transition: all 0.25s ease;
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.12);
+    background: #fff;
+  }
+
+  .CurrencySymbol {
+    padding: 0 14px;
+    font-size: 18px;
+    font-weight: 700;
+    color: $primary;
+    background: rgba($primary, 0.07);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-right: 1.5px solid #e2e8f0;
+    min-height: 48px;
+  }
+
+  input {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    flex: 1;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    padding: 13px 16px;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button { -webkit-appearance: none; }
+  }
+}
+
+/* Transaction badge */
+.TxnBadge {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #f1f5f9;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 4px;
+
+  span { font-weight: 600; color: #64748b; }
+
+  code {
+    font-size: 13px;
+    color: #0f172a;
+    word-break: break-all;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* File upload zone */
+.FileZone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  min-height: 70px;
+  background: #f8fafc;
+
+  input { display: none; }
+
+  &:hover {
+    border-color: $primary;
+    background: rgba($primary, 0.03);
+    color: $primary;
+  }
+
+  .FileChosen {
+    color: #16a34a;
+    font-weight: 600;
+  }
+}
+
+/* Pay button */
+.PayBtn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, $primary 0%, #e67e22 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-top: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba($primary, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba($primary, 0.45);
+    background: linear-gradient(135deg, darken(#d35400, 5%) 0%, $primary 100%);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba($primary, 0.2);
+  }
+}
+
+/* Trust row */
+.TrustRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+}
+
+.TrustBadge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+
+  svg { color: #22c55e; width: 14px; height: 14px; }
+}
