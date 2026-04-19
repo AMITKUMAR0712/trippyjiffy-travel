@@ -1,5 +1,9 @@
 @import './variables';
 
+/* ================================================================
+   Footer — Fully Responsive (5 col → 3 col → 2 col → 1 col)
+   ================================================================ */
+
 .Footer {
   background: radial-gradient(circle at 80% 0%, rgba(20, 30, 48, 1) 0%, rgba(15, 23, 42, 1) 100%);
   color: $text-white;
@@ -7,18 +11,21 @@
   overflow: hidden;
   position: relative;
 
-  /* Subtle World Map/Dot Matrix Travel Aesthetic */
+  /* Dot matrix pattern */
   &::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 24px 24px;
     opacity: 0.8;
     pointer-events: none;
   }
 
-  /* Animated Airplane Track container */
+  /* Animated airplane track */
   .airplaneTrack {
     position: absolute;
     top: 60px;
@@ -28,13 +35,19 @@
     border-top: 1px dashed rgba(255, 255, 255, 0.1);
     pointer-events: none;
 
-    .airplane, .airplane2, .airplane3 {
+    @media (max-width: 768px) {
+      display: none;
+    }
+
+    .airplane,
+    .airplane2,
+    .airplane3 {
       position: absolute;
       top: -14px;
       left: 0;
       color: var(--primary-color, $primary);
       filter: drop-shadow(0 4px 6px rgba(211, 84, 0, 0.4));
-      
+
       &::after {
         content: '';
         position: absolute;
@@ -50,7 +63,10 @@
     .airplane {
       font-size: 24px;
       z-index: 3;
-      &::after { width: 150px; }
+
+      &::after {
+        width: 150px;
+      }
     }
 
     .airplane2 {
@@ -59,7 +75,11 @@
       top: -30px;
       filter: drop-shadow(0 2px 4px rgba(211, 84, 0, 0.2));
       z-index: 2;
-      &::after { width: 80px; background: linear-gradient(to left, rgba(211, 84, 0, 0.2), transparent); }
+
+      &::after {
+        width: 80px;
+        background: linear-gradient(to left, rgba(211, 84, 0, 0.2), transparent);
+      }
     }
 
     .airplane3 {
@@ -68,7 +88,11 @@
       top: 10px;
       filter: none;
       z-index: 1;
-      &::after { width: 40px; background: linear-gradient(to left, rgba(211, 84, 0, 0.1), transparent); }
+
+      &::after {
+        width: 40px;
+        background: linear-gradient(to left, rgba(211, 84, 0, 0.1), transparent);
+      }
     }
   }
 
@@ -76,67 +100,134 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 40px;
+
+    @media (max-width: 1024px) {
+      padding: 0 24px;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0 16px;
+    }
   }
 
+  /* ── Main grid ── */
   .FooterFlex {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
     gap: 40px;
     padding-bottom: 60px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      padding-bottom: 40px;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-bottom: 32px;
+    }
   }
 
+  /* ── Brand Column ── */
   .FooterWrap {
+    grid-column: span 1;
+
+    @media (max-width: 1200px) {
+      grid-column: span 3;
+      /* Full width on tablet */
+    }
+
+    @media (max-width: 768px) {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 480px) {
+      grid-column: span 1;
+    }
+
     .FooterImage {
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       position: relative;
       display: inline-block;
-      
-      img { 
-        height: 60px; /* Large visible logo */
+
+      img {
+        height: 55px;
         max-width: 100%;
         position: relative;
         z-index: 2;
         object-fit: contain;
       }
-      
+
       &::after {
         content: '';
         position: absolute;
-        top: 50%; left: 50%;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
-        width: 120%; height: 120%;
-        background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+        width: 120%;
+        height: 120%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
         z-index: 1;
         pointer-events: none;
       }
     }
-    p { 
-      color: $text-light; 
-      margin-bottom: 30px; 
-      font-size: 15px;
-      max-width: 280px;
-      line-height: 1.6;
+
+    p {
+      color: $text-light;
+      margin-bottom: 24px;
+      font-size: 14px;
+      max-width: 300px;
+      line-height: 1.7;
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+        margin-bottom: 20px;
+      }
     }
 
     .FooterInsta {
-      h2 { font-size: 18px; margin-bottom: 16px; font-weight: 700; color: $text-white; }
-      ul { 
-        display: flex; gap: 14px; padding: 0;
+      h2 {
+        font-size: 16px;
+        margin-bottom: 14px;
+        font-weight: 700;
+        color: $text-white;
+      }
+
+      ul {
+        display: flex;
+        gap: 12px;
+        padding: 0;
+        flex-wrap: wrap;
+
         li a {
-          width: 44px; height: 44px;
-          background: rgba(255, 255, 255, 0.05);
+          width: 42px;
+          height: 42px;
+          background: rgba(255, 255, 255, 0.06);
           color: $text-white;
-          display: flex; align-items: center; justify-content: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           border-radius: $radius-full;
           border: 1px solid rgba(255, 255, 255, 0.08);
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
+          font-size: 18px;
 
           &::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: var(--primary-color, $primary);
             transform: scale(0);
             border-radius: 50%;
@@ -144,49 +235,66 @@
             z-index: -1;
           }
 
-          &:hover { 
+          &:hover {
             color: #fff;
-            transform: translateY(-5px) rotate(8deg); 
+            transform: translateY(-4px) rotate(6deg);
             border-color: transparent;
-            box-shadow: 0 10px 20px rgba(211, 84, 0, 0.3);
-            &::before { transform: scale(1); }
+            box-shadow: 0 8px 18px rgba(211, 84, 0, 0.3);
+
+            &::before {
+              transform: scale(1);
+            }
           }
         }
       }
     }
   }
 
-  .FooterWrap1, .FooterWrap2, .FooterWrap3 {
+  /* ── Link Columns ── */
+  .FooterWrap1,
+  .FooterWrap2,
+  .FooterWrap3 {
     h2 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       color: $text-white;
       position: relative;
+
       &::after {
         content: '';
         position: absolute;
         bottom: -8px;
         left: 0;
-        width: 30px;
+        width: 28px;
         height: 2px;
         background: $primary;
       }
     }
+
     ul {
       padding: 0;
+
       li {
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         font-size: 14px;
         color: $text-light;
         transition: $transition-base;
         display: flex;
         align-items: flex-start;
-        gap: 12px;
-        
+        gap: 10px;
+
         a {
           color: $text-light;
           position: relative;
+          transition: $transition-base;
+          line-height: 1.5;
+
+          &:hover {
+            color: #fff;
+            padding-left: 12px;
+          }
+
           &::before {
             content: "→";
             position: absolute;
@@ -194,49 +302,48 @@
             opacity: 0;
             color: var(--primary-color, $primary);
             transition: all 0.3s ease;
+            font-size: 12px;
           }
-          &:hover { 
-            color: #fff; 
-            padding-left: 15px; 
-            &::before { left: 0; opacity: 1; }
+
+          &:hover::before {
+            left: 0;
+            opacity: 1;
           }
         }
 
-        svg { color: $primary; margin-top: 4px; flex-shrink: 0; }
-        span { line-height: 1.4; }
+        svg {
+          color: $primary;
+          margin-top: 2px;
+          flex-shrink: 0;
+        }
+
+        span {
+          line-height: 1.5;
+        }
       }
     }
   }
 
+  /* ── Footer Bottom Bar ── */
   .FooterBottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 30px 0;
+    padding: 24px 0;
     text-align: center;
     position: relative;
     z-index: 5;
-    p { 
-      font-size: 14.5px; 
-      color: rgba(255, 255, 255, 0.6); 
+
+    p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.55);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
     }
   }
-}
-
-@media (max-width: 1200px) {
-  .Footer .FooterFlex { grid-template-columns: 1fr 1fr 1fr; }
-}
-
-@media (max-width: 768px) {
-  .Footer {
-    .wrapper { padding: 0 20px; }
-    .FooterFlex { grid-template-columns: 1fr 1fr; gap: 40px; }
-    .FooterWrap { grid-column: span 2; }
-  }
-}
-
-@media (max-width: 480px) {
-  .Footer .FooterFlex { grid-template-columns: 1fr; }
-  .FooterWrap { grid-column: span 1; }
 }

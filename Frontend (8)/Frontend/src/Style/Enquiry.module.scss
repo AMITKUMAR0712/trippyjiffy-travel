@@ -17,16 +17,22 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    align-items: flex-start;
+    min-height: calc(100vh - 68px);
+    background-attachment: scroll;
+    /* Performance */
+  }
 }
 
 .BgOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(5, 10, 30, 0.72) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(5, 10, 30, 0.72) 100%);
   backdrop-filter: blur(5px);
   z-index: 1;
 }
@@ -47,18 +53,68 @@
   background: rgba(255, 255, 255, 0.18);
   animation: float 9s infinite ease-in-out;
 
-  &:nth-child(1) { top: 10%; left: 8%;  animation-delay: 0s;   animation-duration: 7s; }
-  &:nth-child(2) { top: 75%; left: 15%; animation-delay: 1s;   animation-duration: 9s; }
-  &:nth-child(3) { top: 25%; left: 85%; animation-delay: 2s;   animation-duration: 6s; }
-  &:nth-child(4) { top: 85%; left: 80%; animation-delay: 3s;   animation-duration: 8s; }
-  &:nth-child(5) { top: 50%; left: 50%; animation-delay: 1.5s; animation-duration: 11s; }
-  &:nth-child(6) { top: 12%; left: 60%; animation-delay: 0.5s; animation-duration: 7.5s; }
-  &:nth-child(7) { top: 60%; left: 35%; animation-delay: 2.5s; animation-duration: 8.5s; }
+  &:nth-child(1) {
+    top: 10%;
+    left: 8%;
+    animation-delay: 0s;
+    animation-duration: 7s;
+  }
+
+  &:nth-child(2) {
+    top: 75%;
+    left: 15%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+  }
+
+  &:nth-child(3) {
+    top: 25%;
+    left: 85%;
+    animation-delay: 2s;
+    animation-duration: 6s;
+  }
+
+  &:nth-child(4) {
+    top: 85%;
+    left: 80%;
+    animation-delay: 3s;
+    animation-duration: 8s;
+  }
+
+  &:nth-child(5) {
+    top: 50%;
+    left: 50%;
+    animation-delay: 1.5s;
+    animation-duration: 11s;
+  }
+
+  &:nth-child(6) {
+    top: 12%;
+    left: 60%;
+    animation-delay: 0.5s;
+    animation-duration: 7.5s;
+  }
+
+  &:nth-child(7) {
+    top: 60%;
+    left: 35%;
+    animation-delay: 2.5s;
+    animation-duration: 8.5s;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0) scale(1);      opacity: 0.18; }
-  50%       { transform: translateY(-28px) scale(1.5); opacity: 0.45; }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.18;
+  }
+
+  50% {
+    transform: translateY(-28px) scale(1.5);
+    opacity: 0.45;
+  }
 }
 
 /* ── Glass Card ── */
@@ -98,7 +154,8 @@
   background: none !important;
   display: block !important;
 
-  .BgOverlay, .Particles {
+  .BgOverlay,
+  .Particles {
     display: none !important;
   }
 
@@ -106,38 +163,55 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 0 !important;
+    padding: 10px 0 !important;
     max-width: 100% !important;
 
     // Use dark colors for modal text
-    .CardTitle, .CardSubtitle, label, input, select, textarea {
+    .CardTitle,
+    .CardSubtitle,
+    label,
+    input,
+    select,
+    textarea {
       color: $text-dark !important;
     }
 
     .CardTitle {
       color: #1a1a1a !important;
+      font-size: 20px;
     }
 
     .CardSubtitle {
-      color: #666 !important;
+      color: #64748b !important;
+      font-size: 12px;
     }
 
     label {
-      color: #555 !important;
+      color: #475569 !important;
     }
 
     .Divider {
-      background: rgba(0, 0, 0, 0.1) !important;
+      background: rgba(0, 0, 0, 0.08) !important;
+      margin-bottom: 15px;
     }
 
     .HeaderIcon {
-       box-shadow: 0 4px 12px rgba($primary, 0.2);
+      box-shadow: 0 4px 12px rgba($primary, 0.2);
+      width: 44px;
+      height: 44px;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       background: #f8fafc !important;
-      border: 1px solid #e2e8f0 !important;
-      color: #1e293b !important;
+      /* Single solid light background */
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+      border-radius: 12px !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+      appearance: none;
 
       &::placeholder {
         color: #94a3b8 !important;
@@ -146,13 +220,16 @@
       &:focus {
         background: #fff !important;
         border-color: $primary !important;
-        box-shadow: 0 0 0 3px rgba($primary, 0.1) !important;
+        box-shadow: none !important;
       }
     }
-    
+
     select {
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
-      
+      background-position: right 10px center !important;
+      background-size: 14px !important;
+      padding-right: 30px !important;
+
       option {
         background: #fff !important;
         color: #1e293b !important;
@@ -161,6 +238,7 @@
 
     input[type="date"]::-webkit-calendar-picker-indicator {
       filter: none !important;
+      opacity: 0.5;
     }
   }
 }
@@ -218,7 +296,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 
-  @media (max-width: 540px) { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .Grid3 {
@@ -226,8 +306,13 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 14px;
 
-  @media (max-width: 900px) { grid-template-columns: 1fr 1fr; }
-  @media (max-width: 640px) { grid-template-columns: 1fr; }
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Field */
@@ -235,6 +320,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 
   label {
     display: flex;
@@ -246,40 +333,55 @@
     text-transform: uppercase;
     letter-spacing: 0.8px;
 
-    svg { width: 12px; height: 12px; opacity: 0.75; }
+    svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.75;
+    }
   }
 
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 10px;
-    padding: 11px 14px;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 14px;
     font-size: 14px;
     color: #fff;
     font-family: 'Inter', sans-serif;
     outline: none;
-    width: 100%;
-    box-sizing: border-box;
-    transition: all 0.25s ease;
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none !important;
 
-    &::placeholder { color: rgba(255, 255, 255, 0.3); }
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
 
     &:focus {
       background: rgba(255, 255, 255, 0.15);
-      border-color: rgba($primary, 0.7);
-      box-shadow: 0 0 0 3px rgba($primary, 0.18);
+      border-color: #fff;
     }
   }
 
   select {
     appearance: none;
     cursor: pointer;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
     background-repeat: no-repeat;
     background-position: right 12px center;
-    background-size: 1em;
+    background-size: 14px !important;
 
-    option { background: #1e2030; color: #fff; }
+    option {
+      background: #1e2030;
+      color: #fff;
+    }
   }
 
   /* Date input calendar icon color */
@@ -309,7 +411,7 @@
 /* Submit button */
 .SubmitBtn {
   width: 100%;
-  padding: 14px;
+  padding: 15px;
   background: linear-gradient(135deg, $primary 0%, #e67e22 100%);
   color: #fff;
   font-size: 15px;
@@ -326,13 +428,22 @@
   gap: 8px;
   font-family: 'Inter', sans-serif;
   margin-top: 4px;
+  min-height: 54px;
+  /* Touch-friendly */
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 14px 30px rgba($primary, 0.55);
   }
-  &:active { transform: translateY(1px); }
-  &:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
 }
 
 /* Spinner */
@@ -345,7 +456,11 @@
   animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Success screen */
 .SuccessIcon {

@@ -144,6 +144,11 @@ const DashboardSidebar = ({ isOpen, toggleSidebar, isMobile }) => {
               <FaPalette className={Style.icon} /> Customize Theme
             </Link>
           </li>
+          <li>
+            <Link to="/admin/dashboard/upcoming-trips" onClick={handleLinkClick}>
+              <FaMapMarkedAlt className={Style.icon} /> Upcoming Trips
+            </Link>
+          </li>
         </ul>
       </aside>
     </>

@@ -1,0 +1,85 @@
+
+.container {
+  min-height: 100vh; background-color: #f8fafc; padding-bottom: 100px;
+}
+
+/* HERO */
+.hero {
+  position: relative; height: 50vh; min-height: 350px; display: flex; align-items: flex-end; color: white; padding-bottom: 40px;
+  .heroBg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;
+    img { width: 100%; height: 100%; object-fit: cover; }
+    .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.85), transparent); }
+  }
+  .heroContent { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; width: 100%; padding: 0 20px;
+    .tag { background: #f97316; font-size: 0.7rem; font-weight: 800; padding: 4px 12px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+    h1 { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; }
+  }
+}
+
+/* MAIN GRID */
+.mainGrid { 
+  max-width: 1240px; margin: 0 auto; padding: 30px 20px; 
+  display: grid; grid-template-columns: 1fr 380px; gap: 30px;
+  
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr; // On very small screens we stack, but maintain laptop components
+  }
+}
+
+.contentArea { display: flex; flex-direction: column; gap: 20px; }
+
+.glassCard {
+  background: white; padding: 30px; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 5px 25px rgba(0,0,0,0.03); border: 1px solid #f1f5f9;
+  @media (max-width: 640px) { padding: 20px; }
+  h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 15px; span { color: #f97316; } }
+}
+
+.description { font-size: 1rem; line-height: 1.7; color: #475569; }
+
+/* GALLERY - MULTI TINy GRID */
+.tinyGrid {
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); // FORCE 4 COLUMNS EVEN ON MOBILE
+  gap: 8px; margin-bottom: 20px;
+}
+.tinyPic {
+  aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; &:hover { transform: scale(1.1); } }
+}
+
+.miniSwiperWrap { border-top: 1px solid #f8fafc; padding-top: 15px; }
+.microCard { aspect-ratio: 1; border-radius: 6px; overflow: hidden; img { width: 100%; height: 100%; object-fit: cover; } }
+
+/* TIMELINE ITINERARY */
+.itinerary {
+  position: relative; padding-left: 30px;
+  &::before { content: ''; position: absolute; left: 10px; top: 10px; bottom: 10px; width: 2px; background: #f1f5f9; }
+  .step {
+    position: relative; margin-bottom: 25px;
+    &::after { content: ''; position: absolute; left: -25px; top: 6px; width: 10px; height: 10px; background: white; border: 3px solid #f97316; border-radius: 50%; z-index: 2; }
+    .stepNumber { font-size: 0.65rem; font-weight: 900; color: #f97316; text-transform: uppercase; display: block; margin-bottom: 2px; }
+    .stepText { font-weight: 700; font-size: 0.95rem; color: #1e293b; line-height: 1.4; }
+  }
+}
+
+/* SIDEBAR */
+.sidebar { 
+  @media (max-width: 900px) { 
+    order: 2; // Keep at bottom but keep styling same
+  } 
+  .stickyBox { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 20px; } 
+}
+
+/* MOBILE ACTION */
+.mobileAction {
+  display: none;
+  @media (max-width: 900px) {
+    display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 12px 20px; z-index: 1000; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); gap: 10px;
+  }
+  .enquireBtn { flex: 1; background: #f97316; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 1rem; }
+  .waBtn { width: 50px; height: 50px; background: #25d366; color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; }
+}
+
+.mobileFormOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: flex-end; }
+.formContent { background: white; width: 100%; border-radius: 20px 20px 0 0; padding: 40px 20px; position: relative; .close { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #64748b; background: none; border: none; } }

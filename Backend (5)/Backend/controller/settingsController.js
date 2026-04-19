@@ -17,11 +17,11 @@ export const getSettings = async (req, res) => {
 
 export const updateSettings = async (req, res) => {
   try {
-    const { primaryColor, secondaryColor, fontFamily, navbarColor, footerColor } = req.body;
+    const { primaryColor, secondaryColor, fontFamily, navbarColor, footerColor, glassEffect, borderRadius, cardHoverStyle, primaryGradient, darkTheme } = req.body;
     const settings = await prisma.settings.upsert({
       where: { id: 1 },
-      update: { primaryColor, secondaryColor, fontFamily, navbarColor, footerColor },
-      create: { id: 1, primaryColor, secondaryColor, fontFamily, navbarColor, footerColor },
+      update: { primaryColor, secondaryColor, fontFamily, navbarColor, footerColor, glassEffect, borderRadius, cardHoverStyle, primaryGradient, darkTheme },
+      create: { id: 1, primaryColor, secondaryColor, fontFamily, navbarColor, footerColor, glassEffect, borderRadius, cardHoverStyle, primaryGradient, darkTheme },
     });
     res.json(settings);
   } catch (error) {

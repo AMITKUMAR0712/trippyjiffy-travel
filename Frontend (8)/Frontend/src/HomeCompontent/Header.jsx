@@ -9,10 +9,38 @@ import Enquiry from "../Page/Enquiry";
 import DropDown from "../HomeCompontent/DropDown.jsx";
 import axios from "axios";
 
+const ScrollProgressBar = () => {
+    const [scrollProgress, setScrollProgress] = useState(0);
+
+    useEffect(() => {
+        let ticking = false;
+        const handleScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const totalScroll = document.documentElement.scrollTop;
+                    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    setScrollProgress((totalScroll / windowHeight) * 100);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    return (
+        <div
+            className={Style.scrollBar}
+            style={{ width: `${scrollProgress}%` }}
+        ></div>
+    );
+};
+
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [active, setActive] = useState(false);
-    const [scrollProgress, setScrollProgress] = useState(0);
     const [openDropdown, setOpenDropdown] = useState(null);
     const [showEnquiry, setShowEnquiry] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -98,14 +126,7 @@ const Header = () => {
         const handleScroll = () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
-                    const scrolled = window.scrollY;
-                    setActive(scrolled > 30);
-
-                    const totalScroll = document.documentElement.scrollTop;
-                    const windowHeight =
-                        document.documentElement.scrollHeight -
-                        document.documentElement.clientHeight;
-                    setScrollProgress((totalScroll / windowHeight) * 100);
+                    setActive(window.scrollY > 30);
                     ticking = false;
                 });
                 ticking = true;
@@ -123,6 +144,7 @@ const Header = () => {
         {
             name: "Landing Pages",
             categories: [
+                { name: "Upcoming Trips", path: "/upcoming" },
                 { name: "Golden Triangle", path: "/landing-pages/golden-triangle" },
                 { name: "South India Tour", path: "/landing-pages/south-india" },
                 { name: "Rajasthan", path: "/landing-pages/rajasthan" },
@@ -146,9 +168,9 @@ const Header = () => {
                     <div className={Style.HeaderFlex}>
                         <div className={Style.HeaderLeft}>
                             <Link to="/">
-                                <img 
-                                    src={logo} 
-                                    alt="Trippy Travels Logo" 
+                                <img
+                                    src={logo}
+                                    alt="Trippy Travels Logo"
                                     width="160"
                                     height="60"
                                     decoding="async"
@@ -238,10 +260,7 @@ const Header = () => {
                     </div>
                 </div>
 
-                <div
-                    className={Style.scrollBar}
-                    style={{ width: `${scrollProgress}%` }}
-                ></div>
+                <ScrollProgressBar />
             </header>
 
             <Sidebar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />

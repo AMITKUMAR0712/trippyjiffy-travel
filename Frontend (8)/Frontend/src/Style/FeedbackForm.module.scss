@@ -1,9 +1,9 @@
 @import './variables';
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-/* ============================================
-   Feedback Form — Glassmorphism + Storytelling
-   ============================================ */
+/* ================================================================
+   Feedback Form — Glassmorphism + Fully Responsive
+   ================================================================ */
 
 .Page {
   min-height: 100vh;
@@ -11,9 +11,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px;
+  padding: 40px 20px;
   font-family: 'Inter', sans-serif;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 24px 16px;
+    align-items: flex-start;
+    min-height: calc(100vh - 68px); /* Account for bottom nav */
+  }
 }
 
 /* Blurred travel background */
@@ -23,7 +29,7 @@
   background-size: cover;
   background-position: center;
   filter: blur(6px) brightness(0.75);
-  transform: scale(1.05); /* prevent blur edges */
+  transform: scale(1.05);
   z-index: 0;
 }
 
@@ -33,17 +39,21 @@
   background: linear-gradient(
     135deg,
     rgba(0, 0, 0, 0.55) 0%,
-    rgba(10, 10, 30, 0.7) 100%
+    rgba(10, 10, 30, 0.72) 100%
   );
   z-index: 1;
 }
 
-/* Floating ambient particles */
+/* Floating ambient particles — hidden on mobile for performance */
 .Particles {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .Particle {
@@ -72,20 +82,26 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 600px;
-  background: rgba(255, 255, 255, 0.11);
+  max-width: 620px;
+  background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 28px;
-  padding: 40px 40px 36px;
+  padding: 44px 44px 40px;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
-  @media (max-width: 640px) {
-    padding: 28px 22px 26px;
+  @media (max-width: 768px) {
+    padding: 28px 20px 24px;
     border-radius: 20px;
+    backdrop-filter: blur(16px) saturate(160%);
+  }
+
+  @media (max-width: 400px) {
+    padding: 24px 16px 20px;
+    border-radius: 16px;
   }
 }
 
@@ -95,6 +111,11 @@
   align-items: flex-start;
   gap: 14px;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
 }
 
 .HeaderIcon {
@@ -108,10 +129,16 @@
   justify-content: center;
   color: #fff;
   box-shadow: 0 6px 16px rgba($primary, 0.45);
+
+  @media (max-width: 768px) {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
 }
 
 .CardTitle {
-  font-size: 22px;
+  font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 800;
   color: #fff;
   margin: 0 0 4px;
@@ -123,19 +150,31 @@
   color: rgba(255, 255, 255, 0.65);
   margin: 0;
   line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 }
 
 .Divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.12);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+  }
 }
 
 /* Form */
 .Form {
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 14px;
+
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
 }
 
 .Field {
@@ -147,20 +186,20 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.75);
     text-transform: uppercase;
     letter-spacing: 0.8px;
 
-    svg { width: 13px; height: 13px; opacity: 0.8; }
+    svg { width: 12px; height: 12px; opacity: 0.8; }
   }
 
   input, textarea {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 12px;
-    padding: 13px 16px;
+    padding: 14px 16px;
     font-size: 15px;
     color: #fff;
     font-family: 'Inter', sans-serif;
@@ -168,24 +207,25 @@
     transition: all 0.25s ease;
     width: 100%;
     box-sizing: border-box;
+    min-height: 50px;
 
     &::placeholder { color: rgba(255, 255, 255, 0.35); }
 
     &:focus {
       background: rgba(255, 255, 255, 0.16);
-      border-color: rgba($primary, 0.7);
+      border-color: rgba($primary, 0.8);
       box-shadow: 0 0 0 3px rgba($primary, 0.2);
     }
   }
 
   textarea {
     resize: vertical;
-    min-height: 80px;
+    min-height: 90px;
     line-height: 1.5;
   }
 }
 
-/* Two-column row */
+/* Two-column row — stacks on mobile */
 .Row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -193,25 +233,38 @@
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
-/* Star Rating */
+/* Star Rating — larger on mobile */
 .StarRow {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .StarBtn {
-  font-size: 32px;
+  font-size: 34px;
   background: none;
   border: none;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.25);
   transition: color 0.2s ease, transform 0.15s ease;
-  padding: 0;
+  padding: 2px;
   line-height: 1;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+    min-width: 48px;
+    min-height: 48px;
+  }
 
   &:hover, &.StarActive {
     color: #f9a825;
@@ -220,7 +273,7 @@
 }
 
 .StarLabel {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #f9a825;
   margin-left: 4px;
@@ -245,6 +298,10 @@
   &:hover {
     border-color: $primary;
     background: rgba($primary, 0.08);
+  }
+
+  @media (max-width: 768px) {
+    min-height: 72px;
   }
 }
 
@@ -276,21 +333,10 @@
   word-break: break-all;
 }
 
-/* Error */
-.Error {
-  font-size: 13px;
-  color: #ff6b6b;
-  background: rgba(255, 107, 107, 0.12);
-  border: 1px solid rgba(255, 107, 107, 0.3);
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 0;
-}
-
 /* Submit button */
 .SubmitBtn {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: linear-gradient(135deg, $primary 0%, #e67e22 100%);
   color: #fff;
   font-size: 16px;
@@ -306,7 +352,8 @@
   justify-content: center;
   gap: 8px;
   font-family: 'Inter', sans-serif;
-  margin-top: 4px;
+  margin-top: 6px;
+  min-height: 56px;
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
@@ -314,8 +361,7 @@
   }
 
   &:active { transform: translateY(1px); }
-
-  &:disabled { opacity: 0.7; cursor: not-allowed; }
+  &:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 }
 
 /* Loading spinner */
@@ -342,7 +388,7 @@
 }
 
 .SuccessTitle {
-  font-size: 26px;
+  font-size: clamp(20px, 3vw, 26px);
   font-weight: 800;
   color: #fff;
   text-align: center;
@@ -355,12 +401,17 @@
   text-align: center;
   line-height: 1.65;
   margin: 0 0 28px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
 }
 
 .ResetBtn {
   display: block;
   margin: 0 auto;
-  padding: 13px 32px;
+  padding: 14px 32px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 999px;
@@ -370,6 +421,7 @@
   cursor: pointer;
   transition: all 0.25s ease;
   font-family: 'Inter', sans-serif;
+  min-height: 50px;
 
   &:hover {
     background: rgba(255, 255, 255, 0.22);

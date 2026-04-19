@@ -5,8 +5,9 @@ import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import Style from "../Style/State.module.scss";
-import Enquiry from "./Enquiry";
+import InsiderDealsForm from "./InsiderDealsForm";
 import { getImgUrl } from "../utils/getImgUrl";
+import Loader from "../HomeCompontent/Loader.jsx";
 
 const State = () => {
   const { stateId, stateName } = useParams();
@@ -16,6 +17,7 @@ const State = () => {
   const [stateData, setStateData] = useState(null);
   const [tourData, setTourData] = useState([]);
   const [categoryIndia, setCategoryIndia] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -49,6 +51,8 @@ const State = () => {
         setCategoryIndia(categoryRes.data || []);
       } catch (err) {
         console.error("❌ API Fetch Error:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -391,11 +395,17 @@ const State = () => {
         <div className={Style.wrapper}>
           <div className={Style.StateFlex}>
             <div className={Style.StateFlexLeft}>
-              <div className={Style.StateFlexLeftBox}>{toursList}</div>
+              <div className={Style.StateFlexLeftBox}>
+                {loading ? (
+                  <div style={{ padding: '80px 0' }}><Loader text="Mapping your tour..." /></div>
+                ) : (
+                  toursList
+                )}
+              </div>
             </div>
 
             <div className={Style.StateFlexRight}>
-              <Enquiry />
+              <InsiderDealsForm context={`India State Sidebar: ${bannerTitle}`} />
             </div>
           </div>
         </div>
@@ -410,7 +420,7 @@ const State = () => {
             >
               X
             </button>
-            <Enquiry />
+            <InsiderDealsForm context={`India State Modal: ${bannerTitle}`} />
           </div>
         </div>
       )}

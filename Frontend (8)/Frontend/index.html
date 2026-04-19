@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/Img/trippylogo.png" />
+    <link rel="preload" href="/Banner_LCP.webp" as="image" type="image/webp" fetchpriority="high" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- ✅ Primary Meta Tags -->
@@ -22,6 +23,7 @@
     
     <!-- ✅ Preload Critical Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
     <!-- ✅ Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -86,10 +88,58 @@
         ]
       }
     </script>
+  <style>
+    :root {
+      --primary: #f97316;
+      --bg: #ffffff;
+    }
+    body { background: var(--bg); margin: 0; padding: 0; }
+    #root-preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 99999;
+      font-family: 'Poppins', sans-serif;
+    }
+    .loader-container { position: relative; width: 120px; height: 120px; }
+    .loader-circle {
+      position: absolute; width: 100%; height: 100%;
+      border: 3px solid rgba(249, 115, 22, 0.1);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .plane-icon {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--primary); font-size: 40px;
+      animation: plane-fly 2s ease-in-out infinite;
+    }
+    .loading-text {
+      margin-top: 24px; font-weight: 700; color: #1e293b;
+      letter-spacing: 2px; text-transform: uppercase; font-size: 14px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes plane-fly {
+      0%, 100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(15deg) scale(1.1); }
+    }
+    @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  </style>
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="root-preloader">
+        <div class="loader-container">
+          <div class="loader-circle"></div>
+          <div class="plane-icon">
+            <i class="fas fa-paper-plane"></i>
+          </div>
+        </div>
+        <div class="loading-text">Exploring India's 4th Dimension...</div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
     
     <!-- ✅ Critical Scripts with defer -->

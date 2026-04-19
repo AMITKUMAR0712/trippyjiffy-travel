@@ -1,14 +1,16 @@
 .BlogPage {
   display: block;
   box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #fff !important;
 
   &.dark {
-    background: #000;
+    background: #fff !important;
     .wrapper {
       .BlogPageFlex {
         .BlogPageLeft {
           h2 {
-            color: #fff;
+            color: #333 !important;
           }
         }
       }

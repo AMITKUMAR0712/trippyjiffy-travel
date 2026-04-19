@@ -65,9 +65,23 @@
   .dashboardLayoutLeft {
     position: fixed;
     left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .rightContent {
+    margin-left: 0 !important;
   }
 
   .pageContent {
-    padding: 20px;
+    padding: 20px 16px;
+    height: calc(100vh - 70px); // Adjust for header height
   }
 }
+
+@media (max-width: 640px) {
+  .pageContent {
+    padding: 16px 12px;
+  }
+}
+

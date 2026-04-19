@@ -2,18 +2,19 @@
 
 .Blog {
   padding: $spacing-3xl 0;
-  background-color: $bg-light;
+  background-color: #fff !important;
+  min-height: 400px;
   overflow: hidden;
 
   &.dark {
-    background: $bg-dark;
-    .sectionTitle { color: $text-white; }
+    background: #fff !important;
+    .sectionTitle { color: #333 !important; }
     .BlogWrap {
-      background: #1e293b;
-      border-color: rgba(255, 255, 255, 0.05);
+      background: #fff !important;
+      border-color: rgba(0, 0, 0, 0.05) !important;
       .content {
-        h1 { color: $text-white; }
-        p { color: $text-light; }
+        h1 { color: #333 !important; }
+        p { color: #555 !important; }
       }
     }
   }

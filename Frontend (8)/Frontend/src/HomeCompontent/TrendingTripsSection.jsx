@@ -131,35 +131,19 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
                 {loading ? (
                   <div className={Style.skeletonCard}></div>
                 ) : (
-                  <div className={Style.DestinationCard}>
-                    <Link to={detailsPath} className={Style.DestinationCardImg}>
-                      {item.images?.length > 0 ? (
-                        <picture>
-                          <source srcSet={item.images[0]} type="image/webp" />
-                          <img src={item.images[0]} alt={item.title} loading="lazy" />
-                        </picture>
-                      ) : (
-                        <div className={Style.placeholderImg}>No Image</div>
-                      )}
-                    </Link>
-                    <div className={Style.DestinationCardtext}>
-                      <h3>{item.title}</h3>
-                      {infoText && <p className={Style.DestinationInfo}>{infoText}</p>}
-
-                      <div className={Style.DestinationActions}>
-                        <button
-                          type="button"
-                          className={Style.ActionPrimary}
-                          onClick={() => setModalItem(item)}
-                        >
-                          Get Quote
-                        </button>
-                        <Link to={detailsPath} className={Style.ActionGhost}>
-                          View Details
-                        </Link>
-                      </div>
+                  <Link
+                    to={detailsPath}
+                    className={Style.card}
+                    style={{ "--bg-image": `url("${item.images?.[0] || ""}")` }}
+                  >
+                    <div className={Style.content}>
+                      <h2 className={Style.title}>{item.title}</h2>
+                      <p className={Style.copy}>
+                        {infoText || "Explore the best experience with Trippy Jiffy premium tours."}
+                      </p>
+                      <div className={Style.btn}>View Experience</div>
                     </div>
-                  </div>
+                  </Link>
                 )}
               </SwiperSlide>
             );

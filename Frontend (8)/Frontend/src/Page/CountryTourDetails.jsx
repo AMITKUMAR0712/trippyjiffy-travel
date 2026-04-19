@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import Style from "../Style/TourDetails.module.scss";
-import Enquiry from "./Enquiry";
+import InsiderDealsForm from "./InsiderDealsForm";
 import { renderBlocks } from "../utils/utils";
 import { getImgUrl } from "../utils/getImgUrl";
 import {
@@ -15,7 +15,8 @@ import {
 import { Link as ScrollLink } from "react-scroll";
 import { HiLocationMarker } from "react-icons/hi";
 import Brief from "../Img/Untitled.png";
-import { Helmet } from "react-helmet-async"; // <-- ADDED
+import Loader from "../HomeCompontent/Loader.jsx";
+import { Helmet } from "react-helmet-async";
 
 const CountryTourDetails = () => {
   const { asiastateId } = useParams();
@@ -212,7 +213,11 @@ const CountryTourDetails = () => {
     }
   };
 
-  if (loading) return <p>Loading tour details...</p>;
+  if (loading) return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', background: '#fff' }}>
+      <Loader text="Fetching tour specifics..." />
+    </div>
+  );
   if (fromAsia) return <p>No tour found for this state (Asia Mode).</p>;
   if (!tour) return <p>No tour found for this state.</p>;
 
@@ -402,9 +407,7 @@ const CountryTourDetails = () => {
 
           {/* âœ… Right Sidebar */}
           <div className={Style.TourDetailsFlexRight}>
-            <div className={Style.TourDetailsFlexRightEnquiry}>
-              <Enquiry />
-            </div>
+              <InsiderDealsForm context={`Asia Tour Detail: ${tour?.state_name || ""}`} />
 
             {/* âœ… Popular Tours â€“ current open tour excluded */}
             <div className={Style.TourDetailsFlexRightTours}>
@@ -417,13 +420,15 @@ const CountryTourDetails = () => {
                       const safeStateName = t?.state_name || "Unknown State";
                       const safeImage = getSafeImage(t?.state_image);
                       return (
-                        <div key={t.id} className={Style.TourItem1}>
+                        <div key={t.id} className={Style.sidebarCardWrapper}>
                           <Link
-                            to={`/country/${t.asia_id}/${t.id
-                              }/${safeStateName.replace(/\s+/g, "-")}`}
+                            to={`/country/${t.asia_id}/${t.id}/${safeStateName.replace(/\s+/g, "-")}`}
+                            className={Style.card}
+                            style={{ "--bg-image": `url("${safeImage}")` }}
                           >
-                            <img src={safeImage} alt={safeStateName} />
-                            <p>{safeStateName}</p>
+                            <div className={Style.content}>
+                              <h2 className={Style.title}>{safeStateName}</h2>
+                            </div>
                           </Link>
                         </div>
                       );

@@ -178,13 +178,19 @@
   justify-content: center;
 
   padding: 10px 14px;
-  min-height: 42px;
+  min-height: 44px; /* Touch-friendly */
   border-radius: var(--tj-radius-sm);
 
   font-weight: 800;
   letter-spacing: 0.1px;
 
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+
+  @media (max-width: 768px) {
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
 }
 
 .tjBtn:active {
@@ -1122,6 +1128,35 @@
 /* =========================
    MOBILE TOUCHUPS
 ========================= */
+@media (max-width: 768px) {
+  /* Account for bottom nav + extra safe area */
+  .tjBody {
+    padding-bottom: 80px;
+  }
+
+  /* Quick links stack on mobile */
+  .quickLinksRow {
+    flex-direction: column;
+    .tjBtn { width: 100%; justify-content: center; }
+  }
+
+  /* Contact buttons on mobile */
+  .contactBtnLink {
+    min-height: 44px;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Footer col buttons on mobile */
+  .footerBtnLink {
+    min-height: 44px;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
 @media (max-width: 520px) {
   .tjNav {
     top: 8px;

@@ -1,9 +1,9 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { FaGlobe } from "react-icons/fa";
+import Style from "../Style/HeaderTop.module.scss";
 
 const HeaderTop = () => {
-  const [language, setLanguage] = useState("Language");
+  const [language, setLanguage] = useState("Select Language  -->");
   const initialized = useRef(false);
 
   useEffect(() => {
@@ -77,35 +77,16 @@ const HeaderTop = () => {
   };
 
   return (
-    <div
-      style={{
-        padding: "10px 20px",
-        background: "#121212",
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-      }}
-    >
+    <div className={Style.headerTopWrapper}>
       <button
         onClick={openTranslateDropdown}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          background: "#d35400",
-          color: "#fff",
-          border: "none",
-          padding: "6px 12px",
-          borderRadius: "6px",
-          cursor: "pointer",
-          fontWeight: 600,
-        }}
+        className={Style.langBtn}
       >
         <FaGlobe />
-        {language}
+        <span className={Style.langText}>{language}</span>
       </button>
 
-      <div id="google_translate_element" style={{ marginLeft: "10px" }} />
+      <div id="google_translate_element" className={Style.googleTranslate} />
     </div>
   );
 };

@@ -269,6 +269,11 @@ model settings {
   fontFamily     String   @default("Poppins")
   navbarColor    String   @default("#ffffff")
   footerColor    String   @default("#0f172a")
+  glassEffect    Boolean @default(false)
+  borderRadius   Int     @default(12)
+  cardHoverStyle String  @default("parallax")
+  primaryGradient String @default("linear-gradient(135deg, #f97316 0%, #fbbf24 100%)")
+  darkTheme      Boolean @default(false)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -277,4 +282,17 @@ enum feedback_status {
   pending
   approved
   rejected
+}
+
+model upcoming_trips {
+  id           Int       @id @default(autoincrement())
+  title        String    @db.VarChar(255)
+  images       String?   @db.LongText
+  banner_image String?   @db.VarChar(500)
+  description  String?   @db.LongText
+  details      Json?
+  tags         String?   @db.VarChar(500)
+  link         String?   @db.VarChar(500)
+  is_visible   Boolean?  @default(true)
+  created_at   DateTime? @default(now()) @db.Timestamp(0)
 }

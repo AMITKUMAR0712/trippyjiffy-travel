@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Style from "../Style/BlogDetails.module.scss";
-import Enquiry from "./Enquiry";
+import InsiderDealsForm from "./InsiderDealsForm";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Loader from "../HomeCompontent/Loader";
 import Disk from "../Img/disk.jpg";
 import { renderBlocks } from "../utils/utils";
 
@@ -121,12 +122,12 @@ const BlogDetails = () => {
                   </div>
                 </div>
               ) : (
-                <p>Loading blog...</p>
+                <div style={{ padding: '60px 0' }}><Loader text="Preparing your read..." /></div>
               )}
             </div>
 
             <div className={Style.BlogDetailsFlexRight}>
-              <Enquiry />
+              <InsiderDealsForm context={`Blog Detail: ${blog?.title || ""}`} />
             </div>
           </div>
         </div>

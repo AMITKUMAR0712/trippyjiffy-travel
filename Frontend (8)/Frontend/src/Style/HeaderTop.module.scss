@@ -1,39 +1,72 @@
-.HeaderTop {
+.headerTopWrapper {
   width: 100%;
-  background-color: #f8f9fa; // light neutral color
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(10px);
   display: flex;
-  justify-content: flex-end; // align translate dropdown to the right
+  justify-content: flex-end;
   align-items: center;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // subtle shadow
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 100;
+  min-height: 42px;
+  padding: 0 40px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 
-  #google_translate_element {
-    display: inline-block;
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 10px 15px;
+    gap: 8px;
+  }
+}
 
-    select {
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 5px 10px;
-      background-color: #fff;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--primary, #d35400), #e67e22);
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 50px; /* Modern Pill shape */
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 4px 15px rgba(211, 84, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
 
-      &:hover {
-        border-color: #888;
-      }
+  svg {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(211, 84, 0, 0.3);
+    
+    svg {
+      transform: rotate(20deg);
     }
   }
 
-  @media (max-width: 768px) {
-    justify-content: center; // center the dropdown on small screens
-    padding: 8px 10px;
+  @media (max-width: 480px) {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+}
 
-    #google_translate_element select {
-      font-size: 12px;
-      padding: 4px 8px;
-    }
+.googleTranslate {
+  display: flex;
+  align-items: center;
+  position: relative;
+  
+  :global(#google_translate_element) {
+    display: flex;
+    align-items: center;
+  }
+
+  :global(.goog-te-gadget) {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: inherit !important;
   }
 }

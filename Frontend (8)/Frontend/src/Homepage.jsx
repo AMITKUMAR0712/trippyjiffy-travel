@@ -1,10 +1,12 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Banner from "./HomeCompontent/Banner";
-import Destinations from "./HomeCompontent/Destinations";
-import Blog from "./HomeCompontent/Blog";
-import Testimonials from "./Page/Testimonials";
-import Choose from "./HomeCompontent/Choose";
 import SEO from "./HomeCompontent/SEO";
+import AutoLeadPopup from "./HomeCompontent/AutoLeadPopup";
+
+const Destinations = lazy(() => import("./HomeCompontent/Destinations"));
+const Testimonials = lazy(() => import("./Page/Testimonials"));
+const Blog = lazy(() => import("./HomeCompontent/Blog"));
+const Choose = lazy(() => import("./HomeCompontent/Choose"));
 
 const Homepage = () => {
   return (
@@ -26,11 +28,16 @@ const Homepage = () => {
         }}
       />
 
+      <AutoLeadPopup delay={4500} context="Homepage" />
+
       <Banner />
-      <Destinations />
-      <Testimonials />
-      <Blog />
-      <Choose />
+      
+      <Suspense fallback={<div style={{height: '50vh'}}></div>}>
+        <Destinations />
+        <Testimonials />
+        <Blog />
+        <Choose />
+      </Suspense>
     </div>
   );
 };

@@ -1,16 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 .TermsCondition {
-  font-family: "Poppins", sans-serif;
-  max-width: 950px;
-  margin: 30px auto;
-  padding: 40px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-  line-height: 1.8;
-  color: #333;
-  transition: all 0.3s ease;
+  width: 100% !important;
+  background: #ffffff !important;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .wrapper {
+    max-width: 950px;
+    width: 100%;
+    background: #ffffff;
+    color: #333;
+    line-height: 1.8;
+  }
 
   h1 {
     font-size: 36px;

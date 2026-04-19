@@ -228,6 +228,7 @@
 
 @media (max-width: 1024px) {
   .header {
+    height: 70px;
     padding: 0 16px;
   }
   
@@ -238,4 +239,33 @@
   .userInfo {
     display: none;
   }
+
+  .breadcrumb {
+    font-size: 13px;
+    .root { display: none; }
+    .chevron { display: none; }
+  }
 }
+
+@media (max-width: 480px) {
+  .headerRight {
+    gap: 12px;
+  }
+  
+  .iconBtn {
+    width: 36px;
+    height: 36px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+}
+

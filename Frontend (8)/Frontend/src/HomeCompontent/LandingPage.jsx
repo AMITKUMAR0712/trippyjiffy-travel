@@ -9,7 +9,7 @@ import Banner3 from "../Img/l1.jpeg";
 import Certificates1 from "../Img/Certificates1.jpeg";
 import Certificates2 from "../Img/Certificates2.jpeg";
 
-import Enquiry from "../Page/Enquiry";
+import InsiderDealsForm from "../Page/InsiderDealsForm";
 
 import { createPortal } from "react-dom";
 
@@ -71,7 +71,7 @@ const LandingPage = () => {
         <div className={Style.modalOverlay} onClick={() => setShowEnquiry(false)}>
           <div className={Style.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={Style.closeBtn} onClick={() => setShowEnquiry(false)}>✕</button>
-            <Enquiry isModal={true} />
+            <InsiderDealsForm context="Landing Page Modal" />
           </div>
         </div>,
         document.body
@@ -218,14 +218,12 @@ const LandingPage = () => {
               </div>
 
               {/* Enquiry */}
-              <div id="tj-enquiry" className={Style.enquiryWrap}>
+              <div id="tj-enquiry" className={Style.enquiryFullWidth}>
                 <div className={Style.tjFormBadge}>Just 20 seconds to fill ✨</div>
 
                 <div className={Style.enquiryGridVertical}>
                   <div className={Style.tjFormCardWide}>
-                    <h2>Travel Enquiry</h2>
-                    <p>Fill details & our expert will call/WhatsApp you.</p>
-                    <Enquiry />
+                    <InsiderDealsForm context="Landing Page Section" />
                   </div>
 
                   <div className={Style.enquiryMedia}>

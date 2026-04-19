@@ -1,24 +1,11 @@
 import React, { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Loader from "../HomeCompontent/Loader.jsx";
 
 // Loading component for Suspense
 const PageLoader = () => (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    height: '100vh',
-    background: '#fff'
-  }}>
-    <div className="spinner" style={{
-      width: '40px',
-      height: '40px',
-      border: '3px solid #f3f3f3',
-      borderTop: '3px solid #f97316',
-      borderRadius: '50%',
-      animation: 'spin 1s linear infinite'
-    }} />
-    <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+  <div style={{ height: '100vh', display: 'flex', alignItems: 'center', background: '#fff' }}>
+    <Loader />
   </div>
 );
 
@@ -29,7 +16,7 @@ import UserProtectedRoute from "../User/UserProtectedRoute.jsx";
 import AdminProtectedRoute from "../Dashboard/Compontent/AdminProtectedRoute.jsx";
 
 // Main Pages
-const Homepage = lazy(() => import("../Homepage.jsx"));
+import Homepage from "../Homepage.jsx";
 const Destinations = lazy(() => import("../HomeCompontent/Destinations.jsx"));
 const LandingPage = lazy(() => import("../HomeCompontent/LandingPage.jsx"));
 const ThankYou = lazy(() => import("../HomeCompontent/ThankYou.jsx"));
@@ -55,6 +42,9 @@ const TermsCondition = lazy(() => import("../Page/TermsCondition.jsx"));
 const Payment = lazy(() => import("../Page/Payment.jsx"));
 const LandingTourPage = lazy(() => import("../Page/LandingTourPage.jsx"));
 const PageNotFound = lazy(() => import("../Page/PageNotFound.jsx"));
+const ExploreTours = lazy(() => import("../Page/ExploreTours.jsx"));
+const UpcomingLanding = lazy(() => import("../Page/UpcomingLanding.jsx"));
+const UpcomingDetails = lazy(() => import("../Page/UpcomingDetails.jsx"));
 
 // Admin Components
 const AdminLogin = lazy(() => import("../Admin/AdminLogin.jsx"));
@@ -77,6 +67,7 @@ const AdminEdit = lazy(() => import("../Dashboard/page/AdminEdit.jsx"));
 const AdminTheme = lazy(() => import("../Dashboard/page/AdminTheme.jsx"));
 const AdminPayments = lazy(() => import("../Dashboard/page/AdminPayments.jsx"));
 const AdminBussianContent = lazy(() => import("../Dashboard/page/AdminBussianContent.jsx"));
+const AdminUpcomingTrips = lazy(() => import("../Dashboard/page/AdminUpcomingTrips.jsx"));
 
 // User Components
 const UserdHome = lazy(() => import("../User/Dashboard/UserHome.jsx"));
@@ -116,6 +107,9 @@ const router = createBrowserRouter([
       { path: "termscondition", element: <Suspense fallback={<PageLoader />}><TermsCondition /></Suspense> },
       { path: "payment", element: <Suspense fallback={<PageLoader />}><Payment /></Suspense> },
       { path: "landing-pages/:slug", element: <Suspense fallback={<PageLoader />}><LandingTourPage /></Suspense> },
+      { path: "explore", element: <Suspense fallback={<PageLoader />}><ExploreTours /></Suspense> },
+      { path: "upcoming", element: <Suspense fallback={<PageLoader />}><UpcomingLanding /></Suspense> },
+      { path: "upcoming/:id", element: <Suspense fallback={<PageLoader />}><UpcomingDetails /></Suspense> },
     ],
   },
   { path: "/landingpage", element: <Suspense fallback={<PageLoader />}><LandingPage /></Suspense> },
@@ -151,6 +145,7 @@ const router = createBrowserRouter([
           { path: "adminPayments", element: <Suspense fallback={<PageLoader />}><AdminPayments /></Suspense> },
           { path: "AdminBussianContent", element: <Suspense fallback={<PageLoader />}><AdminBussianContent /></Suspense> },
           { path: "admintheme", element: <Suspense fallback={<PageLoader />}><AdminTheme /></Suspense> },
+          { path: "upcoming-trips", element: <Suspense fallback={<PageLoader />}><AdminUpcomingTrips /></Suspense> },
         ],
       },
     ],

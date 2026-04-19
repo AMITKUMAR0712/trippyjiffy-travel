@@ -7,12 +7,14 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import Style from "../Style/LandingTourPage.module.scss";
-import Enquiry from "./Enquiry.jsx";
+import InsiderDealsForm from "./InsiderDealsForm.jsx";
 import GoogleReviews from "../HomeCompontent/GoogleReviews.jsx";
 import TrendingTripsSection from "../HomeCompontent/TrendingTripsSection.jsx";
 import { useLandingPageData } from "../hooks/useLandingPageData";
 import { getImgUrl } from "../utils/getImgUrl";
+import Loader from "../HomeCompontent/Loader.jsx";
 import { motion } from "framer-motion";
+import AutoLeadPopup from "../HomeCompontent/AutoLeadPopup.jsx";
 
 const defaultAboutUs = {
   heading: "About TrippyJiffy",
@@ -59,17 +61,7 @@ const LandingTourPage = () => {
       setPage(apiPageData);
       setRecommended(apiPageData?.recommendedTours || []);
       window.scrollTo({ top: 0, behavior: "smooth" });
-
-      // Open contact modal automatically for landing pages after a short delay
-      if (modalTimer.current) clearTimeout(modalTimer.current);
-      modalTimer.current = setTimeout(() => {
-        setShowModal(true);
-      }, 2400);
     }
-
-    return () => {
-      if (modalTimer.current) clearTimeout(modalTimer.current);
-    };
   }, [apiPageData]);
 
   useEffect(() => {
@@ -194,7 +186,11 @@ const LandingTourPage = () => {
     fetchRecommended();
   }, [page?.recommendTourId, page?.slug, page?.title, baseURL]);
 
-  if (!page) return null;
+  if (pageLoading || !page) return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', background: '#fff' }}>
+       <Loader text={`Welcome to ${slug?.replace(/-/g, ' ')}...`} />
+    </div>
+  );
 
   const callNow = (phone) => {
     if (!phone) return;
@@ -222,6 +218,9 @@ const LandingTourPage = () => {
         <title>{page.seo?.title || page.title}</title>
         <meta name="description" content={page.seo?.description || page.hero?.subtitle} />
       </Helmet>
+
+      {/* NEW AUTO LEAD POPUP */}
+      <AutoLeadPopup delay={4000} context={`Landing Page: ${page.title}`} />
 
       <section className={Style.hero}>
         <div className={Style.heroSwiper}>
@@ -279,7 +278,7 @@ const LandingTourPage = () => {
             initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             className={Style.heroFormWrap}
           >
-            <Enquiry isLandingPage={true} />
+            <InsiderDealsForm context={`Landing Tour Hero: ${page?.title || ""}`} />
           </motion.div>
         </div>
       </section>
@@ -312,16 +311,14 @@ const LandingTourPage = () => {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   href={item.link || "#"} 
-                  className={Style.recommendSlide}
+                  className={Style.card}
+                  style={{ "--bg-image": `url("${item.image}")` }}
                 >
-                  <div className={Style.recommendImage}>
-                    {item.image ? (
-                      <img src={item.image} alt={item.title} loading="lazy" />
-                    ) : (
-                      <div className={Style.recommendPlaceholder}>Tour</div>
-                    )}
+                  <div className={Style.content}>
+                    <h2 className={Style.title}>{item.title}</h2>
+                    <p className={Style.copy}>Handpicked circuit with premium stays and local experts.</p>
+                    <div className={Style.btn}>Explore Now</div>
                   </div>
-                  <p className={Style.recommendTitle}>{item.title}</p>
                 </motion.a>
               </SwiperSlide>
             ))}
@@ -509,12 +506,8 @@ const LandingTourPage = () => {
             >
               ×
             </button>
-            <div className={Style.modalHeader}>Plan Your Trip</div>
-            <p className={Style.modalSubhead}>
-              Share your dates and preferences; we'll tailor a perfect itinerary.
-            </p>
             <div className={Style.modalFormWrap}>
-              <Enquiry isLandingPage={true} />
+              <InsiderDealsForm context={`Landing Tour Modal: ${page?.title || ""}`} />
             </div>
           </div>
         </div>
@@ -562,7 +555,7 @@ const LandingTourPage = () => {
             </div>
           </div>
           <div className={Style.contactForm}>
-            <Enquiry isLandingPage={true} />
+            <InsiderDealsForm context={`Landing Tour Contact: ${page?.title || ""}`} />
           </div>
         </div>
       </section>

@@ -31,6 +31,23 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
     fetchData();
   }, [baseURL]);
 
+  // Close on escape key
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    if (menuOpen) {
+      window.addEventListener("keydown", handleEsc);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen, setMenuOpen]);
+
   const toggleDropdown = (index) => {
     setOpenDropdown(openDropdown === index ? null : index);
     setOpenSubCategory(null);
@@ -81,17 +98,26 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
     { name: "User Login", path: "/register" },
   ];
 
+  const handleClose = () => setMenuOpen(false);
+
   return (
     <>
+      {/* Backdrop overlay */}
       <div
         className={`${Style.overlay} ${menuOpen ? Style.show : ""}`}
-        onClick={() => setMenuOpen(false)}
-      ></div>
+        onClick={handleClose}
+        aria-hidden="true"
+      />
 
-      <div
+      {/* Sidebar drawer */}
+      <nav
         className={`${Style.sidebar} ${menuOpen ? Style.active : ""}`}
+        aria-label="Mobile navigation"
+        aria-modal="true"
+        role="dialog"
       >
-        <button className={Style.closeBtn} onClick={() => setMenuOpen(false)}>
+        {/* Close button */}
+        <button className={Style.closeBtn} onClick={handleClose} aria-label="Close menu">
           ✕
         </button>
 
@@ -105,7 +131,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                 {menu.categories ? (
                   <span>{menu.name}</span>
                 ) : (
-                  <Link to={menu.path} onClick={() => setMenuOpen(false)}>
+                  <Link to={menu.path} onClick={handleClose}>
                     {menu.name}
                   </Link>
                 )}
@@ -114,6 +140,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                     className={`${Style.DropArrow} ${
                       openDropdown === index ? Style.open : ""
                     }`}
+                    aria-hidden="true"
                   >
                     ▼
                   </span>
@@ -140,7 +167,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                               cat.region_name
                             )}`}
                             className={Style.IndiaLink}
-                            onClick={() => setMenuOpen(false)}
+                            onClick={handleClose}
                           >
                             {cat.region_name}
                           </Link>
@@ -160,7 +187,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                               <Link
                                 to={`/asia-tours/${slugify(cat.country_name)}`}
                                 className={Style.AsiaLink}
-                                onClick={() => setMenuOpen(false)}
+                                onClick={handleClose}
                               >
                                 {cat.country_name}
                               </Link>
@@ -185,7 +212,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                                           cat.country_name
                                         )}/${slugify(country.country_name)}`}
                                         className={Style.AsiaCountryLink}
-                                        onClick={() => setMenuOpen(false)}
+                                        onClick={handleClose}
                                       >
                                         {country.country_name}
                                       </Link>
@@ -202,7 +229,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                             className={Style.ReachUsLink}
                             onClick={() => {
                               toggleDropdown(null);
-                              setMenuOpen(false);
+                              handleClose();
                             }}
                           >
                             {cat.name}
@@ -217,30 +244,33 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
           ))}
         </ul>
 
+        {/* CTA buttons at bottom */}
         <div className={Style.HeaderRight}>
           <Link
             to="/enquiry-form"
             className={Style.PlanTripBtn}
-            onClick={() => setMenuOpen(false)}
+            onClick={handleClose}
           >
-            Plan Your Trip
-          </Link>
-          <Link
-            to="/shop"
-            className={Style.PlanTripBtn}
-            onClick={() => setMenuOpen(false)}
-          >
-            Shop With Us
+            ✈ Plan Your Trip
           </Link>
           <Link
             to="/payment"
             className={Style.PlanTripBtn}
-            onClick={() => setMenuOpen(false)}
+            onClick={handleClose}
+            style={{ background: "linear-gradient(135deg, #1d4ed8, #1e40af)" }}
           >
-            Pay Now
+            💳 Pay Now
+          </Link>
+          <Link
+            to="/shop"
+            className={Style.PlanTripBtn}
+            onClick={handleClose}
+            style={{ background: "linear-gradient(135deg, #047857, #065f46)" }}
+          >
+            🛍 Shop With Us
           </Link>
         </div>
-      </div>
+      </nav>
     </>
   );
 };

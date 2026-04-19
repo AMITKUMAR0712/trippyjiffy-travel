@@ -169,3 +169,35 @@
     white-space: nowrap;
   }
 }
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 280px !important;
+    position: fixed;
+    border-right: none;
+    box-shadow: 20px 0 50px rgba(0,0,0,0.1);
+
+    &.closed {
+      transform: translateX(-100%);
+      width: 280px;
+    }
+  }
+
+  .toggleBtn {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .sidebarHeader {
+    padding: 20px;
+  }
+  
+  .nav {
+    padding: 20px 12px;
+  }
+}

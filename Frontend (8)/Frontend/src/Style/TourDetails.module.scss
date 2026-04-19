@@ -1,6 +1,8 @@
 .TourDetails {
   display: block;
   width: 100%;
+  background-color: #fff;
+  min-height: 100vh;
 
   .TourImages {
     position: relative;
@@ -101,6 +103,7 @@
       }
     }
   }
+
   .wrapper {
     display: block;
     width: 1200px;
@@ -109,9 +112,11 @@
     .TourDetailsFlex {
       display: flex;
       justify-content: space-between;
+
       .TourDetailsFlexLeft {
         width: 65%;
         margin-top: 40px;
+
         .TourDetailsPage {
           padding: 10px 20px;
           background-color: #f5f7fa;
@@ -184,10 +189,12 @@
               letter-spacing: 0.5px;
               border-radius: 4px;
             }
-             p {
+
+            p {
               font-size: 16px;
               color: #444;
             }
+
             ul {
               list-style: none;
               padding: 0;
@@ -421,6 +428,7 @@
             .timelineHeader {
               border-color: #d35400;
             }
+
             .icon {
               background: darkorange;
             }
@@ -434,6 +442,7 @@
           border-radius: 16px;
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
           transition: all 0.3s ease;
+
           h3 {
             margin-bottom: 25px;
             font-size: 22px;
@@ -446,6 +455,7 @@
             letter-spacing: 0.5px;
             border-radius: 4px;
           }
+
           img {
             width: 100%;
             max-width: 500px;
@@ -525,10 +535,10 @@
             border-radius: 4px;
           }
 
-         p {
-              font-size: 16px;
-              color: #444;
-            }
+          p {
+            font-size: 16px;
+            color: #444;
+          }
         }
 
         .Sightseeing {
@@ -556,19 +566,23 @@
             letter-spacing: 0.5px;
             border-radius: 4px;
           }
+
           ol {
             padding: 0;
             margin: 0;
+
             li {
               font-size: 16px;
               font-weight: 500;
               color: #555;
               padding: 10px 0px;
             }
+
             li::marker {
               color: #d35400;
             }
           }
+
           ul {
             list-style: none;
             padding: 0;
@@ -598,6 +612,7 @@
             }
           }
         }
+
         .market {
           margin-top: 40px;
           padding: 30px;
@@ -623,19 +638,23 @@
             letter-spacing: 0.5px;
             border-radius: 4px;
           }
+
           ol {
             padding: 0;
             margin: 0;
             list-style: none;
+
             li {
               font-size: 17px;
               font-weight: 500;
               color: #555;
             }
+
             li::marker {
               color: #d35400;
             }
           }
+
           ul {
             list-style: none;
             padding: 0;
@@ -716,17 +735,21 @@
           }
         }
       }
+
       .TourDetailsFlexRight {
         width: 33%;
         position: sticky;
         top: 100px;
         align-self: flex-start;
+
         .TourDetailsFlexRightEnquiry {
           display: block;
         }
+
         .TourDetailsFlexRightTours {
           display: block;
           width: 100%;
+
           h3 {
             font-size: 22px;
             font-weight: 700;
@@ -738,27 +761,97 @@
             border-bottom: 1px solid #ddd;
             letter-spacing: 0.3px;
           }
+
           .TourList1 {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             width: 100%;
             margin-top: 30px;
-            .TourItem1 {
+
+            .sidebarCardWrapper {
               display: block;
-              width: 42%;
-              margin-top: 30px;
-              a {
+              width: 48%;
+              /* Keep the grid layout but with better spacing */
+              margin-top: 20px;
+
+              .card {
+                position: relative;
+                display: flex;
+                align-items: flex-end;
+                overflow: hidden;
+                padding: 0.75rem;
+                width: 100%;
+                text-align: center;
+                color: whitesmoke;
+                background-color: #1e293b;
+                border-radius: 12px;
+                height: 140px;
+                /* Compact height for sidebar */
                 text-decoration: none;
-                img {
+                --d: 500ms;
+                --e: cubic-bezier(0.19, 1, 0.22, 1);
+
+                &:before {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  left: 0;
                   width: 100%;
-                  height: 150px;
-                  object-fit: cover;
-                  border-radius: 10px;
+                  height: 110%;
+                  background-size: cover;
+                  background-position: center;
+                  background-image: var(--bg-image);
+                  transition: transform calc(var(--d) * 1.5) var(--e);
+                  pointer-events: none;
+                  z-index: 0;
                 }
-                p {
-                  font-size: 14px;
-                  color: #d35400;
+
+                &:after {
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 200%;
+                  pointer-events: none;
+                  background-image: linear-gradient(to bottom,
+                      rgba(0, 0, 0, 0) 0%,
+                      rgba(0, 0, 0, 0.8) 100%);
+                  transform: translateY(-50%);
+                  transition: transform calc(var(--d) * 2) var(--e);
+                  z-index: 1;
+                }
+
+                .content {
+                  position: relative;
+                  width: 100%;
+                  transition: transform var(--d) var(--e);
+                  z-index: 2;
+                }
+
+                .title {
+                  font-size: 0.85rem;
+                  font-weight: 700;
+                  line-height: 1.2;
+                  color: #fff;
+                  margin: 0;
+                  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+                }
+
+                @media (hover: hover) {
+
+                  &:hover,
+                  &:focus-within {
+                    &:before {
+                      transform: translateY(-4%);
+                    }
+
+                    &:after {
+                      transform: translateY(-50%);
+                    }
+                  }
                 }
               }
             }
@@ -782,12 +875,15 @@
                 &:nth-child(1) {
                   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
                 }
+
                 &:nth-child(2) {
                   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
                 }
+
                 &:nth-child(3) {
                   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
                 }
+
                 &:nth-child(4) {
                   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.16);
                 }
@@ -822,18 +918,23 @@
 @media (max-width: 1500px) {
   .TourDetails {
     display: block;
+
     .TourImages {
       display: block;
       width: 100%;
+
       img {
         width: 100%;
       }
+
       .TourDetailsDisk {
         display: block;
       }
     }
+
     .wrapper {
       display: block;
+
       .TourDetailsFlex {
         display: flex;
       }
@@ -844,20 +945,25 @@
 @media (max-width: 1024px) {
   .TourDetails {
     display: block;
+
     .TourImages {
       display: block;
       width: 100%;
+
       img {
         width: 100%;
       }
+
       .TourDetailsDisk {
         display: block;
       }
     }
+
     .TourDetailsInfoDisk {
       display: block;
       text-align: center;
       width: 100%;
+
       ul {
         display: block;
         width: 100%;
@@ -867,9 +973,11 @@
         }
       }
     }
+
     .wrapper {
       width: 100%;
       display: block;
+
       .TourDetailsFlex {
         display: flex;
       }
@@ -881,24 +989,30 @@
   .TourDetails {
     display: block;
     width: 100%;
+
     .TourImages {
       display: block;
+
       .TourItem {
         display: block;
         width: 100%;
+
         img {
           width: 100%;
           object-fit: cover;
           height: 350px;
         }
+
         .TourDetailsNAme {
           display: block;
+
           h1 {
             font-size: 25px;
           }
         }
       }
     }
+
     .TourDetailsInfoDisk {
       display: block;
       text-align: center;
@@ -921,30 +1035,39 @@
         }
       }
     }
+
     .wrapper {
       width: 100%;
       display: block;
       box-sizing: border-box;
       padding: 17px;
+
       .TourDetailsFlex {
         display: block;
         width: 100%;
+
         .TourDetailsFlexLeft {
           display: block;
           width: 100%;
+
           .TourDetailsPage {
             display: block;
+
             .TourDescription {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
             }
+
             .Inclusions {
               display: block;
+
               h3 {
                 font-size: 18px;
               }
+
               p {
                 font-size: 12px;
                 width: 100%;
@@ -955,37 +1078,47 @@
 
             .Itinerary {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
+
               .faqtimeline {
                 display: block;
+
                 .timelineline {
                   display: block;
                 }
+
                 .faqlist {
                   display: block;
+
                   .faqitem {
                     display: block;
+
                     .pin {
                       display: block;
+
                       .pincircle {
-                        .pindot {
-                        }
+                        .pindot {}
                       }
                     }
+
                     .faqbutton {
                       .faqheader {
                         display: flex;
                         gap: 20px;
+
                         h4 {
                           display: block;
                           font-size: 14px;
                           line-height: 20px;
                         }
                       }
+
                       .faqanswer {
                         display: flex;
+
                         p {
                           font-size: 14px;
                           line-height: 22px;
@@ -996,19 +1129,25 @@
                 }
               }
             }
+
             .Inclusions {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
+
               ol {
                 display: block;
+
                 li {
                   font-size: 16px;
                 }
               }
+
               ul {
                 display: block;
+
                 li {
                   font-size: 15px;
                 }
@@ -1017,63 +1156,80 @@
 
             .Route {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
+
               .timeline {
                 display: block;
+
                 p {
                   font-size: 12px;
                 }
               }
             }
+
             .Exclusions {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
-            p{
-               font-size: 12px;
-        width: 104%;
-    
+
+              p {
+                font-size: 12px;
+                width: 104%;
+
+              }
             }
-            }
+
             .Sightseeing {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
+
               ol {
                 display: block;
+
                 li {
                   font-size: 15px;
                   margin-bottom: -10px;
                 }
               }
             }
+
             .market {
               display: block;
+
               h3 {
                 font-size: 20px;
               }
+
               ol {
                 font-size: 18px;
+
                 li {
                   font-size: 15px;
                 }
               }
             }
+
             .Supplemental {
               display: block;
+
               h3 {
                 font-size: 17px;
-                width:108%;
+                width: 108%;
               }
-                 p{
-               font-size: 12px;
-        width: 104%;
-    
-            
+
+              p {
+                font-size: 12px;
+                width: 104%;
+
+
               }
             }
           }
@@ -1083,9 +1239,11 @@
           display: block;
           width: 100%;
           box-sizing: border-box;
+
           .TourDetailsFlexRightEnquiry {
             display: block;
           }
+
           .TourDetailsFlexRightTours {
             margin-top: 30px;
             display: block;
@@ -1095,11 +1253,14 @@
             h3 {
               font-size: 20px;
             }
+
             ul {
               display: block;
               width: 100%;
+
               li {
                 width: 100%;
+
                 img {
                   width: 100%;
                 }

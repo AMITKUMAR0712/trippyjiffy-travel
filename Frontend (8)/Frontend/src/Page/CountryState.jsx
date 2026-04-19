@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Style from "../Style/CountryState.module.scss";
-import Enquiry from "../Page/Enquiry.jsx";
+import InsiderDealsForm from "../Page/InsiderDealsForm.jsx";
 import { Helmet } from "react-helmet-async";
 import { getImgUrl } from "../utils/getImgUrl";
+import Loader from "../HomeCompontent/Loader.jsx";
 
 const CountryState = () => {
   const { countryId, stateName } = useParams(); // ✅ ADDED stateName
@@ -251,7 +252,7 @@ const CountryState = () => {
           <div className={Style.CountryStateFlexLeft}>
             <div className={Style.StateFlexLeftBox}>
               {loading ? (
-                <p>Loading states...</p>
+                <div style={{ padding: '60px 0' }}><Loader text="Discovering regions..." /></div>
               ) : states.length > 0 ? (
                 states.map((state) => (
                   <div key={state.id} className={Style.StateBlockFlex}>
@@ -317,7 +318,7 @@ const CountryState = () => {
 
           {/* RIGHT SIDE */}
           <div className={Style.CountryStateFlexRight}>
-            <Enquiry />
+            <InsiderDealsForm context={`Asia Country Sidebar: ${selectedCountry?.country_name}`} />
           </div>
         </div>
       </div>
@@ -332,7 +333,7 @@ const CountryState = () => {
             >
               X
             </button>
-            <Enquiry />
+            <InsiderDealsForm context={`Asia Country Modal: ${selectedCountry?.country_name}`} />
           </div>
         </div>
       )}

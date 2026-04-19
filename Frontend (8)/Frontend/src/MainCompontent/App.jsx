@@ -5,6 +5,7 @@ import Footer from "../HomeCompontent/Footer";
 import WhatsappButton from "../HomeCompontent/WhatsappButton";
 import ScrollToTop from "../HomeCompontent/ScrollToTop";
 import HeaderTop from "../HomeCompontent/HeaderTop";
+import MobileBottomNav from "../HomeCompontent/MobileBottomNav";
 import axios from "axios";
 
 import { LanguageProvider } from "../HomeCompontent/LanguageContext";
@@ -36,20 +37,31 @@ const App = () => {
     root.style.setProperty("--font-family", settings.fontFamily);
     root.style.setProperty("--navbar-color", settings.navbarColor);
     root.style.setProperty("--footer-color", settings.footerColor);
+    root.style.setProperty("--card-radius", `${settings.borderRadius}px` || "20px");
 
     // Apply font to body
     document.body.style.fontFamily = settings.fontFamily + ", sans-serif";
+    
+    // Handle dark theme body class
+    if (settings.darkTheme) {
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.remove("dark-theme");
+    }
   };
 
   return (
     <HelmetProvider>
       <LanguageProvider>
         <ScrollToTop />
+        {/* Hide header top bar on mobile */}
         <HeaderTop />
         <Header />
         <Outlet />
         <Footer />
         <WhatsappButton />
+        {/* Mobile-only bottom nav */}
+        <MobileBottomNav />
         <Toaster position="top-right" richColors expand={true} />
       </LanguageProvider>
     </HelmetProvider>

@@ -1,10 +1,10 @@
 @import './variables';
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
-/* ================================================
-   Payment Page — Split Layout
-   Left: Form  |  Right: Image Slider
-   ================================================ */
+/* ================================================================
+   Payment Page — Fully Responsive Split Layout
+   Desktop: Side-by-side | Tablet: Stacked | Mobile: Form-first
+   ================================================================ */
 
 .PaymentPage {
   min-height: 88vh;
@@ -12,8 +12,10 @@
   grid-template-columns: 1fr 1fr;
   font-family: 'Inter', sans-serif;
 
+  /* Tablet: stack with slider on top */
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 }
 
@@ -23,9 +25,18 @@
   overflow: hidden;
   min-height: 88vh;
 
+  /* Tablet: shorter slider */
   @media (max-width: 900px) {
-    height: 300px;
-    min-height: unset;
+    height: 45vw;
+    min-height: 260px;
+    max-height: 400px;
+    order: -1; /* show slider first on tablet */
+  }
+
+  /* Mobile: compact slider */
+  @media (max-width: 640px) {
+    height: 240px;
+    max-height: 240px;
   }
 }
 
@@ -54,25 +65,32 @@
   );
 }
 
-/* Location chip at middle-top area */
+/* Location chip */
 .LocationLabel {
   position: absolute;
-  top: 110px;
-  left: 28px;
+  top: 80px;
+  left: 20px;
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.18);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.28);
   color: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
   z-index: 4;
 
-  svg { width: 14px; height: 14px; }
+  @media (max-width: 900px) {
+    top: 16px;
+    left: 16px;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  svg { width: 13px; height: 13px; }
 }
 
 /* Arrow buttons */
@@ -81,8 +99,8 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 5;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(255,255,255,0.18);
   backdrop-filter: blur(8px);
@@ -93,22 +111,27 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.25s ease;
+  min-height: 36px;
 
   &:hover { background: rgba(255,255,255,0.35); }
 }
 
-.ArrowLeft  { left: 14px; }
-.ArrowRight { right: 14px; }
+.ArrowLeft  { left: 12px; }
+.ArrowRight { right: 12px; }
 
 /* Dots */
 .Dots {
   position: absolute;
-  bottom: 100px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 6px;
   z-index: 5;
+
+  @media (max-width: 900px) {
+    bottom: 16px;
+  }
 }
 
 .Dot {
@@ -120,124 +143,68 @@
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
+  min-height: unset;
+  min-width: unset;
 }
 
 .DotActive {
-  width: 24px;
+  width: 22px;
   background: #fff;
-}
-
-/* Stats row at bottom */
-.FloatingStats {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 5;
-  white-space: nowrap;
-}
-
-.TravelImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transform: scale(1.04);
-  transition: transform 8s ease-out;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-}
-
-.ImageOverlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(0, 0, 0, 0.15) 0%,
-    rgba(0, 0, 0, 0.65) 60%,
-    rgba(0, 0, 0, 0.85) 100%
-  );
 }
 
 /* Top branding block */
 .TopBrand {
   position: absolute;
-  top: 28px;
-  left: 28px;
-  right: 28px;
+  top: 22px;
+  left: 22px;
+  right: 22px;
   z-index: 3;
   text-align: left;
+
+  @media (max-width: 900px) {
+    display: none; /* hide on smaller screens to save space */
+  }
 }
 
 .BrandLogo {
   display: inline-block;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   color: #fff;
   letter-spacing: 0.5px;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-
-  /* Plane emoji extra weight */
   font-family: 'Inter', sans-serif;
 }
 
 .BrandTagline {
   margin: 4px 0 10px;
-  font-size: 13px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.75);
   font-weight: 500;
-  letter-spacing: 0.3px;
 }
 
 .BrandLine {
-  width: 48px;
+  width: 44px;
   height: 3px;
   border-radius: 2px;
   background: linear-gradient(90deg, $primary, #f39c12);
 }
 
-/* Floating chips at top */
-.FloatingStats {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  z-index: 3;
-}
-
-.StatChip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 999px;
-
-  svg { width: 13px; height: 13px; }
-}
-
-/* Quote block at bottom */
+/* Quote block */
 .QuoteBox {
   position: absolute;
-  bottom: 36px;
-  left: 28px;
-  right: 28px;
+  bottom: 28px;
+  left: 22px;
+  right: 22px;
   z-index: 3;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 }
 
 .QuoteMark {
-  font-size: 72px;
+  font-size: 60px;
   line-height: 0.6;
   color: $primary;
   font-family: Georgia, serif;
@@ -245,41 +212,45 @@
 }
 
 .QuoteText {
-  font-size: clamp(18px, 2.5vw, 26px);
+  font-size: clamp(16px, 2.2vw, 24px);
   font-weight: 700;
   color: #fff;
   line-height: 1.35;
-  margin: 0 0 12px 0;
+  margin: 0 0 10px;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
 .QuoteAuthor {
-  font-size: 14px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.65);
   font-style: italic;
   margin: 0;
-  letter-spacing: 0.5px;
 }
 
-/* ── RIGHT FORM PANEL ── */
+/* ── FORM PANEL ─────────────────────────────────────────── */
 .FormPanel {
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f8faff;
-  padding: 40px 24px;
+  padding: 48px 28px;
 
   @media (max-width: 900px) {
-    padding: 32px 20px;
+    padding: 40px 24px;
+    align-items: flex-start;
+  }
+
+  @media (max-width: 640px) {
+    padding: 28px 16px 40px;
   }
 }
 
 .FormInner {
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   background: #fff;
   border-radius: 24px;
-  padding: 36px 32px 28px;
+  padding: 40px 36px 32px;
   box-shadow:
     0 4px 6px rgba(0, 0, 0, 0.04),
     0 24px 48px rgba(0, 0, 0, 0.1);
@@ -299,8 +270,10 @@
     border-radius: 24px 24px 0 0;
   }
 
-  @media (max-width: 480px) {
-    padding: 28px 20px 22px;
+  @media (max-width: 640px) {
+    padding: 32px 20px 28px;
+    border-radius: 20px;
+    max-width: 100%;
   }
 }
 
@@ -322,10 +295,16 @@
   justify-content: center;
   color: $primary;
   flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
 }
 
 .FormTitle {
-  font-size: 22px;
+  font-size: clamp(18px, 2.5vw, 22px);
   font-weight: 800;
   color: #0f172a;
   margin: 0 0 2px;
@@ -362,8 +341,8 @@
   transition: color 0.3s ease;
 
   span {
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     border-radius: 999px;
     background: #e2e8f0;
     display: flex;
@@ -372,11 +351,11 @@
     font-size: 12px;
     font-weight: 700;
     transition: background 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
   }
 
   &.StepActive {
     color: $primary;
-
     span {
       background: $primary;
       color: #fff;
@@ -413,16 +392,17 @@
   input, select {
     width: 100%;
     box-sizing: border-box;
-    padding: 13px 16px;
+    padding: 14px 16px;
     font-size: 15px;
     border: 1.5px solid #e2e8f0;
-    border-radius: 10px;
+    border-radius: 12px;
     outline: none;
     transition: all 0.25s ease;
     background: #f8fafc;
     color: #1e293b;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
+    min-height: 50px;
 
     &::placeholder { color: #94a3b8; font-weight: 400; }
 
@@ -445,12 +425,12 @@
   }
 }
 
-/* Amount with currency prefix */
+/* Amount input wrapper */
 .AmountWrapper {
   display: flex;
   align-items: center;
   border: 1.5px solid #e2e8f0;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #f8fafc;
   overflow: hidden;
   transition: all 0.25s ease;
@@ -463,7 +443,7 @@
 
   .CurrencySymbol {
     padding: 0 14px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     color: $primary;
     background: rgba($primary, 0.07);
@@ -471,7 +451,8 @@
     display: flex;
     align-items: center;
     border-right: 1.5px solid #e2e8f0;
-    min-height: 48px;
+    min-height: 50px;
+    flex-shrink: 0;
   }
 
   input {
@@ -480,10 +461,11 @@
     background: transparent !important;
     border-radius: 0 !important;
     flex: 1;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     color: #0f172a;
-    padding: 13px 16px;
+    padding: 12px 16px;
+    min-height: 50px;
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button { -webkit-appearance: none; }
@@ -496,10 +478,11 @@
   flex-direction: column;
   gap: 4px;
   background: #f1f5f9;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   font-size: 12px;
   margin-bottom: 4px;
+  border: 1px solid #e2e8f0;
 
   span { font-weight: 600; color: #64748b; }
 
@@ -517,7 +500,7 @@
   align-items: center;
   justify-content: center;
   border: 2px dashed #cbd5e1;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 20px;
   cursor: pointer;
   text-align: center;
@@ -525,7 +508,7 @@
   font-size: 13px;
   font-weight: 500;
   transition: all 0.25s ease;
-  min-height: 70px;
+  min-height: 80px;
   background: #f8fafc;
 
   input { display: none; }
@@ -542,16 +525,16 @@
   }
 }
 
-/* Pay button */
+/* Pay button — sticky on mobile */
 .PayBtn {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: linear-gradient(135deg, $primary 0%, #e67e22 100%);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -563,16 +546,22 @@
   justify-content: center;
   gap: 8px;
   font-family: 'Inter', sans-serif;
+  min-height: 56px;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 28px rgba($primary, 0.45);
-    background: linear-gradient(135deg, darken(#d35400, 5%) 0%, $primary 100%);
+    box-shadow: 0 14px 30px rgba($primary, 0.45);
   }
 
   &:active {
     transform: translateY(1px);
     box-shadow: 0 4px 10px rgba($primary, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
   }
 }
 
@@ -581,8 +570,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
-  margin-top: 22px;
+  gap: 16px;
+  margin-top: 20px;
   padding-top: 18px;
   border-top: 1px solid #f1f5f9;
   flex-wrap: wrap;
@@ -593,8 +582,53 @@
   align-items: center;
   gap: 5px;
   color: #64748b;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 
   svg { color: #22c55e; width: 14px; height: 14px; }
+}
+
+/* Floating stats */
+.FloatingStats {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.StatChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  svg { width: 13px; height: 13px; }
+}
+
+.TravelImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.04);
+  transition: transform 8s ease-out;
+
+  &:hover { transform: scale(1.1); }
+}
+
+.ImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 60%, rgba(0,0,0,0.85) 100%);
 }

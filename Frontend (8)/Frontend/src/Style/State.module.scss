@@ -3,12 +3,13 @@
   font-family: "Poppins", sans-serif;
   color: #222;
   background: #fff;
+  min-height: 100vh;
   transition: all 0.3s ease;
 
-  /* 🌙 DARK MODE */
+  /* 🌙 DARK MODE OVERRIDE */
   &.dark {
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #222;
 
     .StateImage::after {
       background: rgba(0, 0, 0, 0.7);

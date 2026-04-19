@@ -1,8 +1,9 @@
 import React, { useState, useEffect, memo } from "react";
 import Style from "../Style/BlogPage.module.scss";
-import Enquiry from "../Page/Enquiry.jsx";
+import InsiderDealsForm from "../Page/InsiderDealsForm.jsx";
 import { Link } from "react-router-dom";
 import BlogImg from "../Img/blog-hero.webp";
+import Loader from "../HomeCompontent/Loader.jsx";
 import axios from "axios";
 
 // ⭐ Helmet Import
@@ -10,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 4;
 
@@ -18,10 +20,13 @@ const BlogPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(`${baseURL}/api/blogs/get`);
         setBlogs(res.data);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchBlogs();
@@ -96,7 +101,10 @@ const BlogPage = () => {
         </div>
 
         <div className={Style.wrapper}>
-          <div className={Style.BlogPageFlex}>
+          {loading ? (
+            <div style={{ padding: '100px 0' }}><Loader text="Fetching latest stories..." /></div>
+          ) : (
+            <div className={Style.BlogPageFlex}>
             <div className={Style.BlogPageLeft}>
               <h2>Blogs</h2>
               <div className={Style.BlogSwiper}>
@@ -159,9 +167,10 @@ const BlogPage = () => {
             </div>
 
             <div className={Style.BlogPageRight}>
-              <Enquiry />
+              <InsiderDealsForm context="Travel Blog Sidebar" />
             </div>
           </div>
+          )}
         </div>
       </div>
     </>

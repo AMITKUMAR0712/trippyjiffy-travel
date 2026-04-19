@@ -1,36 +1,38 @@
 .Business {
   font-family: "Poppins", sans-serif;
   display: block;
+  min-height: 100vh;
+  background-color: #fff !important;
 
   &.dark {
-    background: #000;
+    background: #fff !important;
 
     .BusinessRight {
       h2,
       p {
-        color: #fff;
+        color: #333 !important;
       }
     }
 
     .ContactFormWrapper {
-      background-color: #111;
+      background-color: #f9f9f9 !important;
 
       h2 {
-        color: #fff;
+        color: #333 !important;
       }
 
       .ContactForm {
         .FormGroup label,
         .FormGroupCheckbox label {
-          color: #fff;
+          color: #333 !important;
         }
 
         input,
         select,
         textarea {
-          background: #222;
-          color: #fff;
-          border: 1px solid #555;
+          background: #fff !important;
+          color: #333 !important;
+          border: 1px solid #ccc !important;
         }
       }
     }

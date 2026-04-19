@@ -246,6 +246,7 @@ import chatbotRoutes from './routes/chatbotroutes.js';
 import landingPageRoutes from "./routes/landingPageRoutes.js"; 
 import settingsRoutes from "./routes/settingsRoutes.js";
 import translateRoutes from "./routes/translateRoutes.js";
+import upcomingTripsRoutes from "./routes/upcomingTripsRoutes.js";
 
 
 // ✅ Use all routes
@@ -253,6 +254,7 @@ app.use('/api/chatbot', chatbotRoutes);
 app.use("/api/landing-pages", landingPageRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/translate", translateRoutes);
+app.use("/api/upcoming-trips", upcomingTripsRoutes);
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);

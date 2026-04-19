@@ -24,8 +24,17 @@ const Choose = () => {
           >
             <h2>Why Choose TrippyJiffy For Your Travel</h2>
             <p>
+              At TrippyJiffy, we don't just plan trips; we craft life-changing experiences. 
+              Our mission is to bridge the gap between ordinary vacations and extraordinary adventures. 
+              From the hidden alleyways of Kyoto to the golden dunes of Rajasthan, we curate every 
+              detail with passion, precision, and an unwavering commitment to your safety 
+              and comfort. 
+            </p>
+            <p>
               We provide customized itineraries, expert local knowledge, and
-              24/7 support to make your journey unforgettable.
+              24/7 on-ground support to make your journey completely seamless and truly unforgettable.
+              Whether you're a solo explorer, a couple on a romantic escape, or a group looking 
+              for the ultimate thrill, TrippyJiffy is your 4th dimension of travel.
             </p>
           </motion.div>
           

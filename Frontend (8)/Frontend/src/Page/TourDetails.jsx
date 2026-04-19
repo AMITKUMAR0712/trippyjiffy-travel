@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
+import Loader from "../HomeCompontent/Loader.jsx";
 import Style from "../Style/TourDetails.module.scss";
-import Enquiry from "./Enquiry";
+import InsiderDealsForm from "./InsiderDealsForm";
 import { renderBlocks } from "../utils/utils";
 import { getImgUrl } from "../utils/getImgUrl";
 import {
@@ -199,7 +200,11 @@ const TourDetails = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', background: '#fff' }}>
+      <Loader text="Generating itinerary details..." />
+    </div>
+  );
   if (!tour) return <p>Tour not found.</p>;
 
   let relatedStates = [];
@@ -448,9 +453,7 @@ const TourDetails = () => {
 
           {/* Right Section */}
           <div className={Style.TourDetailsFlexRight}>
-            <div className={Style.TourDetailsFlexRightEnquiry}>
-              <Enquiry />
-            </div>
+              <InsiderDealsForm context={`India Tour Detail: ${tour?.tour_name || ""}`} />
 
             <div className={Style.TourDetailsFlexRightTours}>
               <h3>Recommended Tour</h3>
@@ -470,10 +473,15 @@ const TourDetails = () => {
                     const linkPath = firstTour ? `/tour/${firstTour.id}` : "#";
 
                     return (
-                      <div key={`state-${s.id}`} className={Style.TourItem1}>
-                        <Link to={linkPath}>
-                          <img src={safeImage} alt={safeStateName} />
-                          <p>{safeStateName}</p>
+                      <div key={`state-${s.id}`} className={Style.sidebarCardWrapper}>
+                        <Link
+                          to={linkPath}
+                          className={Style.card}
+                          style={{ "--bg-image": `url("${safeImage}")` }}
+                        >
+                          <div className={Style.content}>
+                            <h2 className={Style.title}>{safeStateName}</h2>
+                          </div>
                         </Link>
                       </div>
                     );

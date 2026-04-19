@@ -60,9 +60,8 @@ const ForgotPassword = () => {
 
             {message && (
               <p
-                className={`${Style.forgotMessage} ${
-                  isSuccess ? Style.success : Style.error
-                }`}
+                className={`${Style.forgotMessage} ${isSuccess ? Style.success : Style.error
+                  }`}
               >
                 {isSuccess ? (
                   <FaCheckCircle className={Style.messageIcon} />

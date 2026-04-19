@@ -18,7 +18,7 @@ const About = () => {
   return (
     <div className={Style.About}>
 
-      <SEO 
+      <SEO
         title="About Us"
         description="Learn more about TrippyJiffy (Neelasha Travels LLP), your trusted partner for hotel bookings, holiday packages, and custom travel itineraries across India and Asia."
         keywords="TrippyJiffy, Neelasha Travels LLP, travel agency India, holiday packages, custom trips, about TrippyJiffy"
@@ -38,29 +38,14 @@ const About = () => {
           }
         })}
       </script>
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className={Style.AboutImage}
-      >
-        <img src={AboutImg} alt="About TrippyJiffy" />
-      </motion.div>
-
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className={Style.AboutText}
-      >
-        <h1>Discover Your Next Adventure</h1>
-        <p>Your trusted partner in creating unforgettable travel experiences</p>
-      </motion.div>
+      <div className={Style.AboutBanner}>
+        <div className={Style.AboutImage}>
+          <img src={AboutImg} alt="About TrippyJiffy" />
+        </div>
+      </div>
 
       <div className={Style.wrapper}>
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -84,8 +69,8 @@ const About = () => {
             partner for your next journey.
           </p>
         </motion.div>
-        
-        <motion.div 
+
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
@@ -158,7 +143,7 @@ const About = () => {
           </motion.div>
 
           <div className={Style.AboutFlexmeet}>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -186,7 +171,7 @@ const About = () => {
               <h2>Managing Director</h2>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -215,8 +200,8 @@ const About = () => {
             </motion.div>
           </div>
         </div>
-        
-        <motion.div 
+
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -231,16 +216,16 @@ const About = () => {
             </p>
           </div>
           <div className={Style.AboutCertificatesFlex}>
-            <motion.div 
-              whileHover={{ scale: 1.05 }} 
-              transition={{ ease: "easeOut" }} 
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ ease: "easeOut" }}
               className={Style.AboutCertificatesLeft}
             >
               <img src={Certificates1} alt="Certificates1" />
             </motion.div>
-            <motion.div 
-              whileHover={{ scale: 1.05 }} 
-              transition={{ ease: "easeOut" }} 
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ ease: "easeOut" }}
               className={Style.AboutCertificatesRight}
             >
               <img src={Certificates2} alt="Certificates2" />

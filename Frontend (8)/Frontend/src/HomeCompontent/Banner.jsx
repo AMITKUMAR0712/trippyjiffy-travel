@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import Style from "../Style/Banner.module.scss";
-import Banner1 from "../Img/Banner!.webp";
+// The first banner image is moved to public and preloaded in index.html for LCP optimization
 import Banner2 from "../Img/Banner2 (2).webp";
 import Banner3 from "../Img/Banner32.webp";
 
@@ -85,10 +85,16 @@ const Banner = () => {
         speed={2000}
         className={Style.swiperContainer}
       >
-        {[Banner1, Banner2, Banner3].map((img, idx) => (
+        {["/Banner_LCP.webp", Banner2, Banner3].map((img, idx) => (
           <SwiperSlide key={idx}>
             <div className={Style.slide}>
-              <img src={img} alt={`banner-${idx + 1}`} className={Style.bannerImage} loading={idx === 0 ? "eager" : "lazy"} />
+              <img 
+                src={img} 
+                alt={`banner-${idx + 1}`} 
+                className={Style.bannerImage} 
+                loading={idx === 0 ? "eager" : "lazy"} 
+                fetchpriority={idx === 0 ? "high" : "auto"}
+              />
               <div className={Style.overlay}></div>
             </div>
           </SwiperSlide>

@@ -274,14 +274,51 @@
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .titleBox {
+    .titleIcon { padding: 10px; }
+    h2 { font-size: 20px; }
   }
 
   .messageSection {
-    padding: 20px;
+    padding: 24px 16px;
   }
 
   .messageCard {
     flex-direction: column;
+    gap: 16px;
+    padding: 20px 16px;
+  }
+
+  .msgHeader {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .docsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .payBtnHeader {
+    width: 100%;
+    justify-content: center;
   }
 }
+
+@media (max-width: 480px) {
+  .docCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .docActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+

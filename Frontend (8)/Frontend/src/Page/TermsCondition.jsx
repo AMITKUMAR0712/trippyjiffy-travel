@@ -14,7 +14,8 @@ import Style from "../Style/TermsCondition.module.scss";
 const TermsCondition = () => {
   return (
     <div className={Style.TermsCondition}>
-      <h1>Terms & Conditions — TrippyJiffy</h1>
+      <div className={Style.wrapper}>
+        <h1>Terms & Conditions — TrippyJiffy</h1>
 
       <section>
         <h2>Last Updated on : 18 Nov 2025</h2>
@@ -306,6 +307,7 @@ If you have a contagious disease, you cannot travel with us. If we find out duri
           </strong>
         </p>
       </section>
+      </div>
     </div>
   );
 };

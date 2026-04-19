@@ -13,9 +13,19 @@
   align-items: center;
   font-size: 28px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
+  z-index: 800; /* Below bottom nav */
   animation: zoomPulse 1.5s infinite ease-in-out;
   cursor: pointer;
+  transition: bottom 0.3s ease;
+
+  /* Move above bottom nav on mobile */
+  @media (max-width: 768px) {
+    bottom: 80px; /* 68px nav + 12px margin */
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    right: 16px;
+  }
 }
 
 /* Chat Support Button */
@@ -25,7 +35,7 @@
   height: 55px;
   bottom: 90px;
   left: 22px;
-  background-color:#d65a05;
+  background-color: #d65a05;
   color: white;
   border-radius: 50%;
   border: none;
@@ -35,26 +45,49 @@
   align-items: center;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-  z-index: 1000;
+  z-index: 800;
+  transition: bottom 0.3s ease;
+
+  @media (max-width: 768px) {
+    bottom: 152px; /* above the whatsapp button on mobile */
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    left: 16px;
+  }
 }
 
 /* Scroll Button */
 .scroll_top {
   position: fixed;
-  bottom: 160px;
-  right: 33px;
-  width: 40px;
-  height: 40px;
+  bottom: 85px;  /* Reduced from 160px */
+  right: 28px;  /* Slightly closer to right edge to align centers better */
+  width: 44px;
+  height: 44px;
   background-color: #d35400;
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 800;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 140px; /* Reduced from 228px */
+    right: 22px;
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
 }
 
 /* -------- MODAL STYLE --------- */

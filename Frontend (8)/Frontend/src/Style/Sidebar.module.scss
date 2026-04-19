@@ -1,54 +1,61 @@
+/* ================================================================
+   Sidebar — Mobile Full-Screen Menu
+   ================================================================ */
+
 .sidebar {
   position: fixed;
   top: 0;
-  right: -320px;
+  right: -100%;
   width: 320px;
   height: 100vh;
+  height: 100dvh;
   background: #fff;
-  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.2);
-  transition: right 0.3s ease-in-out;
-  z-index: 1000;
-  padding: 20px;
-  overflow-y: auto;
+  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
+  transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
-  &.dark {
-    background: #000;
-
-    .NavItem a,
-    .MenuLink span {
-      color: #fff;
-    }
-
-    .activeLink {
-      color: #ffa500 !important;
-      border-left: 3px solid #ffa500;
-    }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 
   &.active {
     right: 0;
   }
+}
 
-  @media (max-width: 768px) {
-    width: 100%;
-    right: -100%;
-
-    &.active {
-      right: 0;
-    }
-  }
+/* Header section of sidebar */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  flex-shrink: 0;
 }
 
 .closeBtn {
-  background: none;
-  border: none;
-  font-size: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  transition: all 0.2s ease;
   float: right;
-  color: #333;
+  margin: 16px 16px 0 0;
 
-  @media (max-width: 768px) {
-    font-size: 32px;
+  &:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: #fecaca;
   }
 }
 
@@ -58,11 +65,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  height: 100dvh;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
-  z-index: 999;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
 
   &.show {
     opacity: 1;
@@ -70,221 +80,246 @@
   }
 }
 
+/* Scrollable nav list */
 .NavList {
   list-style: none;
-  padding: 0;
+  padding: 8px 0;
   margin: 50px 0 0 0;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
 
-  @media (max-width: 768px) {
-    margin: 30px 0 0 0;
-  }
+  /* Scrollbar */
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
 }
 
 .NavItem {
-  margin: 15px 0;
+  border-bottom: 1px solid #f8fafc;
 
   .MenuLink {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    padding: 14px 20px;
+    transition: background 0.2s ease;
+    min-height: 52px; /* Touch-friendly */
+
+    &:hover {
+      background: #f8fafc;
+    }
 
     span {
-      color: #333;
-      font-size: 16px;
-
-      @media (max-width: 768px) {
-        font-size: 18px;
-      }
+      color: #1e293b;
+      font-size: 15px;
+      font-weight: 600;
     }
 
     a {
       text-decoration: none;
-      font-size: 18px;
-      color: #333;
-      transition: color 0.3s;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e293b;
+      transition: color 0.2s;
+      flex: 1;
 
       &:hover {
-        color: #ff6600;
-      }
-
-      @media (max-width: 768px) {
-        font-size: 17px;
+        color: #f97316;
       }
     }
 
     .DropArrow {
-      transition: transform 0.3s;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #f1f5f9;
+      font-size: 11px;
+      color: #64748b;
+      transition: transform 0.25s ease, background 0.2s ease;
+      flex-shrink: 0;
 
       &.open {
         transform: rotate(180deg);
+        background: rgba(249, 115, 22, 0.1);
+        color: #f97316;
       }
     }
   }
 
   .Dropdown {
     list-style: none;
-    padding-left: 15px;
+    padding: 0;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-in-out;
+    background: #fafafa;
 
     li {
-      margin: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
       width: 100%;
-
-      a {
-        font-size: 13px;
-        color: #666;
-        text-decoration: none;
-        transition: color 0.3s;
-
-        &:hover {
-          color: #ff6600;
-        }
-
-        @media (max-width: 768px) {
-          font-size: 16px;
-        }
-      }
     }
 
     &.showDropdown {
-      max-height: 400px;
+      max-height: 600px;
     }
   }
 }
 
-.indiaDropdown.showDropdown {
-  max-height: 250px;
-}
+.indiaDropdown.showDropdown { max-height: 300px; }
+.asiaDropdown.showDropdown  { max-height: 600px; }
+.reachDropdown.showDropdown { max-height: 200px; }
 
-.asiaDropdown.showDropdown {
-  max-height: 400px;
-}
-
-.reachDropdown.showDropdown {
-  max-height: 180px;
-}
-
+/* Sidebar action buttons */
 .HeaderRight {
-  display: block;
-  align-items: center;
-  gap: 14px;
+  padding: 16px 20px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+  background: #fff;
 
   .PlanTripBtn {
-    padding: 10px 16px;
-    background: linear-gradient(135deg, #e67e22, #d35400);
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #ea580c, #d35400);
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     color: #fff;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    display: block;
-    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    margin-top: 10px;
     width: 100%;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+    min-height: 50px;
+    text-align: center;
 
     &:hover {
       background: linear-gradient(135deg, #cf6d1b, #a84300);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.4);
     }
 
-    @media (max-width: 768px) {
-      font-size: 16px;
-      padding: 12px 18px;
+    &:active {
+      transform: translateY(0);
     }
   }
 }
 
-/* ---- India Tours ---- */
+/* Link styles within dropdown items */
 .IndiaLink {
-  display: block;
+  display: flex;
+  align-items: center;
   font-size: 14px;
   font-weight: 500;
-  color: #2c3e50;
-  margin: 4px 0;
-  transition: color 0.3s;
+  color: #334155;
+  padding: 12px 28px;
+  min-height: 48px;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+  width: 100%;
 
-  &:hover {
-    color: #e67e22;
+  &::before {
+    content: '→';
+    margin-right: 8px;
+    color: #f97316;
+    font-size: 12px;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.2s ease;
   }
 
-  @media (max-width: 768px) {
-    font-size: 16px;
+  &:hover {
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.05);
+    padding-left: 36px;
+
+    &::before {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 
-/* ---- Asia Tours ---- */
+.AsiaHeading {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 .AsiaLink {
-  display: block;
+  display: flex;
+  align-items: center;
   font-size: 14px;
-  font-weight: 500;
-  color: #34495e;
-  margin: 4px 0;
-  transition: color 0.3s;
+  font-weight: 600;
+  color: #334155;
+  padding: 12px 28px;
+  min-height: 48px;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+  width: 100%;
 
   &:hover {
-    color: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 16px;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.05);
   }
 }
 
 .AsiaCountryLink {
-  font-size: 13px;
-  color: #666;
-  margin-left: 10px;
-  text-decoration: none;
-  transition: color 0.3s;
-
-  &:hover {
-    color: #27ae60;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 15px;
-    margin-left: 15px;
-  }
-}
-
-/* ---- Reach Us ---- */
-.ReachUsLink {
   display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #8e44ad;
-  margin: 4px 0;
-  transition: color 0.3s;
+  font-size: 13px;
+  color: #64748b;
+  margin-left: 0;
+  padding: 10px 40px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.2s;
 
   &:hover {
-    color: #9b59b6;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 16px;
+    color: #f97316;
   }
 }
 
-/* ✅ Active Link Highlight */
-.activeLink {
-  color: #ff6600 !important;
+.StateList {
+  padding: 0;
+  list-style: none;
+}
+
+.ReachUsLink {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
   font-weight: 600;
-  border-left: 3px solid #ff6600;
-  padding-left: 8px;
-  background: rgba(255, 165, 0, 0.08);
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  color: #6d28d9;
+  padding: 12px 28px;
+  min-height: 48px;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover {
+    color: #7c3aed;
+    background: rgba(109, 40, 217, 0.05);
+  }
 }
 
-/* Slight shadow when active for better visibility */
-.activeLink:hover {
-  color: #ff6600;
-  background: rgba(255, 165, 0, 0.15);
+.activeLink {
+  color: #f97316 !important;
+  font-weight: 700;
+  border-left: 3px solid #f97316;
+  padding-left: 25px !important;
+  background: rgba(249, 115, 22, 0.06);
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
 }
