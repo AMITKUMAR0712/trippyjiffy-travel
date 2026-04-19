@@ -10,23 +10,33 @@ export const LanguageProvider = ({ children }) => {
   const [translations, setTranslations] = useState({});
 
   const translateBatch = async (texts) => {
+    // ❌ FIX: Check if baseURL is defined before making API call
+    if (!baseURL) {
+      console.warn("⚠️ VITE_API_BASE_URL is not defined. Translations disabled.");
+      return;
+    }
+
     try {
-      const keys = Object.keys(texts);
+      const keys = Array.isArray(Object.keys(texts)) ? Object.keys(texts) : [];
       const promises = keys.map(async (key) => {
         const res = await axios.post(`${baseURL}/api/translate`, {
           text: texts[key],
           target: language,
         });
-        return [key, res.data.translation];
+        return [key, res.data.translation || texts[key]];
       });
       const results = await Promise.all(promises);
       setTranslations(Object.fromEntries(results));
     } catch (err) {
       console.error("Translation error:", err);
+      // On error, just use the original text
+      setTranslations(texts);
     }
   };
 
   useEffect(() => {
+    if (!language) return;
+    
     const defaultTexts = {
       home: "Home",
       about: "About Us",
@@ -39,7 +49,7 @@ export const LanguageProvider = ({ children }) => {
       feedback: "Feedback",
     };
     translateBatch(defaultTexts);
-  }, [language]);
+  }, [language, baseURL]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, translations }}>
