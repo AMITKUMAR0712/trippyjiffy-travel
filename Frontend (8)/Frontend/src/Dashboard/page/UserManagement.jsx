@@ -493,7 +493,14 @@ const UserManagement = () => {
   const fetchAllPDFs = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/user-documents/all`, { headers });
-      const allPDFs = res.data.pdfs || [];
+      let allPDFs = [];
+      
+      if (Array.isArray(res.data)) {
+        allPDFs = res.data;
+      } else if (res.data?.pdfs && Array.isArray(res.data.pdfs)) {
+        allPDFs = res.data.pdfs;
+      }
+      
       const grouped = {};
       allPDFs.forEach((pdf) => {
         if (!grouped[pdf.user_id]) grouped[pdf.user_id] = [];

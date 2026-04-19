@@ -86,7 +86,8 @@ const Header = () => {
         const fetchIndiaTours = async () => {
             try {
                 const res = await axios.get(`${baseURL}/api/category-india/get`);
-                const formatted = res.data.map((item) => ({
+                const data = Array.isArray(res.data) ? res.data : [];
+                const formatted = data.map((item) => ({
                     id: item.id,
                     name: item.region_name,
                     path: `/india-tours/${item.region_name
@@ -96,6 +97,7 @@ const Header = () => {
                 setIndiaTours(formatted);
             } catch (error) {
                 console.error("Error fetching India Tours:", error);
+                setIndiaTours([]);
             }
         };
         fetchIndiaTours();
@@ -105,7 +107,8 @@ const Header = () => {
         const fetchAsiaTours = async () => {
             try {
                 const res = await axios.get(`${baseURL}/api/asia/get`);
-                const formatted = res.data.map((item) => ({
+                const data = Array.isArray(res.data) ? res.data : [];
+                const formatted = data.map((item) => ({
                     id: item.id,
                     name: item.country_name,
                     path: `/asia-tours/${item.country_name
@@ -116,6 +119,7 @@ const Header = () => {
                 setAsiaTours(formatted);
             } catch (error) {
                 console.error("Error fetching Asia Tours:", error);
+                setAsiaTours([]);
             }
         };
         fetchAsiaTours();

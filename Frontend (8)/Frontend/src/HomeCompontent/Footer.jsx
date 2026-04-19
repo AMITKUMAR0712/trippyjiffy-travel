@@ -26,18 +26,20 @@ const Footer = () => {
     const fetchIndiaTours = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/category-india/get`);
-        setIndiaTours(res.data || []);
+        setIndiaTours(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching India Tours:", err);
+        setIndiaTours([]);
       }
     };
 
     const fetchAsiaTours = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/asia/get`);
-        setAsiaTours(res.data || []);
+        setAsiaTours(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching Asia Tours:", err);
+        setAsiaTours([]);
       }
     };
 

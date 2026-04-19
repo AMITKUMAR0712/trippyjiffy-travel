@@ -117,7 +117,8 @@ const CountryState = () => {
   const fetchWithAlert = async (axiosFunc) => {
     try {
       const res = await axiosFunc();
-      return res.data?.data || res.data || [];
+      const data = res.data?.data || res.data || [];
+      return Array.isArray(data) ? data : [];
     } catch (err) {
       const msg =
         err.response?.data?.message ||

@@ -20,18 +20,20 @@ const AdminAsiaState = () => {
   const fetchStates = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/asiaState/get`);
-      setStates(res.data);
+      setStates(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Error fetching states:", err);
+      setStates([]);
     }
   };
 
   const fetchAsiaList = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/asia/get`);
-      setAsiaList(res.data);
+      setAsiaList(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Error fetching asia list:", err);
+      setAsiaList([]);
     }
   };
 

@@ -27,9 +27,10 @@ const AdminBussianContent = () => {
   const fetchContacts = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/BussianContent/get/business`);
-      setContacts(res.data);
+      setContacts(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching contacts:", error);
+      setContacts([]);
     }
   };
 

@@ -142,9 +142,11 @@ const CountryTourDetails = () => {
         setImage(foundTour);
 
         const countryRes = await axios.get(`${baseURL}/api/country/get`);
-        const countryData = Array.isArray(countryRes.data.data)
+        const countryData = Array.isArray(countryRes.data?.data)
           ? countryRes.data.data
-          : [];
+          : Array.isArray(countryRes.data)
+            ? countryRes.data
+            : [];
 
         const filteredCountry = countryData.filter(
           (t) => Number(t.asiastate_id) === Number(asiastateId)

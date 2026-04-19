@@ -81,7 +81,8 @@ const AdminCountry = () => {
   const fetchTours = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/country/get`);
-      const toursData = res.data.data.map((t) => ({
+      const data = Array.isArray(res.data?.data) ? res.data.data : [];
+      const toursData = data.map((t) => ({
         ...t,
         description: safeParse(t.description),
         routing: safeParse(t.routing),
@@ -93,15 +94,17 @@ const AdminCountry = () => {
     } catch (err) {
       console.error(err);
       alert("Failed to fetch tours ❌");
+      setTours([]);
     }
   };
 
   const fetchStates = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/asiaState/get`);
-      setStates(res.data || []);
+      setStates(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
+      setStates([]);
     }
   };
 

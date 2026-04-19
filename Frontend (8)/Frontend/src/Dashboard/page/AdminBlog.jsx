@@ -49,9 +49,10 @@ const AdminBlog = () => {
   const fetchBlogs = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/blogs/get`);
-      setBlogs(res.data);
+      setBlogs(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching blogs:", error);
+      setBlogs([]);
     }
   };
 

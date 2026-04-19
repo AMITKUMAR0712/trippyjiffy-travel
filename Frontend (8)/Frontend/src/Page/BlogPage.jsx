@@ -22,9 +22,10 @@ const BlogPage = () => {
       try {
         setLoading(true);
         const res = await axios.get(`${baseURL}/api/blogs/get`);
-        setBlogs(res.data);
+        setBlogs(Array.isArray(res.data) ? res.data : []);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        setBlogs([]);
       } finally {
         setLoading(false);
       }

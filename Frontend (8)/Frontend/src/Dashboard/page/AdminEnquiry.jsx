@@ -28,10 +28,11 @@ const AdminEnquiry = () => {
   const fetchEnquiries = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/enquiry/get`);
-      setEnquiries(res.data);
+      setEnquiries(Array.isArray(res.data) ? res.data : []);
       setLoading(false);
     } catch (err) {
       console.error("Error fetching enquiries:", err);
+      setEnquiries([]);
       setLoading(false);
     }
   };

@@ -11,9 +11,10 @@ const CatagoryIndia = () => {
   const fetchRegions = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/category-india/get`);
-      setRegions(res.data);
+      setRegions(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching regions:", error);
+      setRegions([]);
     }
   };
 

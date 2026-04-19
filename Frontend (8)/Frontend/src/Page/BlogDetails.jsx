@@ -20,10 +20,12 @@ const BlogDetails = () => {
     const fetchBlog = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/blogs/get`);
-        const foundBlog = res.data.find((b) => String(b.id) === String(id));
+        const blogs = Array.isArray(res.data) ? res.data : [];
+        const foundBlog = blogs.find((b) => String(b.id) === String(id));
         setBlog(foundBlog || null);
       } catch (error) {
         console.error("Error fetching blog:", error);
+        setBlog(null);
       }
     };
 

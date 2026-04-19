@@ -12,13 +12,16 @@ const AdminEdit = () => {
   const fetchAdmins = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/admin/get`);
-      if (res.data.success) {
+      if (res.data?.success && Array.isArray(res.data.admins)) {
         setAdmins(res.data.admins);
+      } else if (Array.isArray(res.data)) {
+        setAdmins(res.data);
       } else {
         setAdmins([]);
       }
     } catch (err) {
       console.error("Fetch error:", err);
+      setAdmins([]);
     }
   };
 

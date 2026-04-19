@@ -81,7 +81,8 @@ const AdminTours = () => {
   const fetchTours = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/tours/get`);
-      const toursData = res.data.map((t) => ({
+      const data = Array.isArray(res.data) ? res.data : [];
+      const toursData = data.map((t) => ({
         ...t,
         description: safeParse(t.description),
         routing: safeParse(t.routing),
@@ -92,15 +93,17 @@ const AdminTours = () => {
       setTours(toursData);
     } catch (error) {
       console.error("Error fetching tours:", error);
+      setTours([]);
     }
   };
 
   const fetchStates = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/state/get`);
-      setStates(res.data);
+      setStates(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching states:", error);
+      setStates([]);
     }
   };
 

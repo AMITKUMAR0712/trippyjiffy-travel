@@ -68,18 +68,20 @@ const AdminFaqState = () => {
   const fetchFaqs = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/faq/get`);
-      setFaqs(res.data || []);
+      setFaqs(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching FAQs:", error);
+      setFaqs([]);
     }
   };
 
   const fetchTours = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/tours/get`);
-      setTours(res.data || []);
+      setTours(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching tours:", error);
+      setTours([]);
     }
   };
 

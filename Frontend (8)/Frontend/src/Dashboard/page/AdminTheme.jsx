@@ -37,7 +37,7 @@ const AdminTheme = () => {
     const fetchSettings = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/settings/get`);
-        if (res.data) setSettings(res.data);
+        if (res.data && typeof res.data === 'object') setSettings(res.data);
       } catch (err) {
         console.error("Error fetching settings:", err);
       }

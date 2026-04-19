@@ -40,9 +40,10 @@ const AdminUpcomingTrips = () => {
   const fetchTrips = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/upcoming-trips/get`);
-      setTrips(res.data);
+      setTrips(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Fetch error:", err);
+      setTrips([]);
     }
   };
 

@@ -35,10 +35,11 @@ const AdminFeedback = () => {
   const fetchFeedbacks = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/feedback/get`);
-      setFeedbacks(res.data);
+      setFeedbacks(Array.isArray(res.data) ? res.data : []);
     } catch (error) {
       console.error("Error fetching feedbacks:", error);
       alert("Failed to load feedbacks.");
+      setFeedbacks([]);
     }
   };
 

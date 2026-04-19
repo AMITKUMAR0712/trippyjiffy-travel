@@ -285,18 +285,20 @@ const AdminState = () => {
   const fetchStates = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/state/get`);
-      setStates(res.data);
+      setStates(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
+      setStates([]);
     }
   };
 
   const fetchCategories = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/category-india/get`);
-      setCategories(res.data);
+      setCategories(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error(err);
+      setCategories([]);
     }
   };
 

@@ -272,9 +272,10 @@ const AdminAsia = () => {
   const fetchCountries = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/asia/get`);
-      setCountries(res.data);
+      setCountries(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Fetch error:", err);
+      setCountries([]);
     }
   };
 

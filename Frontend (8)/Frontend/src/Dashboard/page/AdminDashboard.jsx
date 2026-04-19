@@ -40,9 +40,10 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        setEnquiries(data);
+        setEnquiries(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching enquiries:", error);
+        setEnquiries([]);
       }
     };
 
@@ -53,9 +54,10 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        setUsers(data);
+        setUsers(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching users:", error);
+        setUsers([]);
       }
     };
 
