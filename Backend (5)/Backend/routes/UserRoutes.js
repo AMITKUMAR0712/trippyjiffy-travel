@@ -11,75 +11,80 @@ import {
   getUserAnnouncements,
   protect,
   getUserPDF,
-  deleteUserPDF,   // ✅ added
+  deleteUserPDF,
   upload,
 } from "../controller/UserController.js";
 
 const router = express.Router();
 
-// ====================================================
-// Register with PDF upload
-// ====================================================
+/**
+ * @route   POST /api/users/register
+ * @desc    Register a new user with an optional PDF document
+ */
 router.post("/register", upload.single("pdf"), registerUser);
 
-// ====================================================
-// Authentication routes
-// ====================================================
+/**
+ * @route   POST /api/users/login
+ * @desc    Login and receive a JWT
+ */
 router.post("/login", login);
+
+/**
+ * @route   GET /api/users/me
+ * @desc    Get current logged-in user profile
+ */
 router.get("/me", protect, getMe);
 
-// ====================================================
-// CRUD routes
-// ====================================================
+/**
+ * @route   GET /api/users/get/users
+ * @desc    Get all registered users (Admin View)
+ */
 router.get("/get/users", getUsers);
+
+/**
+ * @route   GET /api/users/get/users/:id
+ * @desc    Get a specific user by ID
+ */
 router.get("/get/users/:id", getUserById);
-router.put("/update/users/:id", updateUser);
+
+/**
+ * @route   PUT /api/users/update/users/:id
+ * @desc    Update user details or upload new PDF
+ */
+router.put("/update/users/:id", upload.single("pdf"), updateUser);
+
+/**
+ * @route   DELETE /api/users/delete/users/:id
+ * @desc    Delete a user account
+ */
 router.delete("/delete/users/:id", deleteUser);
 
-// ====================================================
-// Admin Message + PDF upload
-// ====================================================
+/**
+ * @route   PUT /api/users/send-admin-message/:id
+ * @desc    Send a message or document from Admin to a specific User
+ */
 router.put(
   "/send-admin-message/:id",
-  upload.single("admin_pdf"),  // frontend field name
+  upload.single("admin_pdf"),
   sendAdminMessage
 );
 
-// ====================================================
-// Get Announcements
-// ====================================================
+/**
+ * @route   GET /api/users/announcements/:id
+ * @desc    Get messages/announcements for a specific user
+ */
 router.get("/announcements/:id", getUserAnnouncements);
 
-// ====================================================
-// Download PDF
-// ====================================================
+/**
+ * @route   GET /api/users/download-pdf/:id
+ * @desc    Download the user's uploaded PDF
+ */
 router.get("/download-pdf/:id", getUserPDF);
 
-// ====================================================
-// Delete PDF
-// ====================================================
-router.delete("/delete-pdf/:id", protect, deleteUserPDF); // ✅ new
+/**
+ * @route   DELETE /api/users/delete-pdf/:id
+ * @desc    Delete only the user's PDF, keeping the user account
+ */
+router.delete("/delete-pdf/:id", protect, deleteUserPDF);
 
 export default router;
-
-
-
-// import express from "express";
-// import {
-//   registerUser,
-//   login,
-//   getUsers,
-//   updateUser,
-//   getUserPDF,
-//   upload,
-// } from "../controller/UserController.js";
-
-// const router = express.Router();
-
-// router.post("/register", upload.single("pdf"), registerUser);
-// router.post("/login", login);
-// router.get("/get/users", getUsers);
-// router.put("/update/users/:id", upload.single("pdf"), updateUser);
-// router.get("/download-pdf/:id", getUserPDF);
-
-// export default router;

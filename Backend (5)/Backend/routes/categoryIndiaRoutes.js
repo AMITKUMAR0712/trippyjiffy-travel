@@ -1,23 +1,3 @@
-// import express from "express";
-// import {
-//   getRegions,
-//   getRegionById,
-//   addRegion,
-//   updateRegion,
-//   deleteRegion,
-// } from "../controller/categoryIndiaController.js";
-
-// const router = express.Router();
-
-// // Routes
-// router.get("/get", getRegions);
-// router.get("/get/:id", getRegionById);
-// router.post("/post", addRegion);
-// router.put("/put/:id", updateRegion);
-// router.delete("/delete/:id", deleteRegion);
-
-// // ✅ ESM compatible export
-// export default router;
 import express from "express";
 import multer from "multer";
 import {
@@ -30,7 +10,9 @@ import {
 
 const router = express.Router();
 
-// 🗂 Multer setup (upload folder = /uploads)
+/**
+ * @description Multer configuration for category images
+ */
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: (req, file, cb) => {
@@ -39,11 +21,19 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ✅ Routes
+// ✅ Fetch all regions
 router.get("/get", getRegions);
+
+// ✅ Fetch single region by ID
 router.get("/get/:id", getRegionById);
+
+// ✅ Create local tour category with image
 router.post("/post", upload.single("image"), addRegion);
+
+// ✅ Update category details or image
 router.put("/put/:id", upload.single("image"), updateRegion);
+
+// ✅ Delete category
 router.delete("/delete/:id", deleteRegion);
 
 export default router;

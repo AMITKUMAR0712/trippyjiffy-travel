@@ -25,8 +25,13 @@ router.post("/", async (req, res) => {
 
     res.json({ translation: response.data.data.translations[0].translatedText });
   } catch (err) {
-    console.error("Translation error:", err.response?.data || err.message);
-    res.status(500).json({ message: "Translation failed", error: err.response?.data || err.message });
+    console.error("Translation logic error (likely expired key):", err.response?.data || err.message);
+    // Return the original text so the UI doesn't break, even if translation fails
+    res.json({ 
+      translation: req.body.text, 
+      warning: "Translation failed (API Key might be expired), showing original text.",
+      error: err.response?.data || err.message 
+    });
   }
 });
 
