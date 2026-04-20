@@ -2,7 +2,7 @@
 // import Style from "../Style/AdminState.module.scss";
 // import axios from "axios";
 
-// const baseURL = import.meta.env.VITE_API_BASE_URL;
+// const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // // -------- FORMAT IMAGE URL --------
 // const formatImageURL = (url) => {
@@ -256,7 +256,7 @@ import React, { useState, useEffect } from "react";
 import Style from "../Style/AdminState.module.scss";
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // -------- FORMAT IMAGE URL --------
 const formatImageURL = (url) => {

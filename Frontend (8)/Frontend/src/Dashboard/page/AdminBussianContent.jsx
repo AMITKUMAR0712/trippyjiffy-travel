@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Style from "../Style/AdminBussianContent.module.scss";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const AdminBussianContent = () => {
   const [contacts, setContacts] = useState([]);

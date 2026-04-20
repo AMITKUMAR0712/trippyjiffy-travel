@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "../Style/DeshboardHeader.module.scss";
 import { jwtDecode } from "jwt-decode";
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const DeshboardHeader = () => {
   const navigate = useNavigate();

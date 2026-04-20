@@ -23,7 +23,7 @@ const Announcements = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [user, setUser] = useState(null);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const token = localStorage.getItem("token");
 
   useEffect(() => {

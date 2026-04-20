@@ -16,7 +16,7 @@ import Style from "../Dashboard/Style/Profile.module.scss";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const navigate = useNavigate();
 
   useEffect(() => {

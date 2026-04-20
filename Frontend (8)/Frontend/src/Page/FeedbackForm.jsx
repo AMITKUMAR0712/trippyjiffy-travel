@@ -23,7 +23,7 @@ const FeedbackForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });

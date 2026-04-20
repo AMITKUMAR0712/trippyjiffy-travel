@@ -15,7 +15,7 @@ import {
 
 import Style from "../Style/AdminDashboard.module.scss";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 ChartJS.register(
   CategoryScale,

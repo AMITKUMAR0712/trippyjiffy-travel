@@ -3,7 +3,7 @@
 // import axios from "axios";
 // import Style from "../Style/UserManagement.module.scss";
 
-// const baseURL = import.meta.env.VITE_API_BASE_URL;
+// const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // const UserManagement = () => {
 //   const [users, setUsers] = useState([]);
@@ -451,7 +451,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Style from "../Style/UserManagement.module.scss";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);

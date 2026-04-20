@@ -28,7 +28,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   // Pick a random background
   const bg = BG_IMAGES[Math.floor(Math.random() * BG_IMAGES.length)];

@@ -9,7 +9,7 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

@@ -20,7 +20,7 @@ const Business = () => {
     country: "",
   });
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const handleChange = (e) => {
     const { id, value } = e.target;

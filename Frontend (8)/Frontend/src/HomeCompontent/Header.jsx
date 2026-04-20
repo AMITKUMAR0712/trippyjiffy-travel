@@ -53,7 +53,7 @@ const Header = () => {
         }
     }, []);
 
-    const baseURL = import.meta.env.VITE_API_BASE_URL;
+    const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
     const [indiaTours, setIndiaTours] = useState([]);
     const [asiaTours, setAsiaTours] = useState([]);
 

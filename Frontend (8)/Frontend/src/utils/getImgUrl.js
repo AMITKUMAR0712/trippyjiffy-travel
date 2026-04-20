@@ -10,7 +10,7 @@ import gal4 from "../Img/l1.jpeg";
 import gal5 from "../Img/people-doi-pha-tang-against-sky-sunrise_1048944-4357386.jpeg";
 import gal6 from "../Img/hiker-looking-mountains-from-great-wall-china-sunset_1048944-9830948.jpeg";
 
-const baseURL_IMG = import.meta.env.VITE_API_BASE_URL_IMG || "http://localhost:5005/api/uploads";
+const baseURL_IMG = import.meta.env.VITE_API_BASE_URL_IMG || "https://trippyjiffy.com/api/uploads";
 
 // Map exact db paths to actual Vite imported hashes
 const LOCAL_ASSET_MAP = {
@@ -38,22 +38,20 @@ export const getImgUrl = (url) => {
     return LOCAL_ASSET_MAP[url];
   }
 
-  const currentHost = window.location.host;
-  const isLocal = currentHost.includes("localhost") || currentHost.includes("127.0.0.1");
-
-  if (isLocal && typeof url === "string" && url.includes("trippyjiffy.com")) {
-    const filename = url.split("/").pop();
-    return `${baseURL_IMG}/${filename}`;
-  }
-
+  // 1. If it's a full URL, check if it's a "bad" one (localhost or old IP)
   if (typeof url === "string" && (url.startsWith("http://") || url.startsWith("https://"))) {
+    if (url.includes("localhost") || url.includes("127.0.0.1") || url.includes("187.127.139.99")) {
+      const filename = url.split("/").pop();
+      return `${baseURL_IMG}/${filename}`;
+    }
     return url;
   }
 
+  // 2. Otherwise, treat it as a path/filename and normalize it
   let filename = url;
   if (typeof url === "string") {
     filename = url
-      .replace(/^https?:\/\/[^\/]+/, "")
+      .replace(/^https?:\/\/[^\/]+/, "") // Remove domain if any (though handled above)
       .replace(/^\/?api\/uploads\//, "")
       .replace(/^\/?uploads\//, "")
       .replace(/^\//, "");

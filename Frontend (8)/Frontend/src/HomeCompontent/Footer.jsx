@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 
 import Style from "../Style/Footer.module.scss";
 import Logo from "../Img/trippylogo.png";
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const Footer = () => {
   const [indiaTours, setIndiaTours] = useState([]);

@@ -5,7 +5,7 @@
 
 export const getLandingPageDataFromAPI = async (slug) => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5005/api";
+    const apiUrl = import.meta.env.VITE_API_URL || "https://trippyjiffy.com/api";
     const response = await fetch(`${apiUrl}/landing-pages/${slug}`);
 
     if (!response.ok) {
@@ -27,7 +27,7 @@ export const getLandingPageDataFromAPI = async (slug) => {
 
 export const getAllLandingPagesFromAPI = async () => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5005/api";
+    const apiUrl = import.meta.env.VITE_API_URL || "https://trippyjiffy.com/api";
     const response = await fetch(`${apiUrl}/landing-pages/all`);
 
     if (!response.ok) {

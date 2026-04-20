@@ -15,7 +15,7 @@ const BlogPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 4;
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchBlogs = async () => {

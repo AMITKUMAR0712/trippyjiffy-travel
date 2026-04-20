@@ -7,7 +7,7 @@
 // import "swiper/css";
 // import "swiper/css/navigation";
 
-// const baseURL = import.meta.env.VITE_API_BASE_URL;
+// const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // const DestinationCard = memo(({ item, slugify, type }) => (
 //   <Link
@@ -242,7 +242,7 @@ import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
 import { ArrowUpRight, MapPin } from "lucide-react";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const DestinationCard = memo(({ item, slugify, type }) => {
   const imageUrl = getImgUrl(item.images?.[0]) || "";

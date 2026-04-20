@@ -10,7 +10,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
   const [asiaTours, setAsiaTours] = useState([]);
   const [countriesData, setCountriesData] = useState([]);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchData = async () => {

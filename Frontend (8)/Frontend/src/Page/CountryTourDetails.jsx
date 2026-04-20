@@ -30,7 +30,7 @@ const CountryTourDetails = () => {
   const [faqs, setFaqs] = useState([]);
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedTours, setRelatedTours] = useState([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const toggleFaq = (id) => setOpenFaq(openFaq === id ? null : id);
 

@@ -25,7 +25,7 @@ const UserEdit = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   
   const navigate = useNavigate();
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchUserProfile = async () => {

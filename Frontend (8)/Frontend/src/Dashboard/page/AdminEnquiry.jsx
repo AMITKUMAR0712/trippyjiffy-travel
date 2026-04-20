@@ -8,7 +8,7 @@ const AdminEnquiry = () => {
   const [editingEnquiry, setEditingEnquiry] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const [form, setForm] = useState({
     name: "",

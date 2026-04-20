@@ -5,7 +5,7 @@ import Style from "../Style/ExploreTours.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const DestinationCard = memo(({ item, slugify, type }) => {
   const imageUrl = getImgUrl(item.images?.[0]) || "";

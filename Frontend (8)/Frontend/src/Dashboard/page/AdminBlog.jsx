@@ -33,7 +33,7 @@ const AdminBlog = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const editorRef = useRef(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   // ✅ FIXED IMAGE URL FORMATTER (now includes /api/uploads/)
   const formatImageURL = (img) => {

@@ -9,7 +9,7 @@ import Style from "../Style/Destinations.module.scss";
 import ContactUsForm from "./ContactUsForm";
 import { getImgUrl } from "../utils/getImgUrl";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTrips }) => {
   const [tours, setTours] = useState([]);

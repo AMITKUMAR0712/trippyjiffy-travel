@@ -5,7 +5,7 @@ import axios from "axios";
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const [language, setLanguage] = useState("en");
   const [translations, setTranslations] = useState({});
 

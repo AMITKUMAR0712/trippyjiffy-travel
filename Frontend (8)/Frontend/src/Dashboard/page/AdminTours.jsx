@@ -57,7 +57,7 @@ const renderBlocks = (editorData) => {
     .join("\n");
 };
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const AdminTours = () => {
   const [showPopup, setShowPopup] = useState(false);

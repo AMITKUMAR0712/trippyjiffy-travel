@@ -16,7 +16,7 @@ import LinkTool from "@editorjs/link";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const safeParse = (data, fallback = { blocks: [] }) => {
   if (!data) return fallback;

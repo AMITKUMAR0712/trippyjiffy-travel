@@ -35,7 +35,7 @@ const AdminFaqCountry = () => {
 
   const questionEditorRef = useRef(null);
   const answerEditorRef = useRef(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const safeParse = (val) => {
     if (!val) return { blocks: [] };

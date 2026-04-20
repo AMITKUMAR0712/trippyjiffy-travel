@@ -7,7 +7,7 @@ const AdminEdit = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [editing, setEditing] = useState(null);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const fetchAdmins = async () => {
     try {

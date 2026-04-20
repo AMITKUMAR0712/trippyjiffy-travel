@@ -20,7 +20,7 @@ const AdminUpcomingTrips = () => {
   });
   const [imageFiles, setImageFiles] = useState([]);
   const [bannerFile, setBannerFile] = useState(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const getValidImageUrl = (img) => {
     if (!img) return null;

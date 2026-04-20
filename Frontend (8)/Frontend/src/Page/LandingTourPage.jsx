@@ -33,7 +33,7 @@ const LandingTourPage = () => {
   const [recommended, setRecommended] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const modalTimer = useRef(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "";
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   // Fetch landing page data from API using the hook
   const { data: apiPageData, loading: pageLoading, error: pageError } = useLandingPageData(slug || "golden-triangle");

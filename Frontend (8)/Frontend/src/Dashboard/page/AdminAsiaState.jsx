@@ -14,7 +14,7 @@ const AdminAsiaState = () => {
   const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState("");
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const baseIMG = import.meta.env.VITE_API_BASE_URL_IMG;
 
   const fetchStates = async () => {

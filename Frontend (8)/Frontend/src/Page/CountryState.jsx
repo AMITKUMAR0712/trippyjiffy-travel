@@ -15,7 +15,7 @@ const CountryState = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [states, setStates] = useState([]);
   const [tours, setTours] = useState([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   // Normalize image URLs
   const normalizeImages = useCallback(

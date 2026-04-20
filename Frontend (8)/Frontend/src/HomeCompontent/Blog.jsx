@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // ======================
 // BlogCard Component

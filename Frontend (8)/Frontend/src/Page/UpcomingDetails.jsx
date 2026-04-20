@@ -16,7 +16,7 @@ const UpcomingDetails = () => {
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showMobileForm, setShowMobileForm] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchTrip = async () => {

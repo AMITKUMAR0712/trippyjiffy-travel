@@ -16,7 +16,7 @@ const AdminContact = () => {
     contact_via_whatsapp: false,
   });
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const fetchContacts = async () => {
     try {

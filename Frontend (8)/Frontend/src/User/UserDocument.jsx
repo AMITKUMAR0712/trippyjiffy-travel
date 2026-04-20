@@ -14,7 +14,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import Style from "./Dashboard/Style/UserDocument.module.scss";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const UserDocument = () => {
   const [token, setToken] = useState(null);

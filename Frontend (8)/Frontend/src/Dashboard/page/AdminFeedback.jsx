@@ -3,7 +3,7 @@ import Style from "../Style/AdminFeedback.module.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 // ✅ FIXED IMAGE URL FORMATTER
 const formatImageURL = (photo) => {

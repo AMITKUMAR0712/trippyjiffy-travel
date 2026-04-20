@@ -31,7 +31,7 @@ const AdminTheme = () => {
 
   const [activeTab, setActiveTab] = useState("colors");
   const [loading, setLoading] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchSettings = async () => {

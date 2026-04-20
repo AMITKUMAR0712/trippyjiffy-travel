@@ -7,7 +7,7 @@ const CatagoryIndia = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [regions, setRegions] = useState([]);
   const [formData, setFormData] = useState({ id: null, region_name: "" });
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const fetchRegions = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/category-india/get`);

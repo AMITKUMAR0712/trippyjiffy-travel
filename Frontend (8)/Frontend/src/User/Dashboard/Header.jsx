@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = ({ toggleSidebar, isSidebarOpen }) => {
   const [userName, setUserName] = useState("Guest");
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const navigate = useNavigate();
   const location = useLocation();
 

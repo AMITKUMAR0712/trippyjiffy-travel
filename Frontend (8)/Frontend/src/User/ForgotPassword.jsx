@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const API_URL = `${baseURL}/api/users/forget-password`;
 
   const handleSubmit = async (e) => {

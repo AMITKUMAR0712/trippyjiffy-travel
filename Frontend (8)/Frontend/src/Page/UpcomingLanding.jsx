@@ -11,7 +11,7 @@ import Loader from "../HomeCompontent/Loader.jsx";
 const UpcomingLanding = () => {
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchTrips = async () => {

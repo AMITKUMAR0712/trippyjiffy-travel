@@ -12,7 +12,7 @@
 //     images: [],
 //   });
 //   const [imageFiles, setImageFiles] = useState([]);
-//   const baseURL = import.meta.env.VITE_API_BASE_URL;
+//   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 //   const getValidImageUrl = (img) => {
 //     if (!img) return null;
@@ -252,7 +252,7 @@ const AdminAsia = () => {
     is_visible: 1,
   });
   const [imageFiles, setImageFiles] = useState([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const getValidImageUrl = (img) => {
     if (!img) return null;
