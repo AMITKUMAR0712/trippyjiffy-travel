@@ -36,7 +36,7 @@ export const getStates = async (req, res) => {
     const [rows] = await pool.query(
       `SELECT s.id, s.state_name, s.category_id, s.image, s.is_visible, c.region_name 
        FROM state s 
-       JOIN CategoryIndia c ON s.category_id = c.id
+       JOIN categoryindia c ON s.category_id = c.id
        ORDER BY s.id DESC`
     );
 

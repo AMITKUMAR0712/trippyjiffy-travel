@@ -14,7 +14,7 @@ const adminLogin = async (req, res) => {
 
   try {
     const [results] = await pool.query(
-      "SELECT * FROM Admin WHERE email = ? AND password = ?",
+      "SELECT * FROM admin WHERE email = ? AND password = ?",
       [email, password]
     );
 
@@ -64,7 +64,7 @@ const createAdmin = async (req, res) => {
 
   try {
     const [result] = await pool.query(
-      "INSERT INTO Admin (name, email, password) VALUES (?, ?, ?)",
+      "INSERT INTO admin (name, email, password) VALUES (?, ?, ?)",
       [name, email, password]
     );
 
@@ -83,7 +83,7 @@ const createAdmin = async (req, res) => {
 const getAdmins = async (req, res) => {
   try {
     const [rows] = await pool.query(
-      "SELECT id, name, email, password FROM Admin"
+      "SELECT id, name, email, password FROM admin"
     );
     res.json({ success: true, admins: rows });
   } catch (err) {
@@ -99,14 +99,14 @@ const updateAdmin = async (req, res) => {
 
   try {
     if (!password) {
-      await pool.query("UPDATE Admin SET name=?, email=? WHERE id=?", [
+      await pool.query("UPDATE admin SET name=?, email=? WHERE id=?", [
         name,
         email,
         id,
       ]);
     } else {
       await pool.query(
-        "UPDATE Admin SET name=?, email=?, password=? WHERE id=?",
+        "UPDATE admin SET name=?, email=?, password=? WHERE id=?",
         [name, email, password, id]
       );
     }
@@ -123,7 +123,7 @@ const deleteAdmin = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await pool.query("DELETE FROM Admin WHERE id=?", [id]);
+    await pool.query("DELETE FROM admin WHERE id=?", [id]);
     res.json({ success: true, message: "Admin deleted" });
   } catch (err) {
     res

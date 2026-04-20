@@ -14,7 +14,7 @@ export const getCombinedData = async (req, res) => {
     const [states] = await pool.query(
       `SELECT s.id, s.state_name, s.category_id, s.image, c.region_name 
        FROM state s 
-       JOIN CategoryIndia c ON s.category_id = c.id`
+       JOIN categoryindia c ON s.category_id = c.id`
     );
 
     const [asia] = await pool.query("SELECT * FROM asia");

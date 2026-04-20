@@ -30,7 +30,7 @@ export const registerUser = async (req, res) => {
     }
 
     const [existing] = await pool.query(
-      "SELECT * FROM UserRegister WHERE email = ?",
+      "SELECT * FROM userregister WHERE email = ?",
       [email]
     );
 
@@ -44,7 +44,7 @@ export const registerUser = async (req, res) => {
     if (req.file) pdfBuffer = req.file.buffer;
 
     await pool.query(
-      "INSERT INTO UserRegister (name, email, mobile, password, country, pdf_file) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO userregister (name, email, mobile, password, country, pdf_file) VALUES (?, ?, ?, ?, ?, ?)",
       [name, email, mobile, hashedPassword, country, pdfBuffer]
     );
 
@@ -77,7 +77,7 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     const [users] = await pool.query(
-      "SELECT * FROM UserRegister WHERE email = ?",
+      "SELECT * FROM userregister WHERE email = ?",
       [email]
     );
 
@@ -100,7 +100,7 @@ export const login = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM UserRegister"
+      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister"
     );
     res.json(users);
   } catch (error) {
@@ -113,7 +113,7 @@ export const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM UserRegister WHERE id = ?",
+      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister WHERE id = ?",
       [id]
     );
 
@@ -134,7 +134,7 @@ export const updateUser = async (req, res) => {
 
     const updates = [name, email, mobile, country];
     let query =
-      "UPDATE UserRegister SET name=?, email=?, mobile=?, country=?";
+      "UPDATE userregister SET name=?, email=?, mobile=?, country=?";
 
     if (password && password.trim() !== "") {
       const hashed = await bcrypt.hash(password, 10);
@@ -161,7 +161,7 @@ export const updateUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    await pool.query("DELETE FROM UserRegister WHERE id=?", [id]);
+    await pool.query("DELETE FROM userregister WHERE id=?", [id]);
     res.json({ message: "User deleted successfully ❌" });
   } catch (error) {
     console.error("Delete User Error:", error);
@@ -176,7 +176,7 @@ export const getMe = async (req, res) => {
       return res.status(401).json({ message: "Not authorized" });
 
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM UserRegister WHERE id=?",
+      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister WHERE id=?",
       [req.user.id]
     );
 
@@ -198,7 +198,7 @@ export const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       const [users] = await pool.query(
-        "SELECT * FROM UserRegister WHERE id=?",
+        "SELECT * FROM userregister WHERE id=?",
         [decoded.id]
       );
 
@@ -227,7 +227,7 @@ export const sendAdminMessage = async (req, res) => {
       return res.status(400).json({ message: "Admin message required" });
 
     await pool.query(
-      "UPDATE UserRegister SET admin_message=? WHERE id=?",
+      "UPDATE userregister SET admin_message=? WHERE id=?",
       [adminMessage, id]
     );
 
@@ -243,7 +243,7 @@ export const getUserAnnouncements = async (req, res) => {
   try {
     const { id } = req.params;
     const [rows] = await pool.query(
-      "SELECT id, name, admin_message, created_at FROM UserRegister WHERE id=? AND admin_message IS NOT NULL",
+      "SELECT id, name, admin_message, created_at FROM userregister WHERE id=? AND admin_message IS NOT NULL",
       [id]
     );
 
@@ -259,7 +259,7 @@ export const getUserPDF = async (req, res) => {
   try {
     const { id } = req.params;
     const [users] = await pool.query(
-      "SELECT pdf_file, name FROM UserRegister WHERE id=?",
+      "SELECT pdf_file, name FROM userregister WHERE id=?",
       [id]
     );
 
@@ -289,7 +289,7 @@ export const deleteUserPDF = async (req, res) => {
 
     // Check if user exists
     const [users] = await pool.query(
-      "SELECT pdf_file FROM UserRegister WHERE id=?",
+      "SELECT pdf_file FROM userregister WHERE id=?",
       [id]
     );
 
@@ -300,7 +300,7 @@ export const deleteUserPDF = async (req, res) => {
       return res.status(400).json({ message: "No PDF to delete" });
 
     // Delete PDF (set pdf_file to NULL)
-    await pool.query("UPDATE UserRegister SET pdf_file=NULL WHERE id=?", [id]);
+    await pool.query("UPDATE userregister SET pdf_file=NULL WHERE id=?", [id]);
 
     res.json({ message: "PDF deleted successfully ✅" });
   } catch (error) {

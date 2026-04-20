@@ -10,7 +10,7 @@ const parseJSON = (val) => {
 
 export const getCountry = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM Countrytours ORDER BY id DESC");
+    const [rows] = await pool.query("SELECT * FROM countrytours ORDER BY id DESC");
 
     const cleaned = rows.map((r) => ({
       ...r,
@@ -52,7 +52,7 @@ export const postCountry = async (req, res) => {
     }
 
     await pool.query(
-      `INSERT INTO Countrytours 
+      `INSERT INTO countrytours 
       (asiastate_id, title, description, routing, inclusions, supplemental_activities, exclusions, sightseeing_points, activities, monument_info, market_info)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
@@ -98,7 +98,7 @@ export const putCountry = async (req, res) => {
     } = req.body;
 
     await pool.query(
-      `UPDATE Countrytours SET
+      `UPDATE countrytours SET
        asiastate_id = ?, title = ?, description = ?, routing = ?, inclusions = ?, 
        supplemental_activities = ?, exclusions = ?, sightseeing_points = ?, 
        activities = ?, monument_info = ?, market_info = ? 
@@ -133,7 +133,7 @@ export const deleteCountry = async (req, res) => {
   try {
     const id = req.params.id;
 
-    await pool.query("DELETE FROM Countrytours WHERE id = ?", [id]);
+    await pool.query("DELETE FROM countrytours WHERE id = ?", [id]);
 
     res.json({ success: true, message: "Deleted successfully" });
   } catch (err) {

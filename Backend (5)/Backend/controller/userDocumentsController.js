@@ -42,7 +42,7 @@ export const uploadPDF = async (req, res) => {
     }
 
     await pool.query(
-      "INSERT INTO UserDocuments (user_id, pdf_name, pdf_text, pdf_file) VALUES (?, ?, ?, ?)",
+      "INSERT INTO userdocuments (user_id, pdf_name, pdf_text, pdf_file) VALUES (?, ?, ?, ?)",
       [user_id, pdf_name, pdf_text || "", pdf_data]
     );
 
@@ -57,7 +57,7 @@ export const uploadPDF = async (req, res) => {
 export const getAllPDFs = async (req, res) => {
   try {
     const [pdfs] = await pool.query(
-      "SELECT id, user_id, pdf_name, pdf_text, uploaded_at, pdf_file IS NOT NULL AS has_file FROM UserDocuments ORDER BY uploaded_at DESC"
+      "SELECT id, user_id, pdf_name, pdf_text, uploaded_at, pdf_file IS NOT NULL AS has_file FROM userdocuments ORDER BY uploaded_at DESC"
     );
     res.json({ success: true, pdfs });
   } catch (err) {
@@ -73,7 +73,7 @@ export const getUserPDFs = async (req, res) => {
 
     const user_id = req.user.id;
     const [pdfs] = await pool.query(
-      "SELECT id, pdf_name, pdf_text, uploaded_at, pdf_file IS NOT NULL AS has_file FROM UserDocuments WHERE user_id=? ORDER BY uploaded_at DESC",
+      "SELECT id, pdf_name, pdf_text, uploaded_at, pdf_file IS NOT NULL AS has_file FROM userdocuments WHERE user_id=? ORDER BY uploaded_at DESC",
       [user_id]
     );
     res.json({ success: true, pdfs });
@@ -89,7 +89,7 @@ export const downloadPDF = async (req, res) => {
 
   try {
     const [rows] = await pool.query(
-      "SELECT pdf_name, pdf_file FROM UserDocuments WHERE id = ?",
+      "SELECT pdf_name, pdf_file FROM userdocuments WHERE id = ?",
       [pdfId]
     );
 
@@ -132,7 +132,7 @@ export const deletePDF = async (req, res) => {
   try {
     const { id } = req.params;
     const [rows] = await pool.query(
-      "SELECT user_id FROM UserDocuments WHERE id=?",
+      "SELECT user_id FROM userdocuments WHERE id=?",
       [id]
     );
 
@@ -142,7 +142,7 @@ export const deletePDF = async (req, res) => {
     if (!req.user || (req.user.role !== "admin" && rows[0].user_id !== req.user.id))
       return res.status(403).json({ message: "Access denied" });
 
-    await pool.query("DELETE FROM UserDocuments WHERE id=?", [id]);
+    await pool.query("DELETE FROM userdocuments WHERE id=?", [id]);
     res.json({ success: true, message: "Document deleted successfully ✅" });
   } catch (err) {
     console.error("❌ Delete Error:", err);

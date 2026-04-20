@@ -12,7 +12,7 @@ const addRegion = async (req, res) => {
     }
 
     const [result] = await pool.query(
-      "INSERT INTO CategoryIndia (region_name, image) VALUES (?, ?)",
+      "INSERT INTO categoryindia (region_name, image) VALUES (?, ?)",
       [region_name, image]
     );
 
@@ -29,7 +29,7 @@ const addRegion = async (req, res) => {
 
 const getRegions = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM CategoryIndia ORDER BY id ASC");
+    const [rows] = await pool.query("SELECT * FROM categoryindia ORDER BY id ASC");
     const baseURL = process.env.BASE_URL || "";
     const data = rows.map((row) => ({
       ...row,
@@ -46,7 +46,7 @@ const getRegions = async (req, res) => {
 const getRegionById = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("SELECT * FROM CategoryIndia WHERE id = ?", [id]);
+    const [rows] = await pool.query("SELECT * FROM categoryindia WHERE id = ?", [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({ message: "Region not found" });
@@ -66,7 +66,7 @@ const updateRegion = async (req, res) => {
     const { region_name } = req.body;
     const image = req.file ? req.file.filename : null;
 
-    const [existing] = await pool.query("SELECT * FROM CategoryIndia WHERE id = ?", [id]);
+    const [existing] = await pool.query("SELECT * FROM categoryindia WHERE id = ?", [id]);
     if (existing.length === 0) {
       return res.status(404).json({ message: "Region not found" });
     }
@@ -74,7 +74,7 @@ const updateRegion = async (req, res) => {
     const newRegionName = region_name || existing[0].region_name;
     const newImage = image || existing[0].image;
 
-    await pool.query("UPDATE CategoryIndia SET region_name=?, image=? WHERE id=?", [
+    await pool.query("UPDATE categoryindia SET region_name=?, image=? WHERE id=?", [
       newRegionName,
       newImage,
       id,
@@ -92,12 +92,12 @@ const deleteRegion = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [existing] = await pool.query("SELECT * FROM CategoryIndia WHERE id = ?", [id]);
+    const [existing] = await pool.query("SELECT * FROM categoryindia WHERE id = ?", [id]);
     if (existing.length === 0) {
       return res.status(404).json({ message: "Region not found" });
     }
 
-    await pool.query("DELETE FROM CategoryIndia WHERE id = ?", [id]);
+    await pool.query("DELETE FROM categoryindia WHERE id = ?", [id]);
     res.json({ message: "Region deleted successfully" });
   } catch (error) {
     console.error("❌ Error deleting region:", error);

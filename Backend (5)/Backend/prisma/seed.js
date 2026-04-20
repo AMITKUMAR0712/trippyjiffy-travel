@@ -685,7 +685,20 @@ async function seed() {
       console.log(`✅ Seeded: ${result.slug}`);
     }
 
-    console.log("✅ All landing pages seeded successfully!");
+    console.log("🌱 Seeding admin data...");
+    const adminEmail = "admin@trippyjiffy.com";
+    await prisma.admin.upsert({
+      where: { email: adminEmail },
+      update: {},
+      create: {
+        email: adminEmail,
+        name: "Admin",
+        password: "admin123", // Note: The system currently uses plain text for admin passwords
+      },
+    });
+    console.log(`✅ Admin seeded: ${adminEmail}`);
+
+    console.log("✅ All data seeded successfully!");
   } catch (error) {
     console.error("❌ Error seeding data:", error);
     process.exit(1);

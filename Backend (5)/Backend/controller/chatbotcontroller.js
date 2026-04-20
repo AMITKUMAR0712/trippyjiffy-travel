@@ -91,7 +91,7 @@ India 🇮🇳`,
 
     if (indiaTourKeywords.some(k => userMessage.includes(k))) {
       const [categories] = await pool.query(
-        "SELECT id, region_name FROM CategoryIndia"
+        "SELECT id, region_name FROM categoryindia"
       );
 
       if (!categories.length) {
@@ -113,7 +113,7 @@ India 🇮🇳`,
        📦 INDIA TOUR PACKAGES (CATEGORY MATCH)
     ===================================================== */
     const [indiaCategories] = await pool.query(
-      "SELECT id, region_name FROM CategoryIndia"
+      "SELECT id, region_name FROM categoryindia"
     );
 
     const matchedCategory = indiaCategories.find(cat =>
