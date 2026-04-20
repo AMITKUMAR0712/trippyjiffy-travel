@@ -8,7 +8,7 @@ export const forgotPassword = async (req, res) => {
 
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM UserRegister WHERE email = ?",
+      "SELECT * FROM userregister WHERE email = ?",
       [email]
     );
 
@@ -24,7 +24,7 @@ export const forgotPassword = async (req, res) => {
     expireTimeIST.setDate(expireTimeIST.getDate() + 1);
 
     await pool.query(
-      "UPDATE UserRegister SET reset_token = ?, reset_token_expire = ? WHERE email = ?",
+      "UPDATE userregister SET reset_token = ?, reset_token_expire = ? WHERE email = ?",
       [token, expireTimeIST, email]
     );
 
@@ -55,7 +55,7 @@ export const resetPassword = async (req, res) => {
   const { token, newPassword } = req.body;
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM UserRegister WHERE reset_token = ? AND reset_token_expire > NOW()",
+      "SELECT * FROM userregister WHERE reset_token = ? AND reset_token_expire > NOW()",
       [token]
     );
 
@@ -67,7 +67,7 @@ export const resetPassword = async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await pool.query(
-      "UPDATE UserRegister SET password = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?",
+      "UPDATE userregister SET password = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?",
       [hashedPassword, email]
     );
 

@@ -6,7 +6,7 @@ export const resetPassword = async (req, res) => {
 
   try {
     const [rows] = await pool.query(
-      "SELECT * FROM UserRegister WHERE reset_token = ? AND reset_token_expire > NOW()",
+      "SELECT * FROM userregister WHERE reset_token = ? AND reset_token_expire > NOW()",
       [token]
     );
 
@@ -14,12 +14,12 @@ export const resetPassword = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
 
-    const email = rows[0].email;
+    const user = rows[0];
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await pool.query(
-      "UPDATE UserRegister SET password = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?",
-      [hashedPassword, email]
+      "UPDATE userregister SET password = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?",
+      [hashedPassword, user.email]
     );
 
     res.json({ message: "Password reset successfully." });
