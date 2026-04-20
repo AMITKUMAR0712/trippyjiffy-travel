@@ -6,21 +6,31 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import { sendEmailToAdmin } from "../utils/contentSendToAdmin.js";
+
+// ================= TOKEN =================
 const generateToken = (user) => {
-  return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+  return jwt.sign(
+    { id: user.id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 };
 
+// ================= MULTER =================
 const storage = multer.memoryStorage();
+
 export const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === "application/pdf") cb(null, true);
-    else cb(new Error("Only PDF files are allowed!"), false);
+    if (file.mimetype === "application/pdf") {
+      cb(null, true);
+    } else {
+      cb(new Error("Only PDF files are allowed!"), false);
+    }
   },
 });
 
+// ================= REGISTER USER =================
 export const registerUser = async (req, res) => {
   try {
     const { name, email, mobile, password, country } = req.body;
@@ -30,7 +40,7 @@ export const registerUser = async (req, res) => {
     }
 
     const [existing] = await pool.query(
-      "SELECT * FROM userregister WHERE email = ?",
+      "SELECT * FROM userregister WHERE email=?",
       [email]
     );
 
@@ -40,161 +50,174 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    let pdfBuffer = null;
-    if (req.file) pdfBuffer = req.file.buffer;
+    const pdfBuffer = req.file ? req.file.buffer : null;
 
     await pool.query(
-      "INSERT INTO userregister (name, email, mobile, password, country, pdf_file) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO userregister (name,email,mobile,password,country,pdf_file) VALUES (?,?,?,?,?,?)",
       [name, email, mobile, hashedPassword, country, pdfBuffer]
     );
 
-    const adminSubject = "🆕 New User Registered";
-    const adminHtml = `
-      <h3>New User Registration</h3>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Mobile:</strong> ${mobile}</p>
-      <p><strong>Country:</strong> ${country}</p>
-      ${req.file ? `<p>PDF uploaded ✅</p>` : "<p>No PDF uploaded</p>"}
-    `;
-    
-    // Send email but don't block registration if it fails
+    // Email to admin (non-blocking)
     try {
-      await sendEmailToAdmin(adminSubject, adminHtml);
-    } catch (emailError) {
-      console.error("⚠️ Email sending failed but registration succeeded:", emailError);
+      await sendEmailToAdmin(
+        "🆕 New User Registered",
+        `<h3>New User Registration</h3>
+         <p><b>Name:</b> ${name}</p>
+         <p><b>Email:</b> ${email}</p>
+         <p><b>Mobile:</b> ${mobile}</p>
+         <p><b>Country:</b> ${country}</p>`
+      );
+    } catch (err) {
+      console.log("Email error:", err.message);
     }
 
     res.status(201).json({ message: "User registered successfully ✅" });
   } catch (error) {
-    console.error("Register Error:", error);
+    console.log("Register Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// ================= LOGIN =================
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const [users] = await pool.query(
-      "SELECT * FROM userregister WHERE email = ?",
+      "SELECT * FROM userregister WHERE email=?",
       [email]
     );
 
-    if (users.length === 0)
+    if (!users.length) {
       return res.status(400).json({ message: "Invalid email or password" });
+    }
 
     const user = users[0];
+
     const match = await bcrypt.compare(password, user.password);
 
-    if (!match)
+    if (!match) {
       return res.status(400).json({ message: "Invalid email or password" });
+    }
 
     const token = generateToken(user);
+
     res.json({ token, user });
   } catch (error) {
-    console.error("Login Error:", error);
+    console.log("Login Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// ================= GET ALL USERS =================
 export const getUsers = async (req, res) => {
   try {
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister"
+      "SELECT id,name,email,mobile,country,admin_message,created_at FROM userregister"
     );
+
     res.json(users);
   } catch (error) {
-    console.error("Get Users Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// ================= GET USER BY ID =================
 export const getUserById = async (req, res) => {
   try {
-    const { id } = req.params;
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister WHERE id = ?",
-      [id]
+      "SELECT id,name,email,mobile,country,admin_message,created_at FROM userregister WHERE id=?",
+      [req.params.id]
     );
 
-    if (users.length === 0)
+    if (!users.length) {
       return res.status(404).json({ message: "User not found" });
+    }
 
     res.json(users[0]);
   } catch (error) {
-    console.error("Get User Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// ================= UPDATE USER =================
 export const updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
     const { name, email, mobile, country, password } = req.body;
 
-    const updates = [name, email, mobile, country];
     let query =
       "UPDATE userregister SET name=?, email=?, mobile=?, country=?";
+    let values = [name, email, mobile, country];
 
     if (password && password.trim() !== "") {
       const hashed = await bcrypt.hash(password, 10);
       query += ", password=?";
-      updates.push(hashed);
+      values.push(hashed);
     }
 
     if (req.file) {
       query += ", pdf_file=?";
-      updates.push(req.file.buffer);
+      values.push(req.file.buffer);
     }
 
     query += " WHERE id=?";
-    updates.push(id);
+    values.push(req.params.id);
 
-    await pool.query(query, updates);
+    await pool.query(query, values);
+
     res.json({ message: "User updated successfully ✅" });
   } catch (error) {
-    console.error("Update User Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// ================= DELETE USER =================
 export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    await pool.query("DELETE FROM userregister WHERE id=?", [id]);
+    await pool.query("DELETE FROM userregister WHERE id=?", [
+      req.params.id,
+    ]);
+
     res.json({ message: "User deleted successfully ❌" });
   } catch (error) {
-    console.error("Delete User Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
+// ================= GET ME =================
 export const getMe = async (req, res) => {
   try {
-    if (!req.user)
-      return res.status(401).json({ message: "Not authorized" });
-
     const [users] = await pool.query(
-      "SELECT id, name, email, mobile, country, admin_message, created_at FROM userregister WHERE id=?",
+      "SELECT id,name,email,mobile,country,admin_message,created_at FROM userregister WHERE id=?",
       [req.user.id]
     );
 
-    if (users.length === 0)
+    if (!users.length) {
       return res.status(404).json({ message: "User not found" });
+    }
 
     res.json(users[0]);
   } catch (error) {
-    console.error("Get Me Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// ================= PROTECT MIDDLEWARE =================
 export const protect = async (req, res, next) => {
   let token;
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
     try {
       token = req.headers.authorization.split(" ")[1];
+
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       const [users] = await pool.query(
@@ -202,111 +225,110 @@ export const protect = async (req, res, next) => {
         [decoded.id]
       );
 
-      if (users.length === 0)
+      if (!users.length) {
         return res.status(401).json({ message: "User not found" });
+      }
 
       req.user = users[0];
       return next();
     } catch (error) {
-      console.error("Auth Error:", error);
+      console.log("Auth Error:", error);
       return res.status(401).json({ message: "Token invalid or expired" });
     }
   }
 
-  if (!token)
-    return res.status(401).json({ message: "No token, authorization denied" });
+  return res
+    .status(401)
+    .json({ message: "No token, authorization denied" });
 };
 
-
+// ================= ADMIN MESSAGE =================
 export const sendAdminMessage = async (req, res) => {
   try {
-    const { id } = req.params;
     const { adminMessage } = req.body;
 
-    if (!adminMessage)
+    if (!adminMessage) {
       return res.status(400).json({ message: "Admin message required" });
+    }
 
     await pool.query(
       "UPDATE userregister SET admin_message=? WHERE id=?",
-      [adminMessage, id]
+      [adminMessage, req.params.id]
     );
 
-    res.json({ success: true, message: "Message sent successfully ✅" });
+    res.json({ message: "Message sent successfully ✅" });
   } catch (error) {
-    console.error("Send Admin Message Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
+// ================= USER ANNOUNCEMENTS =================
 export const getUserAnnouncements = async (req, res) => {
   try {
-    const { id } = req.params;
     const [rows] = await pool.query(
-      "SELECT id, name, admin_message, created_at FROM userregister WHERE id=? AND admin_message IS NOT NULL",
-      [id]
+      "SELECT id,name,admin_message,created_at FROM userregister WHERE id=? AND admin_message IS NOT NULL",
+      [req.params.id]
     );
 
     res.json({ success: true, announcements: rows });
   } catch (error) {
-    console.error("Get Announcements Error:", error);
+    console.log(error);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
-
+// ================= GET USER PDF =================
 export const getUserPDF = async (req, res) => {
   try {
-    const { id } = req.params;
     const [users] = await pool.query(
-      "SELECT pdf_file, name FROM userregister WHERE id=?",
-      [id]
+      "SELECT pdf_file,name FROM userregister WHERE id=?",
+      [req.params.id]
     );
 
-    if (users.length === 0 || !users[0].pdf_file) {
+    if (!users.length || !users[0].pdf_file) {
       return res.status(404).json({ message: "PDF not found" });
     }
 
     const user = users[0];
+
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
       `attachment; filename=${user.name.replace(/\s+/g, "_")}.pdf`
     );
+
     res.send(user.pdf_file);
   } catch (error) {
-    console.error("Get PDF Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
-
-
+// ================= DELETE USER PDF =================
 export const deleteUserPDF = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    // Check if user exists
     const [users] = await pool.query(
       "SELECT pdf_file FROM userregister WHERE id=?",
-      [id]
+      [req.params.id]
     );
 
-    if (users.length === 0)
+    if (!users.length) {
       return res.status(404).json({ message: "User not found" });
+    }
 
-    if (!users[0].pdf_file)
+    if (!users[0].pdf_file) {
       return res.status(400).json({ message: "No PDF to delete" });
+    }
 
-    // Delete PDF (set pdf_file to NULL)
-    await pool.query("UPDATE userregister SET pdf_file=NULL WHERE id=?", [id]);
+    await pool.query(
+      "UPDATE userregister SET pdf_file=NULL WHERE id=?",
+      [req.params.id]
+    );
 
     res.json({ message: "PDF deleted successfully ✅" });
   } catch (error) {
-    console.error("Delete PDF Error:", error);
+    console.log(error);
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
