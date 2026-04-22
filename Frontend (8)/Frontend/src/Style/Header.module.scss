@@ -196,23 +196,25 @@
 
   .closeBtn {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 20px;
+    right: 20px;
     font-size: 18px;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
+    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: $radius-full;
-    background: $bg-light;
-    color: $text-light;
-    transition: $transition-base;
-    min-height: 36px;
+    background: #f1f5f9;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    min-height: 38px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      background: #fee2e2;
-      color: #ef4444;
+      background: #ef4444;
+      color: #fff;
     }
   }
 }

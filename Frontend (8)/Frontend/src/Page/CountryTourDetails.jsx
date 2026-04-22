@@ -149,7 +149,7 @@ const CountryTourDetails = () => {
             : [];
 
         const filteredCountry = countryData.filter(
-          (t) => Number(t.asiastate_id) === Number(asiastateId)
+          (t) => String(t.asiastate_id) === String(asiastateId)
         );
 
         if (filteredCountry.length > 0) {
@@ -181,7 +181,7 @@ const CountryTourDetails = () => {
       try {
         const res = await axios.get(`${baseURL}/api/countrytoursfaq/get`);
         const filtered = Array.isArray(res.data)
-          ? res.data.filter((faq) => Number(faq.tour_id) === Number(tour?.id))
+          ? res.data.filter((faq) => String(faq.tour_id) === String(tour?.id))
           : [];
         setFaqs(filtered);
       } catch (err) {
@@ -402,7 +402,7 @@ const CountryTourDetails = () => {
 
               <div id="supplemental" className={Style.Supplemental}>
                 <h3>Supplemental Activities</h3>
-                {safeRender(tour.supplimental_activities)}
+                {safeRender(tour.supplemental_activities)}
               </div>
             </div>
           </div>

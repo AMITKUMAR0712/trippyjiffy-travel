@@ -25,9 +25,10 @@ export const getAllLandingPages = async (req, res) => {
 export const getLandingPageBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
+    const normalizedSlug = slug.toLowerCase();
 
     const page = await prisma.landing_page.findUnique({
-      where: { slug },
+      where: { slug: normalizedSlug },
     });
 
     if (!page) {

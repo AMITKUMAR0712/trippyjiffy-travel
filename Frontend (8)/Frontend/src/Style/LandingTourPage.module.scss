@@ -747,10 +747,11 @@
 
 .modalClose {
   position: absolute;
-  top: 10px;
-  right: 12px;
-  width: 34px;
-  height: 34px;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  z-index: 50;
   border-radius: 50%;
   border: none;
   background: #0f172a;
@@ -761,8 +762,8 @@
 }
 
 .modalClose:hover {
-  transform: scale(1.05);
-  background: #111827;
+  transform: scale(1.1);
+  background: #ef4444;
 }
 
 

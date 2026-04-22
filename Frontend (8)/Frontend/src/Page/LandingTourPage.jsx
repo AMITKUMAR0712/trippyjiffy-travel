@@ -186,6 +186,14 @@ const LandingTourPage = () => {
     fetchRecommended();
   }, [page?.recommendTourId, page?.slug, page?.title, baseURL]);
 
+  if (pageError) return (
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+       <h2>Oops! Page Not Found</h2>
+       <p>{pageError}</p>
+       <a href="/" className={Style.primaryBtn} style={{ marginTop: '20px', textDecoration: 'none' }}>Go Back Home</a>
+    </div>
+  );
+
   if (pageLoading || !page) return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center', background: '#fff' }}>
        <Loader text={`Welcome to ${slug?.replace(/-/g, ' ')}...`} />

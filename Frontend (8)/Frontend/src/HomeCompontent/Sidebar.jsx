@@ -72,7 +72,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
       })),
     },
     {
-      name: "Asia Tours",
+      name: "Overseas Tours",
       categories: asiaTours.map((region) => ({
         ...region,
         path: `/asia-tours/${slugify(region.country_name)}`,
@@ -172,7 +172,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                             {cat.region_name}
                           </Link>
                         )}
-                        {menu.name === "Asia Tours" && (
+                        {menu.name === "Overseas Tours" && (
                           <>
                             <h2
                               className={Style.AsiaHeading}

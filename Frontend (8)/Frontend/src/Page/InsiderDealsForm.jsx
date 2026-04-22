@@ -13,14 +13,14 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 20) + 10);
+  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 50) + 200);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "";
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveUsers(prev => {
         const change = Math.floor(Math.random() * 5) - 2;
-        return Math.max(8, prev + change);
+        return Math.max(200, prev + change);
       });
     }, 5000);
     return () => clearInterval(interval);
@@ -96,7 +96,6 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
             </div>
             <h3>Thank You, {formData.name.split(' ')[0]}!</h3>
             <p>Our lead travel architect has been notified. You'll receive the insider itinerary on WhatsApp/Email within 15 minutes.</p>
-            <div className={Style.successBadge}>Priority Lead ID: TJ-{Math.floor(Math.random() * 10000)}</div>
           </motion.div>
         ) : (
           <form key="form" onSubmit={handleSubmit} className={Style.mainForm}>

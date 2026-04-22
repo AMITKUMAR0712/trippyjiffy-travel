@@ -417,10 +417,10 @@ const Destinations = () => {
             ))}
         </Swiper>
 
-        {/* Popular Destinations */}
+        {/* International Destinations */}
         <div className={Style.DestinationCardBlock}>
           <h2>
-            Popular <span>Destinations</span>
+            International <span>Destinations</span>
           </h2>
         </div>
 

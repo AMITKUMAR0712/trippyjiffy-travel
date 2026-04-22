@@ -197,7 +197,7 @@ const ExploreTours = () => {
             className={filter === 'asia' ? Style.activeBtn : ''} 
             onClick={() => setFilter('asia')}
           >
-            Asia Tours
+            Overseas Tours
           </button>
         </div>
 

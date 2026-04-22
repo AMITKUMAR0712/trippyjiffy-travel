@@ -1,77 +1,125 @@
 .adminEnquiry {
-  padding: 20px;
+  padding: 30px;
+  background: #f8fafc;
+  min-height: 100vh;
 
   h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 28px;
-    font-weight: bold;
+    text-align: left;
+    margin-bottom: 24px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &::before {
+      content: "";
+      width: 4px;
+      height: 24px;
+      background: #f39c12;
+      border-radius: 4px;
+    }
   }
 
   .addBtn {
-    background: linear-gradient(90deg, #d9630c, #f39c12);
+    background: linear-gradient(135deg, #f39c12 0%, #d9630c 100%);
     color: white;
     border: none;
-    padding: 10px 18px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-bottom: 15px;
-    font-size: 16px;
-    transition: 0.3s ease;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+    transition: all 0.3s ease;
 
     &:hover {
-      background: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
     }
   }
 
   .tableWrapper {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     overflow-x: auto;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 
     table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+      border-collapse: separate;
+      border-spacing: 0;
 
       th,
       td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
+        padding: 16px;
+        text-align: left;
         font-size: 14px;
+        border-bottom: 1px solid #f1f5f9;
       }
 
       th {
-        background: linear-gradient(90deg, #d9630c, #f39c12);
+        background: #f8fafc;
+        color: #64748b;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        
+        &:first-child { border-top-left-radius: 10px; }
+        &:last-child { border-top-right-radius: 10px; }
       }
 
-      tr:nth-child(even) {
-        background-color: #fafafa;
+      tr:hover td {
+        background: #fdfaf5;
+      }
+
+      td {
+        color: #334155;
+        font-weight: 500;
       }
 
       button {
-        margin: 2px;
-        padding: 6px 12px;
+        margin: 4px;
+        padding: 8px 14px;
         border: none;
-        border-radius: 4px;
+        border-radius: 10px;
         cursor: pointer;
-        font-size: 13px;
-        transition: 0.2s ease;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.2s ease;
 
         &:first-child {
-          background-color: #28a745;
-          color: #fff;
+          background-color: #ecfdf5;
+          color: #059669;
 
           &:hover {
-            background-color: #218838;
+            background-color: #059669;
+            color: #fff;
           }
         }
 
         &.deleteBtn {
-          background-color: #dc3545;
-          color: #fff;
+          background-color: #fef2f2;
+          color: #dc2626;
 
           &:hover {
-            background-color: #c82333;
+            background-color: #dc2626;
+            color: #fff;
+          }
+        }
+
+        &.sendBtn {
+          background-color: #eff6ff;
+          color: #2563eb;
+          
+          &:hover {
+            background-color: #2563eb;
+            color: #fff;
           }
         }
       }
@@ -84,168 +132,137 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 2000;
 
     .formBox {
       background: #fff;
-      padding: 20px 25px;
-      border-radius: 8px;
-      width: 600px;
+      padding: 32px;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 650px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 
       h3 {
-        margin-bottom: 15px;
-        font-size: 22px;
+        margin-bottom: 24px;
+        font-size: 24px;
+        font-weight: 800;
+        color: #1e293b;
         text-align: center;
       }
 
       form {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
 
         label {
-          font-weight: 500;
-          margin-top: 10px;
-          margin-bottom: 5px;
+          font-weight: 600;
+          font-size: 13px;
+          color: #64748b;
+          margin-bottom: 4px;
+          grid-column: span 2;
+          
+          &:not(:first-child) { margin-top: 8px; }
         }
 
         input,
         select,
         textarea {
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
+          grid-column: span 1;
+          padding: 12px 16px;
+          border: 1px solid #e2e8f0;
+          border-radius: 12px;
           font-size: 14px;
+          color: #1e293b;
+          background: #f8fafc;
+          transition: all 0.2s ease;
+
+          &:focus {
+            outline: none;
+            border-color: #f39c12;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.1);
+          }
+        }
+
+        textarea, 
+        .btnGroup,
+        label[for="message"],
+        label[for="admin_message"] {
+          grid-column: span 2;
         }
 
         textarea {
           resize: vertical;
+          min-height: 100px;
         }
 
         .btnGroup {
           display: flex;
-          justify-content: space-between;
-          margin-top: 15px;
+          justify-content: flex-end;
+          gap: 12px;
+          margin-top: 24px;
 
           button {
-            padding: 10px 18px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
-            font-size: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.3s ease;
+            transition: all 0.3s ease;
 
             &:first-child {
-              background: #007bff;
+              background: #f39c12;
               color: white;
+              box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
 
               &:hover {
-                background: #0056b3;
+                background: #d9630c;
+                transform: translateY(-2px);
               }
             }
 
             &:last-child {
-              background: #6c757d;
-              color: white;
+              background: #f1f5f9;
+              color: #64748b;
 
               &:hover {
-                background: #5a6268;
+                background: #e2e8f0;
+                color: #1e293b;
               }
             }
           }
         }
       }
-    }
-  }
-}
-
-@media (max-width: 992px) {
-  .adminEnquiry {
-    .formBox {
-      width: 80% !important;
     }
   }
 }
 
 @media (max-width: 768px) {
   .adminEnquiry {
-    h2 {
-      font-size: 22px;
-    }
-
-    .addBtn {
-      font-size: 14px;
-      padding: 8px 15px;
-    }
-
-    .tableWrapper {
-      table {
-        font-size: 12px;
-
-        th,
-        td {
-          padding: 6px;
-        }
-      }
-    }
-
-    .overlay {
-      .formBox {
-        width: 90%;
-        padding: 15px;
-
-        h3 {
-          font-size: 18px;
-        }
-
-        form {
-          label {
-            font-size: 13px;
-          }
-
-          input,
-          select,
-          textarea {
-            font-size: 13px;
-            padding: 8px;
-          }
-
-          .btnGroup button {
-            font-size: 13px;
-            padding: 8px 12px;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .adminEnquiry {
-    h2 {
-      font-size: 20px;
-    }
-
-    .overlay {
-      .formBox {
-        width: 95%;
-        padding: 12px;
-
-        form {
-          .btnGroup {
-            flex-direction: column;
-
-            button {
-              width: 100%;
-              margin-bottom: 10px;
-            }
-          }
+    padding: 20px;
+    
+    h2 { font-size: 22px; }
+    
+    .tableWrapper { padding: 10px; border-radius: 12px; }
+    
+    .overlay .formBox {
+      padding: 20px;
+      margin: 10px;
+      
+      form {
+        grid-template-columns: 1fr;
+        
+        label, input, select, textarea {
+          grid-column: span 1;
         }
       }
     }

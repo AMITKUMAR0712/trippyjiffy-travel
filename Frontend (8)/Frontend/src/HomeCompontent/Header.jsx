@@ -144,7 +144,7 @@ const Header = () => {
     const navData = [
         { name: "Home", path: "/" },
         { name: "India Tours", categories: indiaTours },
-        { name: "Asia Tours", categories: asiaTours },
+        { name: "Overseas Tours", categories: asiaTours },
         {
             name: "Landing Pages",
             categories: [

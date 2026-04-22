@@ -4,7 +4,7 @@ export const getAllFaqs = async (req, res) => {
   try {
     const [rows] = await pool.query(`
       SELECT f.id, f.question, f.answer, f.tour_id, f.created_at, f.updated_at
-      FROM Countrytours_faq f
+      FROM countrytours_faq f
       ORDER BY f.id DESC
     `);
     res.json(rows);

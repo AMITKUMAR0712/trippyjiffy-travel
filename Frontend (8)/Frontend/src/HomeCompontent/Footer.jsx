@@ -176,7 +176,7 @@ const Footer = () => {
           </motion.div>
 
           <motion.div variants={itemVariants} className={Style.FooterWrap2}>
-            <h2>Asia Tours</h2>
+            <h2>Overseas Tours</h2>
             <ul>
               {asiaTours.length > 0 ? (
                 asiaTours.map((tour) => (
