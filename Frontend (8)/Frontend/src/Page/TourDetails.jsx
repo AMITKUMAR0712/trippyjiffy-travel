@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../HomeCompontent/Loader.jsx";
 import Style from "../Style/TourDetails.module.scss";
@@ -15,6 +15,8 @@ import {
 } from "react-icons/fi";
 import { Link as ScrollLink } from "react-scroll";
 import Brief from "../Img/Untitled.png";
+import { Heart, Scale } from "lucide-react";
+import { toast } from "sonner";
 // ----------------- HELMET -----------------
 import { Helmet } from "react-helmet-async";
 import SEO from "../utils/SEO";
@@ -28,6 +30,52 @@ const TourDetails = () => {
   const [states, setStates] = useState([]);
   const [allTours, setAllTours] = useState([]);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleAddToWishlist = async () => {
+    if (!token) {
+      toast.error("Please login to add to wishlist");
+      navigate("/login");
+      return;
+    }
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/wishlist`, {
+        item_id: tour.id,
+        item_type: "india",
+        title: tour.tour_name || "Tour",
+        image: tour.image ? formatImageURL(tour.image) : "https://via.placeholder.com/600x400",
+        url: window.location.pathname
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success("Added to wishlist!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to add to wishlist");
+    }
+  };
+
+  const handleAddToCompare = async () => {
+    if (!token) {
+      toast.error("Please login to compare tours");
+      navigate("/login");
+      return;
+    }
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/compare`, {
+        item_id: tour.id,
+        item_type: "india",
+        title: tour.tour_name || "Tour",
+        image: tour.image ? formatImageURL(tour.image) : "https://via.placeholder.com/600x400",
+        url: window.location.pathname
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success("Added to compare!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to add to compare");
+    }
+  };
 
   const toggleFaq = (id) => setOpenFaq(openFaq === id ? null : id);
 
@@ -285,9 +333,13 @@ const TourDetails = () => {
           <div className={Style.TourDetailsNAme}>
             <h1>
               {tour.tour_name
-                ? `${tour.tour_name} - ${tourState?.state_name || "Unknown"}`
-                : tourState?.state_name || "Unknown"}
+                ? `${tour.tour_name} - ${tourState?.state_name || "Unknown"} Tour`
+                : `${tourState?.state_name || "Unknown"} Tour`}
             </h1>
+            <div className={Style.actionButtons}>
+               <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
+               <button onClick={handleAddToCompare} className={Style.actionBtn}><Scale size={18} /> Compare</button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -8,6 +8,8 @@ import "swiper/css/navigation";
 import Style from "../Style/Destinations.module.scss";
 import ContactUsForm from "./ContactUsForm";
 import { getImgUrl } from "../utils/getImgUrl";
+import { Heart, Scale } from "lucide-react";
+import { toast } from "sonner";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
@@ -15,6 +17,34 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalItem, setModalItem] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleAction = async (e, action, item) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!token) {
+      toast.error(`Please login to add to ${action}`);
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/${action}`, {
+        item_id: item.id,
+        item_type: "india",
+        title: item.title,
+        image: item.images?.[0] || "https://via.placeholder.com/300x200",
+        url: item.detailPath || `/india-tours/${item.id}/${slugify(item.state_name)}`
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success(`Added to ${action}!`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || `Failed to add to ${action}`);
+    }
+  };
 
   const slugify = (text) =>
     text
@@ -136,6 +166,14 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
                     className={Style.card}
                     style={{ "--bg-image": `url("${item.images?.[0] || ""}")` }}
                   >
+                    <div className={Style.cardActions}>
+                       <button onClick={(e) => handleAction(e, "wishlist", item)} className={Style.iconBtn} title="Add to Wishlist">
+                          <Heart size={18} />
+                       </button>
+                       <button onClick={(e) => handleAction(e, "compare", item)} className={Style.iconBtn} title="Add to Compare">
+                          <Scale size={18} />
+                       </button>
+                    </div>
                     <div className={Style.content}>
                       <h2 className={Style.title}>{item.title}</h2>
                       <p className={Style.copy}>

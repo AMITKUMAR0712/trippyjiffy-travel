@@ -51,6 +51,7 @@ import landingPageRoutes from "./routes/landingPageRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
 import translateRoutes from "./routes/translateRoutes.js";
 import upcomingTripsRoutes from "./routes/upcomingTripsRoutes.js";
+import userFeaturesRoutes from "./routes/userFeaturesRoutes.js";
 
 // ✅ Use all routes
 app.use('/api/chatbot', chatbotRoutes);
@@ -58,6 +59,7 @@ app.use("/api/landing-pages", landingPageRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/translate", translateRoutes);
 app.use("/api/upcoming-trips", upcomingTripsRoutes);
+app.use("/api/user-features", userFeaturesRoutes);
 
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
@@ -71,12 +73,12 @@ app.use("/api/state", stateRoutes);
 app.use("/api/tours", toursRoutes);
 app.use("/api/asia", asiaRoutes);
 app.use("/api/country", countryRoutes);
-app.use("/api/asiaState", asiastateRoutes);
+app.use("/api/asiastate", asiastateRoutes);
 app.use("/api/faq", stateFaqRoutes);
 app.use("/api/countrytoursfaq", countryToursFaqRoutes);
 app.use("/api", combinedRoutes);
 app.use("/api/payment", paymentRoutes);
-app.use("/api/BussianContent", bussiancontentRoutes);
+app.use("/api/bussiancontent", bussiancontentRoutes);
 app.use("/api/user-documents", userDocumentRoutes);
 app.use("/api/user-document", userDocumentspdfRoutes);
 app.use("/api/reviews", reviewsRoutes);

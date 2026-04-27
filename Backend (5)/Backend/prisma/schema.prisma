@@ -274,6 +274,7 @@ model settings {
   cardHoverStyle String  @default("parallax")
   primaryGradient String @default("linear-gradient(135deg, #f97316 0%, #fbbf24 100%)")
   darkTheme      Boolean @default(false)
+  tickerMessages Json?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
@@ -295,4 +296,30 @@ model upcoming_trips {
   link         String?   @db.VarChar(500)
   is_visible   Boolean?  @default(true)
   created_at   DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model user_wishlist {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  item_id    String   @db.VarChar(50)
+  item_type  String   @db.VarChar(50)
+  title      String   @db.VarChar(255)
+  image      String?  @db.VarChar(500)
+  url        String?  @db.VarChar(500)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, item_id, item_type])
+}
+
+model user_compare {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  item_id    String   @db.VarChar(50)
+  item_type  String   @db.VarChar(50)
+  title      String   @db.VarChar(255)
+  image      String?  @db.VarChar(500)
+  url        String?  @db.VarChar(500)
+  created_at DateTime @default(now())
+
+  @@unique([user_id, item_id, item_type])
 }

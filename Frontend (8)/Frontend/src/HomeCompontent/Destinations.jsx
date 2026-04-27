@@ -231,8 +231,9 @@
 
 
 import React, { useEffect, useState, memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner";
 import Style from "../Style/Destinations.module.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -240,18 +241,46 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin, Heart, Scale } from "lucide-react";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
 const DestinationCard = memo(({ item, slugify, type }) => {
   const imageUrl = getImgUrl(item.images?.[0]) || "";
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   const getLink = () => {
     if (type === "upcoming") return item.link || `/upcoming/${item.id}`;
     return type === "tour"
       ? `/india-tours/${item.id}/${slugify(item.state_name)}`
       : `/asia-tours/${slugify(item.country_name)}`;
+  };
+
+  const handleAction = async (e, action) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!token) {
+      toast.error(`Please login to add to ${action}`);
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/${action}`, {
+        item_id: item.id,
+        item_type: type === "tour" ? "india" : type === "country" ? "country" : "upcoming",
+        title: item.title,
+        image: imageUrl || "https://via.placeholder.com/300x200",
+        url: getLink()
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success(`Added to ${action}!`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || `Failed to add to ${action}`);
+    }
   };
 
   return (
@@ -262,6 +291,14 @@ const DestinationCard = memo(({ item, slugify, type }) => {
       style={{ "--bg-image": `url("${imageUrl}")` }}
       target={type === "upcoming" && item.link ? "_blank" : "_self"}
     >
+      <div className={Style.cardActions}>
+         <button onClick={(e) => handleAction(e, "wishlist")} className={Style.iconBtn} title="Add to Wishlist">
+            <Heart size={18} />
+         </button>
+         <button onClick={(e) => handleAction(e, "compare")} className={Style.iconBtn} title="Add to Compare">
+            <Scale size={18} />
+         </button>
+      </div>
       <div className={Style.content}>
         <h2 className={Style.title}>{item.title}</h2>
         <p className={Style.copy}>

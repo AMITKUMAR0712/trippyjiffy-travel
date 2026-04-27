@@ -21,7 +21,9 @@ export const useLandingPageData = (slug) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/landing-pages/${slug}`);
+        const fetchUrl = `${API_BASE_URL}/landing-pages/${slug}`;
+        console.log(`[DEBUG] Fetching landing page from: ${fetchUrl}`);
+        const response = await fetch(fetchUrl);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch landing page: ${response.statusText}`);

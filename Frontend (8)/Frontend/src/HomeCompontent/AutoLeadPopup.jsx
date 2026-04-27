@@ -12,7 +12,23 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 301) + 300);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "";
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveUsers(prev => {
+        const isBigJump = Math.random() > 0.8;
+        const jumpRange = isBigJump ? 15 : 5;
+        const change = Math.floor(Math.random() * (jumpRange * 2 + 1)) - jumpRange;
+        let newValue = prev + change;
+        if (newValue < 300) newValue = 300 + Math.floor(Math.random() * 20);
+        if (newValue > 600) newValue = 600 - Math.floor(Math.random() * 20);
+        return newValue;
+      });
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Clear old legacy key from previous version just in case
@@ -99,6 +115,10 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className={Style.leadForm}>
+              <div className={Style.liveBadge}>
+                <span className={Style.pulseDot}></span>
+                {activeUsers} travelers planning right now
+              </div>
               <h4>Unlock Insider Travel Deals ✈️</h4>
               <p>Just 10 seconds to fill. No spam, promise.</p>
 

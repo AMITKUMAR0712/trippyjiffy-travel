@@ -13,16 +13,26 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 50) + 200);
+  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 301) + 300);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "";
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveUsers(prev => {
-        const change = Math.floor(Math.random() * 5) - 2;
-        return Math.max(200, prev + change);
+        // Organic fluctuation with occasional larger jumps
+        const isBigJump = Math.random() > 0.8;
+        const jumpRange = isBigJump ? 15 : 5;
+        const change = Math.floor(Math.random() * (jumpRange * 2 + 1)) - jumpRange;
+        
+        let newValue = prev + change;
+        
+        // Soft bounds enforcement to keep it between 300 and 600
+        if (newValue < 300) newValue = 300 + Math.floor(Math.random() * 20);
+        if (newValue > 600) newValue = 600 - Math.floor(Math.random() * 20);
+        
+        return newValue;
       });
-    }, 5000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 

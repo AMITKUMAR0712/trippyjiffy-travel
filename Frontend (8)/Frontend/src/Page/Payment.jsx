@@ -141,7 +141,7 @@ const ImageSlider = () => {
 };
 
 /* ── Main Payment Component ── */
-const Payment = () => {
+const Payment = ({ isModal = false }) => {
   const [amount, setAmount] = useState("");
   const [currency, setCurrency] = useState("INR");
   const [transactionId, setTransactionId] = useState("");
@@ -231,6 +231,161 @@ const Payment = () => {
     }
   };
 
+  const formContent = (
+    <motion.div
+      className={Style.FormPanel}
+      style={isModal ? { padding: 0, background: 'transparent' } : {}}
+      initial={{ x: isModal ? 0 : 60, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <div 
+        className={Style.FormInner}
+        style={isModal ? { boxShadow: 'none', border: 'none', maxWidth: '100%', padding: '20px 0 0 0' } : {}}
+      >
+        {/* Header */}
+        <div className={Style.FormHeader}>
+          <div className={Style.IconRing}>
+            <ShieldCheck size={28} />
+          </div>
+          <div>
+            <h1 className={Style.FormTitle}>Secure Booking</h1>
+            <p className={Style.FormSubtitle}>Complete your reservation safely</p>
+          </div>
+        </div>
+
+        <div className={Style.Divider} />
+
+        {/* Step indicator */}
+        <div className={Style.StepBar}>
+          <div className={`${Style.Step} ${Style.StepActive}`}>
+            <span>1</span> Amount
+          </div>
+          <div className={Style.StepLine} />
+          <div className={`${Style.Step} ${showDetailsForm ? Style.StepActive : ""}`}>
+            <span>2</span> Verify
+          </div>
+        </div>
+
+        <AnimatePresence mode="wait">
+          {!showDetailsForm ? (
+            <motion.div
+              key="payment-form"
+              className={Style.FormBody}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35 }}
+            >
+              <div className={Style.InputGroup}>
+                <label>Currency</label>
+                <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                  <option value="INR">🇮🇳 Pay in ₹ INR</option>
+                  <option value="USD">🇺🇸 Pay in $ USD</option>
+                </select>
+              </div>
+
+              <div className={Style.InputGroup}>
+                <label>Amount</label>
+                <div className={Style.AmountWrapper}>
+                  <span className={Style.CurrencySymbol}>
+                    {currency === "INR" ? "₹" : "$"}
+                  </span>
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <button onClick={handlePayment} className={Style.PayBtn}>
+                <Lock size={16} /> Pay Now Securely
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="details-form"
+              className={Style.FormBody}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35 }}
+              onSubmit={handleDetailsSubmit}
+            >
+              <div className={Style.TxnBadge}>
+                <span>Transaction ID:</span>
+                <code>{transactionId}</code>
+              </div>
+
+              <div className={Style.InputGroup}>
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  value={userDetails.name}
+                  onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+                />
+              </div>
+
+              <div className={Style.InputGroup}>
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  placeholder="you@example.com"
+                  value={userDetails.email}
+                  onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+                />
+              </div>
+
+              <div className={Style.InputGroup}>
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  value={userDetails.phone}
+                  onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
+                />
+              </div>
+
+              <div className={Style.InputGroup}>
+                <label>Upload Screenshot</label>
+                <label className={Style.FileZone}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setScreenshot(e.target.files[0])}
+                  />
+                  {screenshot ? (
+                    <span className={Style.FileChosen}>✅ {screenshot.name}</span>
+                  ) : (
+                    <span>Click to upload transaction screenshot</span>
+                  )}
+                </label>
+              </div>
+
+              <button type="submit" className={Style.PayBtn}>
+                <ShieldCheck size={16} /> Submit Verification
+              </button>
+            </motion.form>
+          )}
+        </AnimatePresence>
+
+        {/* Trust Badges */}
+        <div className={Style.TrustRow}>
+          <div className={Style.TrustBadge}><Lock size={14} /><span>256-bit SSL</span></div>
+          <div className={Style.TrustBadge}><CreditCard size={14} /><span>Safe &amp; Secure</span></div>
+          <div className={Style.TrustBadge}><ShieldCheck size={14} /><span>Razorpay</span></div>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  if (isModal) {
+    return formContent;
+  }
+
   return (
     <div className={Style.PaymentPage}>
       {/* ── LEFT: Image Slider ── */}
@@ -243,150 +398,7 @@ const Payment = () => {
       </motion.div>
 
       {/* ── RIGHT: Payment Form ── */}
-      <motion.div
-        className={Style.FormPanel}
-        initial={{ x: 60, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        <div className={Style.FormInner}>
-          {/* Header */}
-          <div className={Style.FormHeader}>
-            <div className={Style.IconRing}>
-              <ShieldCheck size={28} />
-            </div>
-            <div>
-              <h1 className={Style.FormTitle}>Secure Booking</h1>
-              <p className={Style.FormSubtitle}>Complete your reservation safely</p>
-            </div>
-          </div>
-
-          <div className={Style.Divider} />
-
-          {/* Step indicator */}
-          <div className={Style.StepBar}>
-            <div className={`${Style.Step} ${Style.StepActive}`}>
-              <span>1</span> Amount
-            </div>
-            <div className={Style.StepLine} />
-            <div className={`${Style.Step} ${showDetailsForm ? Style.StepActive : ""}`}>
-              <span>2</span> Verify
-            </div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            {!showDetailsForm ? (
-              <motion.div
-                key="payment-form"
-                className={Style.FormBody}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div className={Style.InputGroup}>
-                  <label>Currency</label>
-                  <select value={currency} onChange={(e) => setCurrency(e.target.value)}>
-                    <option value="INR">🇮🇳 Pay in ₹ INR</option>
-                    <option value="USD">🇺🇸 Pay in $ USD</option>
-                  </select>
-                </div>
-
-                <div className={Style.InputGroup}>
-                  <label>Amount</label>
-                  <div className={Style.AmountWrapper}>
-                    <span className={Style.CurrencySymbol}>
-                      {currency === "INR" ? "₹" : "$"}
-                    </span>
-                    <input
-                      type="number"
-                      placeholder="0.00"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <button onClick={handlePayment} className={Style.PayBtn}>
-                  <Lock size={16} /> Pay Now Securely
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="details-form"
-                className={Style.FormBody}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.35 }}
-                onSubmit={handleDetailsSubmit}
-              >
-                <div className={Style.TxnBadge}>
-                  <span>Transaction ID:</span>
-                  <code>{transactionId}</code>
-                </div>
-
-                <div className={Style.InputGroup}>
-                  <label>Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    value={userDetails.name}
-                    onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-                  />
-                </div>
-
-                <div className={Style.InputGroup}>
-                  <label>Email Address</label>
-                  <input
-                    type="email"
-                    placeholder="you@example.com"
-                    value={userDetails.email}
-                    onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-                  />
-                </div>
-
-                <div className={Style.InputGroup}>
-                  <label>Phone Number</label>
-                  <input
-                    type="tel"
-                    placeholder="+91 98765 43210"
-                    value={userDetails.phone}
-                    onChange={(e) => setUserDetails({ ...userDetails, phone: e.target.value })}
-                  />
-                </div>
-
-                <div className={Style.InputGroup}>
-                  <label>Upload Screenshot</label>
-                  <label className={Style.FileZone}>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setScreenshot(e.target.files[0])}
-                    />
-                    {screenshot ? (
-                      <span className={Style.FileChosen}>✅ {screenshot.name}</span>
-                    ) : (
-                      <span>Click to upload transaction screenshot</span>
-                    )}
-                  </label>
-                </div>
-
-                <button type="submit" className={Style.PayBtn}>
-                  <ShieldCheck size={16} /> Submit Verification
-                </button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-
-          {/* Trust Badges */}
-          <div className={Style.TrustRow}>
-            <div className={Style.TrustBadge}><Lock size={14} /><span>256-bit SSL</span></div>
-            <div className={Style.TrustBadge}><CreditCard size={14} /><span>Safe &amp; Secure</span></div>
-            <div className={Style.TrustBadge}><ShieldCheck size={14} /><span>Razorpay</span></div>
-          </div>
-        </div>
-      </motion.div>
+      {formContent}
     </div>
   );
 };

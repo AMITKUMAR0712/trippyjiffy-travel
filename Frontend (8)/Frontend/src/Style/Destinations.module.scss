@@ -162,6 +162,37 @@
       z-index: 1;
     }
 
+    .cardActions {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 3;
+
+      .iconBtn {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #f97316;
+          border-color: #f97316;
+          transform: scale(1.1);
+        }
+      }
+    }
+
     .content {
       position: relative;
       display: flex;

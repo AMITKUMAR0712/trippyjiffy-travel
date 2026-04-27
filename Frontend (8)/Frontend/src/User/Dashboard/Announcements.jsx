@@ -194,7 +194,7 @@ const Announcements = () => {
                <button onClick={() => setShowPayment(false)} className={Style.closeBtn}><X size={20} /></button>
             </div>
             <div className={Style.modalBody}>
-               <Payment />
+               <Payment isModal={true} />
             </div>
           </motion.div>
         </div>

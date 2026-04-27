@@ -160,6 +160,36 @@
   }
 }
 
+.liveBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(219, 39, 119, 0.08);
+  color: #db2777;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  width: fit-content;
+  margin-bottom: 12px;
+
+  .pulseDot {
+    width: 7px;
+    height: 7px;
+    background: #db2777;
+    border-radius: 50%;
+    animation: pulseActive 1.5s infinite;
+  }
+}
+
+@keyframes pulseActive {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 0.2; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
 .inputGroup {
   margin-bottom: 16px;
 

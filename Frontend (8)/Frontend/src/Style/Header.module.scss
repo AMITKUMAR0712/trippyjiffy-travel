@@ -81,12 +81,12 @@
 
         .PlanTripBtn {
           padding: 10px 22px;
-          background: linear-gradient(135deg, $primary, $primary-dark);
+          background: linear-gradient(135deg, var(--primary-color, #f97316), var(--primary-dark, #ea580c));
           color: $text-white;
           border-radius: $radius-full;
           font-size: 14px;
           font-weight: 600;
-          box-shadow: 0 4px 15px rgba($primary, 0.3);
+          box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
           transition: $transition-base;
           min-height: 44px;
           white-space: nowrap;

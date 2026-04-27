@@ -221,7 +221,13 @@ const Footer = () => {
           className={Style.FooterBottom}
         >
           <p>
-            <FaGlobeAmericas style={{ marginRight: '8px', color: 'var(--primary-color, #d35400)' }} /> 
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              style={{ display: 'inline-block', marginRight: '8px' }}
+            >
+              <FaGlobeAmericas style={{ color: 'var(--primary-color, #d35400)' }} /> 
+            </motion.span>
             © {new Date().getFullYear()} Trippyjiffy Travel. All Rights Reserved. Empowering your next journey.
           </p>
         </motion.div>

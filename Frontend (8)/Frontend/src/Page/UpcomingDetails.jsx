@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -10,6 +10,8 @@ import { getImgUrl } from "../utils/getImgUrl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
+import { Heart, Scale } from "lucide-react";
+import { toast } from "sonner";
 
 const UpcomingDetails = () => {
   const { id } = useParams();
@@ -17,6 +19,52 @@ const UpcomingDetails = () => {
   const [loading, setLoading] = useState(true);
   const [showMobileForm, setShowMobileForm] = useState(false);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleAddToWishlist = async () => {
+    if (!token) {
+      toast.error("Please login to add to wishlist");
+      navigate("/login");
+      return;
+    }
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/wishlist`, {
+        item_id: trip.id,
+        item_type: "upcoming",
+        title: trip.title || "Upcoming Trip",
+        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://via.placeholder.com/600x400",
+        url: window.location.pathname
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success("Added to wishlist!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to add to wishlist");
+    }
+  };
+
+  const handleAddToCompare = async () => {
+    if (!token) {
+      toast.error("Please login to compare trips");
+      navigate("/login");
+      return;
+    }
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/compare`, {
+        item_id: trip.id,
+        item_type: "upcoming",
+        title: trip.title || "Upcoming Trip",
+        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://via.placeholder.com/600x400",
+        url: window.location.pathname
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success("Added to compare!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to add to compare");
+    }
+  };
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -56,6 +104,10 @@ const UpcomingDetails = () => {
         <div className={Style.heroContent}>
           <span className={Style.tag}>Limited Batch</span>
           <h1>{trip.title}</h1>
+          <div className={Style.actionButtons}>
+             <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
+             <button onClick={handleAddToCompare} className={Style.actionBtn}><Scale size={18} /> Compare</button>
+          </div>
         </div>
       </section>
 
@@ -69,10 +121,10 @@ const UpcomingDetails = () => {
 
           {/* ADVANCE GALLERY - ONLY ONE FORM REMAINS IN SIDEBAR */}
           {images.length > 0 && (
-            <section className={Style.glassCard}>
+            <section className={`${Style.glassCard} ${Style.gallerySection} ${Style.desktopOnly}`}>
               <h2>Gallery <span>Highlights</span></h2>
               <div className={Style.tinyGrid}>
-                {images.slice(0, 12).map((img, idx) => (
+                {images.slice(0, 5).map((img, idx) => (
                   <div key={idx} className={Style.tinyPic}>
                     <img src={getImgUrl(img)} alt={idx} loading="lazy" />
                   </div>
