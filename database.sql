@@ -81,7 +81,6 @@ CREATE TABLE `asia` (
   `country_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `is_visible` tinyint(1) DEFAULT '1',
-  `tags` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   PRIMARY KEY (`id`),
   CONSTRAINT `asia_chk_1` CHECK (json_valid(`images`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -93,7 +92,7 @@ CREATE TABLE `asia` (
 
 LOCK TABLES `asia` WRITE;
 /*!40000 ALTER TABLE `asia` DISABLE KEYS */;
-INSERT INTO `asia` VALUES (1,'Nepal Tour','[\"1776375323363.jpg\"]',1,''),(4,'Dubai Tour','[\"1776375343002.jpg\"]',1,'Luxury, Shopping, Desert Safari'),(5,'Thailand Tour','[\"1776375353758.jpg\"]',1,'Tropical, Markets, Nightlife');
+INSERT INTO `asia` VALUES (1,'Nepal Tour','[\"1776375323363.jpg\"]',1),(4,'Dubai Tour','[\"1776375343002.jpg\"]',1),(5,'Thailand Tour','[\"1776375353758.jpg\"]',1);
 /*!40000 ALTER TABLE `asia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -356,7 +355,7 @@ CREATE TABLE `enquiries` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `fk_user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +364,7 @@ CREATE TABLE `enquiries` (
 
 LOCK TABLES `enquiries` WRITE;
 /*!40000 ALTER TABLE `enquiries` DISABLE KEYS */;
-INSERT INTO `enquiries` VALUES (28,NULL,'Trippy Jiffy','operationstrippyjiffy@gmail.com','09870210896','jk','kghfhf','2025-12-18','2025-12-25','3 Star',1,0,'hg','2025-12-19 15:08:37'),(29,NULL,'Na','na@gmail.com','123','Na','Na','2025-12-20','2025-12-31','3 Star',1,0,'Na','2025-12-20 07:20:07'),(30,NULL,'Trippy Jiffy','operationstrippyjiffy@gmail.com','09870210896','jk','kghfhf','2025-12-18','2025-12-25','4 Star',1,0,'Testing','2025-12-20 13:22:41'),(31,NULL,'test test','test@google.com','18554052949','test','test','2025-12-23','2025-12-30','4 Star',1,0,'test','2025-12-23 11:38:49'),(32,NULL,'testing','test@gmail.com','999999999','t1','t2','2025-12-24','2025-12-27','4 Star',1,0,'tesing purpose','2025-12-23 11:50:04'),(33,NULL,'testing','test@gmail.com','999999999','t1','t2','2025-12-24','2025-12-27','4 Star',1,0,'tttt','2025-12-23 11:52:43'),(34,NULL,'Stacy Warren','cevyrys@mailinator.com','5412611165','sdd','ddd','2025-12-30','2025-12-30','4 Star',1,0,'dfv','2025-12-23 13:34:02'),(35,NULL,'Amit Jaat','amit@example.com','9876543210','Delhi','Rajasthan','2026-05-15','2026-05-20','4-star',2,1,'Please arrange good hotels','2026-04-16 13:24:43'),(36,NULL,'admin hh Amit','amittalan2203@gmail.com','08927434324','dfghj','ghj','2026-04-15','2026-04-22','Luxury',1,0,'asdfg','2026-04-16 13:30:50'),(37,NULL,'Amit jaat','new@gmail.com','+91888547687','dfghj','ghj','2026-04-17','2026-04-23','5 Star',1,0,'xdfghj','2026-04-16 22:53:22'),(38,NULL,'Amit jaat','new@gmail.com','+91888547687','dfghj','ghj','2026-04-17','2026-04-23','Luxury',1,0,'jajnsjn','2026-04-17 06:12:00'),(39,NULL,'admin hh Amit','amittalan2203@gmail.com','+91888547687','Not Specified','Not Specified','2026-04-17','2026-04-18','Quick Lead',2,0,'Quick Lead from Homepage pop-up.','2026-04-17 18:46:40'),(40,NULL,'Test Lead','test@example.com','1234567890','Not Specified','Not Specified','2026-04-20','2026-04-25','Quick Lead',2,0,'Testing popup','2026-04-17 19:08:52'),(41,NULL,'Amit jaat','new@gmail.com','888547687','Not Specified','Not Specified','2026-04-17','2026-04-18','Quick Lead',2,0,'Quick Lead from Homepage pop-up.','2026-04-17 19:11:15'),(42,NULL,'Amit jaat','new@gmail.com','888547687','Not Specified','Not Specified','2026-04-18','2026-04-19','Quick Lead',2,0,'Insider Deal Lead from Main Form: Spiti Valley Expedition.','2026-04-18 10:10:28'),(43,NULL,'Amit jaat','am@gmail.com','+91888547687','Not Specified','Not Specified','2026-04-18','2026-04-19','Quick Lead',2,0,'Insider Deal Lead from Upcoming Checkout: Santorini Blue Dome Escape.','2026-04-18 10:52:33');
+INSERT INTO `enquiries` VALUES (28,NULL,'Trippy Jiffy','operationstrippyjiffy@gmail.com','09870210896','jk','kghfhf','2025-12-18','2025-12-25','3 Star',1,0,'hg','2025-12-19 15:08:37'),(29,NULL,'Na','na@gmail.com','123','Na','Na','2025-12-20','2025-12-31','3 Star',1,0,'Na','2025-12-20 07:20:07'),(30,NULL,'Trippy Jiffy','operationstrippyjiffy@gmail.com','09870210896','jk','kghfhf','2025-12-18','2025-12-25','4 Star',1,0,'Testing','2025-12-20 13:22:41'),(31,NULL,'test test','test@google.com','18554052949','test','test','2025-12-23','2025-12-30','4 Star',1,0,'test','2025-12-23 11:38:49'),(32,NULL,'testing','test@gmail.com','999999999','t1','t2','2025-12-24','2025-12-27','4 Star',1,0,'tesing purpose','2025-12-23 11:50:04'),(33,NULL,'testing','test@gmail.com','999999999','t1','t2','2025-12-24','2025-12-27','4 Star',1,0,'tttt','2025-12-23 11:52:43'),(34,NULL,'Stacy Warren','cevyrys@mailinator.com','5412611165','sdd','ddd','2025-12-30','2025-12-30','4 Star',1,0,'dfv','2025-12-23 13:34:02'),(35,NULL,'Amit Jaat','amit@example.com','9876543210','Delhi','Rajasthan','2026-05-15','2026-05-20','4-star',2,1,'Please arrange good hotels','2026-04-16 13:24:43'),(36,NULL,'admin hh Amit','amittalan2203@gmail.com','08927434324','dfghj','ghj','2026-04-15','2026-04-22','Luxury',1,0,'asdfg','2026-04-16 13:30:50'),(37,NULL,'Amit jaat','new@gmail.com','+91888547687','dfghj','ghj','2026-04-17','2026-04-23','5 Star',1,0,'xdfghj','2026-04-16 22:53:22'),(38,NULL,'Amit jaat','new@gmail.com','+91888547687','dfghj','ghj','2026-04-17','2026-04-23','Luxury',1,0,'jajnsjn','2026-04-17 06:12:00'),(39,NULL,'admin hh Amit','amittalan2203@gmail.com','+91888547687','Not Specified','Not Specified','2026-04-17','2026-04-18','Quick Lead',2,0,'Quick Lead from Homepage pop-up.','2026-04-17 18:46:40'),(40,NULL,'Test Lead','test@example.com','1234567890','Not Specified','Not Specified','2026-04-20','2026-04-25','Quick Lead',2,0,'Testing popup','2026-04-17 19:08:52'),(41,NULL,'Amit jaat','new@gmail.com','888547687','Not Specified','Not Specified','2026-04-17','2026-04-18','Quick Lead',2,0,'Quick Lead from Homepage pop-up.','2026-04-17 19:11:15'),(42,NULL,'Amit jaat','new@gmail.com','888547687','Not Specified','Not Specified','2026-04-18','2026-04-19','Quick Lead',2,0,'Insider Deal Lead from Main Form: Spiti Valley Expedition.','2026-04-18 10:10:28'),(43,NULL,'Amit jaat','am@gmail.com','+91888547687','Not Specified','Not Specified','2026-04-18','2026-04-19','Quick Lead',2,0,'Insider Deal Lead from Upcoming Checkout: Santorini Blue Dome Escape.','2026-04-18 10:52:33'),(44,NULL,'admin hh Amit','AA@gmail.com','+438927434324','Elite Lead','Floating Label High Priority','2026-04-27','2026-05-04','VIP Leads',2,0,'High Priority Elite Lead from Landing Tour Hero: Golden Triangle Tour.','2026-04-27 21:02:00'),(45,NULL,'admin hh Amit','AA@gmail.com','+438927434324','Elite Lead','Floating Label High Priority','2026-04-27','2026-05-04','VIP Leads',2,0,'High Priority Elite Lead from India State Sidebar: Golden Triangle Tour.','2026-04-27 22:11:54');
 /*!40000 ALTER TABLE `enquiries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,6 +509,7 @@ CREATE TABLE `settings` (
   `darkTheme` tinyint(1) NOT NULL DEFAULT '0',
   `glassEffect` tinyint(1) NOT NULL DEFAULT '0',
   `primaryGradient` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'linear-gradient(135deg, #f97316 0%, #fbbf24 100%)',
+  `tickerMessages` json DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -520,7 +520,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'#f97316','#fbbf24','Inter','#f5f5f5','#0f172a','2026-04-16 18:08:15.816','2026-04-16 18:12:46.179',12,'parallax',0,0,'linear-gradient(135deg, #f97316 0%, #fbbf24 100%)');
+INSERT INTO `settings` VALUES (1,'#f97316','#fbbf24','Inter','#f5f5f5','#0f172a','2026-04-16 18:08:15.816','2026-04-16 18:12:46.179',12,'parallax',0,0,'linear-gradient(135deg, #f97316 0%, #fbbf24 100%)',NULL);
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +537,6 @@ CREATE TABLE `state` (
   `image` varchar(500) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `category_id` int DEFAULT NULL,
   `is_visible` tinyint(1) DEFAULT '1',
-  `tags` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -549,7 +548,7 @@ CREATE TABLE `state` (
 
 LOCK TABLES `state` WRITE;
 /*!40000 ALTER TABLE `state` DISABLE KEYS */;
-INSERT INTO `state` VALUES (65,'The Royal Escape—Neemrana Fort Visit','neemrana.png',6,1,''),(66,'Agra’s Timeless Beauty—Sunrise to Sunset','delhi_agra.png',6,1,''),(67,'Culinary Tales of Chandni Chowk- Delhi visit & Food Tour','chandni_chowk.png',6,1,''),(68,'A walk through Krishna’s Footsteps” - Mathura & Vrindavan Tour','mathura_vrindavan.png',6,1,''),(69,'Experience the India’s Timeless Wonders—Delhi & Agra Await','delhi_agra.png',6,1,''),(70,'Experience the Royal Charm of a 2-Night Pink City Getaway from Delhi','1776375512683-900693766.jpg',6,1,''),(71,'Spiritual Getaway by the Ganges: Haridwar & Rishikesh Tour','haridwar_rishikesh.png',6,1,''),(72,'Stories of Kings & Empires: A 5-Day Golden Triangle Road Trip Expedition','delhi_agra.png',1,1,''),(73,'Heritage Meets Spirituality: Explore Golden Triangle with Varanasi Tour Package','varanasi.png',1,1,''),(74,'Experience the Divine Bliss of the Golden Triangle with Mathura Vrindavan','mathura_vrindavan.png',1,1,''),(75,'A Journey of Inner Peace: Golden Triangle with Haridwar & Rishikesh','haridwar_rishikesh.png',1,1,''),(76,'Wings & Wonders: A Scenic Golden Triangle with Bharatpur Birding Tour','bharatpur.png',1,1,''),(77,'Roars & Royals: Golden Triangle + Ranthambore Safari','ranthambore.png',1,1,''),(78,'A Journey of Heritage and Harmony: Golden Triangle with Amritsar Tour','amritsar.png',1,1,''),(79,'Heritage Odyssey: Golden Triangle with Rajasthan Royal Escape ','1776378500373-130514182.jpg',1,1,'Royal, Heritage, Desert Adventure'),(80,'Through the Land of Royals: 14 Days Rajasthan Journey','1776381566500-466216281.jpg',2,1,'Royal, Heritage, Desert Adventure'),(81,'Into the Golden Sand Dunes: Jaisalmer’s Desert Trail','jaisalmer.png',2,1,''),(82,'Udaipur & Mount Abu Retreat—Tales of Lakes & Hills','1776375268445-230893603.jpg',2,1,''),(83,'From Hills to Backwaters: Kerala\'s Unwinding Escape','1776378477316-746109414.jpg',3,1,'Backwaters, Wellness, Nature'),(84,'A Scenic Coastal Escape—Kerala\'s Beach Tour','1776381545633-516212521.jpg',3,1,'Backwaters, Wellness, Nature'),(85,'Karnataka Kaleidoscope: From City Lights to Cloud-Kissed Heights','karnataka.png',3,1,''),(86,'Whispers of the Jungle: Jim Corbett National Park Escape','jim_corbett.png',8,1,''),(87,'Ranthambore Safari Experience—2 Nights Ranthambore Tour','1776375167458-850942508.jpg',8,1,'');
+INSERT INTO `state` VALUES (65,'The Royal Escape—Neemrana Fort Visit','neemrana.png',6,1),(66,'Agra’s Timeless Beauty—Sunrise to Sunset','delhi_agra.png',6,1),(67,'Culinary Tales of Chandni Chowk- Delhi visit & Food Tour','chandni_chowk.png',6,1),(68,'A walk through Krishna’s Footsteps” - Mathura & Vrindavan Tour','mathura_vrindavan.png',6,1),(69,'Experience the India’s Timeless Wonders—Delhi & Agra Await','delhi_agra.png',6,1),(70,'Experience the Royal Charm of a 2-Night Pink City Getaway from Delhi','1776375512683-900693766.jpg',6,1),(71,'Spiritual Getaway by the Ganges: Haridwar & Rishikesh Tour','haridwar_rishikesh.png',6,1),(72,'Stories of Kings & Empires: A 5-Day Golden Triangle Road Trip Expedition','delhi_agra.png',1,1),(73,'Heritage Meets Spirituality: Explore Golden Triangle with Varanasi Tour Package','varanasi.png',1,1),(74,'Experience the Divine Bliss of the Golden Triangle with Mathura Vrindavan','mathura_vrindavan.png',1,1),(75,'A Journey of Inner Peace: Golden Triangle with Haridwar & Rishikesh','haridwar_rishikesh.png',1,1),(76,'Wings & Wonders: A Scenic Golden Triangle with Bharatpur Birding Tour','bharatpur.png',1,1),(77,'Roars & Royals: Golden Triangle + Ranthambore Safari','ranthambore.png',1,1),(78,'A Journey of Heritage and Harmony: Golden Triangle with Amritsar Tour','amritsar.png',1,1),(79,'Heritage Odyssey: Golden Triangle with Rajasthan Royal Escape ','1776378500373-130514182.jpg',1,1),(80,'Through the Land of Royals: 14 Days Rajasthan Journey','1776381566500-466216281.jpg',2,1),(81,'Into the Golden Sand Dunes: Jaisalmer’s Desert Trail','jaisalmer.png',2,1),(82,'Udaipur & Mount Abu Retreat—Tales of Lakes & Hills','1776375268445-230893603.jpg',2,1),(83,'From Hills to Backwaters: Kerala\'s Unwinding Escape','1776378477316-746109414.jpg',3,1),(84,'A Scenic Coastal Escape—Kerala\'s Beach Tour','1776381545633-516212521.jpg',3,1),(85,'Karnataka Kaleidoscope: From City Lights to Cloud-Kissed Heights','karnataka.png',3,1),(86,'Whispers of the Jungle: Jim Corbett National Park Escape','jim_corbett.png',8,1),(87,'Ranthambore Safari Experience—2 Nights Ranthambore Tour','1776375167458-850942508.jpg',8,1);
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -655,6 +654,37 @@ INSERT INTO `upcoming_trips` VALUES (7,'Bali Tropical Bliss','[\"https://images.
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_compare`
+--
+
+DROP TABLE IF EXISTS `user_compare`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_compare` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `item_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_compare_user_id_item_id_item_type_key` (`user_id`,`item_id`,`item_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_compare`
+--
+
+LOCK TABLES `user_compare` WRITE;
+/*!40000 ALTER TABLE `user_compare` DISABLE KEYS */;
+INSERT INTO `user_compare` VALUES (3,2,'4','country','Dubai Tour','https://trippyjiffy.com/api/uploads/1776375343002.jpg','/asia-tours/dubai-tour','2026-04-27 22:37:18.975'),(4,2,'83','india','From Hills to Backwaters: Kerala\'s Unwinding Escape','https://trippyjiffy.com/api/uploads/1776378477316-746109414.jpg','/india-tours/83/from-hills-to-backwaters-keralas-unwinding-escape','2026-04-27 22:37:24.154');
+/*!40000 ALTER TABLE `user_compare` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user_documents`
 --
 
@@ -686,6 +716,37 @@ INSERT INTO `user_documents` VALUES (10,21,'Buddhist-Trails.pdf',_binary '%PDF-1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_wishlist`
+--
+
+DROP TABLE IF EXISTS `user_wishlist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_wishlist` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `item_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_wishlist_user_id_item_id_item_type_key` (`user_id`,`item_id`,`item_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_wishlist`
+--
+
+LOCK TABLES `user_wishlist` WRITE;
+/*!40000 ALTER TABLE `user_wishlist` DISABLE KEYS */;
+INSERT INTO `user_wishlist` VALUES (4,2,'7','upcoming','Bali Tropical Bliss','https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=600&q=80','/upcoming/7','2026-04-27 22:37:28.510');
+/*!40000 ALTER TABLE `user_wishlist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `userdocuments`
 --
 
@@ -701,7 +762,7 @@ CREATE TABLE `userdocuments` (
   `uploaded_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -710,6 +771,7 @@ CREATE TABLE `userdocuments` (
 
 LOCK TABLES `userdocuments` WRITE;
 /*!40000 ALTER TABLE `userdocuments` DISABLE KEYS */;
+INSERT INTO `userdocuments` VALUES (1,2,'receipt_software-medical_amit (2).pdf',_binary '%PDF-1.3\n%�߬\�\n3 0 obj\n<</Type /Page\n/Parent 1 0 R\n/Resources 2 0 R\n/MediaBox [0 0 595.2799999999999727 841.8899999999999864]\n/Contents 4 0 R\n>>\nendobj\n4 0 obj\n<<\n/Length 5017\n>>\nstream\n0.5670000000000001 w\n0 G\n0.98 0.98 0.98 rg\n0. 841.8899999999999864 595.2755905511811534 -841.8897637795276978 re\nf\n0.31 0.27 0.9 rg\n0. 841.8899999999999864 595.2755905511811534 -170.0787401574803255 re\nf\nBT\n/F2 28 Tf\n32.1999999999999957 TL\n1. g\n56.6929133858267775 742.6774015748030706 Td\n(SOFTWARE MEDICAL CENTER) Tj\nET\nBT\n/F1 10 Tf\n11.5 TL\n1. g\n56.6929133858267775 714.3309448818897636 Td\n(OFFICIAL MEDICAL APPOINTMENT RECEIPT) Tj\nET\nBT\n/F1 10 Tf\n11.5 TL\n1. g\n56.6929133858267775 694.4884251968503577 Td\n(Generated on Apr 22, 2026, 1:04:22 PM) Tj\nET\n0. G\n0.5670000000000001 w\n0. G\n0.5670000000000001 w\n0.95 0.96 0.98 rg\n0.78 G\n0. w\n0.95 0.96 0.98 rg\n56.6929133858267775 643.4648031496062686 206.7911722229309248 -71.6429133858267733 re\nf\nBT\n/F2 13 Tf\n14.9499999999999993 TL\n0.31 0.275 0.898 rg\n85.0393700787401627 604.0683464566928933 Td\n(BOOKING SUMMARY) Tj\nET\n0.95 0.96 0.98 rg\n0.78 G\n0. w\n0.95 0.96 0.98 rg\n263.4840856087577095 643.4648031496062686 275.1030010054154218 -71.6429133858267733 re\nf\nBT\n/F2 13 Tf\n14.9499999999999993 TL\n0.31 0.275 0.898 rg\n291.8305423016710733 604.0683464566928933 Td\n() Tj\nET\n0. G\n0.5670000000000001 w\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 539.7947244094488042 Td\n(PATIENT NAME) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 539.7947244094488042 Td\n(AMIT) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 513.8175590551180676 m\n538.5870866141731312 513.8175590551180676 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 481.7903937007873765 Td\n(CONTACT) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 481.7903937007873765 Td\n(09992196879 / Amittalan2203@gmail.com) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 455.8132283464566399 m\n538.5870866141731312 455.8132283464566399 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 423.7860629921259488 Td\n(SPECIALIST) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 423.7860629921259488 Td\n(DR. AMIT) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 397.808897637795269 m\n538.5870866141731312 397.808897637795269 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 365.7817322834645779 Td\n(DEPARTMENT) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 365.7817322834645779 Td\n(HEART) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 339.8045669291338413 m\n538.5870866141731312 339.8045669291338413 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 307.777401574803207 Td\n(DATE) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 307.777401574803207 Td\n(Thursday, April 23, 2026) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 281.8002362204724704 m\n538.5870866141731312 281.8002362204724704 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 249.7730708661417793 Td\n(TIME SESSION) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 249.7730708661417793 Td\n(09:00 AM) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 223.7959055118110996 m\n538.5870866141731312 223.7959055118110996 l\nS\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F2 11 Tf\n12.6499999999999986 TL\n0.392 0.455 0.545 rg\n79.3700787401574814 191.7687401574803516 Td\n(BOOKING ID) Tj\nET\n0.78 G\n0. w\n0.95 0.96 0.98 rg\nBT\n/F1 11 Tf\n12.6499999999999986 TL\n0.2 0.255 0.333 rg\n286.1612509630884347 191.7687401574803516 Td\n(#609AD7B10429) Tj\nET\n0.89 0.91 0.94 RG\n263.4840856087577095 165.7915748031497003 m\n538.5870866141731312 165.7915748031497003 l\nS\n0. G\n0.5670000000000001 w\n0.78 G\n0. w\n0. G\n0.5670000000000001 w\n0. G\n0.5670000000000001 w\nBT\n/F2 14 Tf\n16.0999999999999979 TL\n0.118 0.161 0.231 rg\n56.6929133858267775 109.0986614173228872 Td\n(Important Instructions:) Tj\nET\nBT\n/F1 10 Tf\n11.5 TL\n0.392 0.455 0.545 rg\n56.6929133858267775 80.7522047244095802 Td\n(� Please arrive 15 minutes before your scheduled appointment time.) Tj\nT* (� Carry a valid ID proof and previous medical records if any.) Tj\nT* (� If you need to cancel or reschedule, please contact the center at least 2 hours in advance.) Tj\nET\n0.31 0.27 0.9 RG\n1.4173228346456694 w\n56.6929133858267775 62.3624409448817829 m\n538.5826771653544256 62.3624409448817829 l\nS\nBT\n/F1 9 Tf\n10.3499999999999996 TL\n0.58 0.639 0.722 rg\n149.992795275590538 42.5199212598424765 Td\n(This is a computer-generated document. No physical signature is required.) Tj\nET\nBT\n/F1 9 Tf\n10.3499999999999996 TL\n0.58 0.639 0.722 rg\n194.992795275590538 28.3466929133857093 Td\n(Powered by Software Medical Management System) Tj\nET\nendstream\nendobj\n1 0 obj\n<</Type /Pages\n/Kids [3 0 R ]\n/Count 1\n>>\nendobj\n5 0 obj\n<<\n/Type /Font\n/BaseFont /Helvetica\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n6 0 obj\n<<\n/Type /Font\n/BaseFont /Helvetica-Bold\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n7 0 obj\n<<\n/Type /Font\n/BaseFont /Helvetica-Oblique\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n8 0 obj\n<<\n/Type /Font\n/BaseFont /Helvetica-BoldOblique\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n9 0 obj\n<<\n/Type /Font\n/BaseFont /Courier\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n10 0 obj\n<<\n/Type /Font\n/BaseFont /Courier-Bold\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n11 0 obj\n<<\n/Type /Font\n/BaseFont /Courier-Oblique\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n12 0 obj\n<<\n/Type /Font\n/BaseFont /Courier-BoldOblique\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n13 0 obj\n<<\n/Type /Font\n/BaseFont /Times-Roman\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n14 0 obj\n<<\n/Type /Font\n/BaseFont /Times-Bold\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n15 0 obj\n<<\n/Type /Font\n/BaseFont /Times-Italic\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n16 0 obj\n<<\n/Type /Font\n/BaseFont /Times-BoldItalic\n/Subtype /Type1\n/Encoding /WinAnsiEncoding\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n17 0 obj\n<<\n/Type /Font\n/BaseFont /ZapfDingbats\n/Subtype /Type1\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n18 0 obj\n<<\n/Type /Font\n/BaseFont /Symbol\n/Subtype /Type1\n/FirstChar 32\n/LastChar 255\n>>\nendobj\n2 0 obj\n<<\n/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]\n/Font <<\n/F1 5 0 R\n/F2 6 0 R\n/F3 7 0 R\n/F4 8 0 R\n/F5 9 0 R\n/F6 10 0 R\n/F7 11 0 R\n/F8 12 0 R\n/F9 13 0 R\n/F10 14 0 R\n/F11 15 0 R\n/F12 16 0 R\n/F13 17 0 R\n/F14 18 0 R\n>>\n/XObject <<\n>>\n>>\nendobj\n19 0 obj\n<<\n/Producer (jsPDF 4.2.1)\n/CreationDate (D:20260422130422+05\'30\')\n>>\nendobj\n20 0 obj\n<<\n/Type /Catalog\n/Pages 1 0 R\n/OpenAction [3 0 R /FitH null]\n/PageLayout /OneColumn\n>>\nendobj\nxref\n0 21\n0000000000 65535 f \n0000005221 00000 n \n0000007038 00000 n \n0000000015 00000 n \n0000000152 00000 n \n0000005278 00000 n \n0000005403 00000 n \n0000005533 00000 n \n0000005666 00000 n \n0000005803 00000 n \n0000005926 00000 n \n0000006055 00000 n \n0000006187 00000 n \n0000006323 00000 n \n0000006451 00000 n \n0000006578 00000 n \n0000006707 00000 n \n0000006840 00000 n \n0000006942 00000 n \n0000007286 00000 n \n0000007372 00000 n \ntrailer\n<<\n/Size 21\n/Root 20 0 R\n/Info 19 0 R\n/ID [ <09502A47FB7E7E2930C4891C99826AAD> <09502A47FB7E7E2930C4891C99826AAD> ]\n>>\nstartxref\n7476\n%%EOF','heyyyy','2026-04-27 22:15:55');
 /*!40000 ALTER TABLE `userdocuments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -759,4 +821,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-20 17:41:29
+-- Dump completed on 2026-04-28  4:24:51
