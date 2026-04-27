@@ -438,7 +438,7 @@ const LandingPage = () => {
               <div className={Style.footerCol}>
                 <h4>Tours</h4>
                 <button type="button" onClick={() => scrollToId("about")}>India Tours</button>
-                <button type="button" onClick={() => scrollToId("about")}>Asia Tours</button>
+                <button type="button" onClick={() => scrollToId("about")}>Overseas Tours</button>
                 <button type="button" onClick={() => scrollToId("about")}>Weekend Tour</button>
               </div>
 

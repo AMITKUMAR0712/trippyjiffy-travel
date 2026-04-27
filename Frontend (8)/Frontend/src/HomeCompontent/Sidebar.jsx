@@ -152,7 +152,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                   className={`${Style.Dropdown} 
                     ${openDropdown === index ? Style.showDropdown : ""} 
                     ${menu.name === "India Tours" ? Style.indiaDropdown : ""} 
-                    ${menu.name === "Asia Tours" ? Style.asiaDropdown : ""} 
+                    ${menu.name === "Overseas Tours" ? Style.asiaDropdown : ""} 
                     ${menu.name === "Reach Us" ? Style.reachDropdown : ""}`}
                 >
                   {menu.categories.map((cat, i) => {

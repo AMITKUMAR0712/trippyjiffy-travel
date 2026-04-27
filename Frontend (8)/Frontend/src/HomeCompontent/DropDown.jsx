@@ -76,7 +76,7 @@ const DropDown = ({ navData, openDropdown, toggleDropdown }) => {
           key={index}
           className={`${Style.NavItem} ${menu.name === "India Tours"
             ? Style.IndiaNavItem
-            : menu.name === "Asia Tours"
+            : menu.name === "Overseas Tours"
               ? Style.AsiaNavItem
               : ""
             }`}
@@ -86,7 +86,7 @@ const DropDown = ({ navData, openDropdown, toggleDropdown }) => {
           <div
             className={`${Style.MenuLink} ${menu.name === "India Tours"
               ? Style.IndiaLink
-              : menu.name === "Asia Tours"
+              : menu.name === "Overseas Tours"
                 ? Style.AsiaLink
                 : ""
               }`}
@@ -105,7 +105,7 @@ const DropDown = ({ navData, openDropdown, toggleDropdown }) => {
             {menu.categories && (
               <span
                 className={`${Style.DropArrow} ${openDropdown === index ? Style.open : ""
-                  } ${menu.name === "India Tours" ? Style.IndiaArrow : ""} ${menu.name === "Asia Tours" ? Style.AsiaArrow : ""
+                  } ${menu.name === "India Tours" ? Style.IndiaArrow : ""} ${menu.name === "Overseas Tours" ? Style.AsiaArrow : ""
                   }`}
               >
                 ▼
@@ -117,7 +117,7 @@ const DropDown = ({ navData, openDropdown, toggleDropdown }) => {
             <div
               className={`${Style.DropdownWrapper} ${menu.name === "India Tours"
                 ? Style.IndiaWrapper
-                : menu.name === "Asia Tours"
+                : menu.name === "Overseas Tours"
                   ? Style.AsiaWrapper
                   : Style.DefaultWrapper
                 } ${openDropdown === index ? Style.showDropdown : ""}`}

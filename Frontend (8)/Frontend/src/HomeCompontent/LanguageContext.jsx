@@ -42,7 +42,7 @@ export const LanguageProvider = ({ children }) => {
       about: "About Us",
       contact: "Contact Us",
       indiaTours: "India Tours",
-      asiaTours: "Asia Tours",
+      asiaTours: "Overseas Tours",
       blogs: "Blogs",
       planTrip: "Plan Your Trip",
       payNow: "Pay Now",

@@ -31,6 +31,7 @@ const CountryTourDetails = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedTours, setRelatedTours] = useState([]);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+  const apiUrl = import.meta.env.VITE_API_URL || `${baseURL}/api`;
 
   const toggleFaq = (id) => setOpenFaq(openFaq === id ? null : id);
 
@@ -131,7 +132,7 @@ const CountryTourDetails = () => {
 
     const fetchTour = async () => {
       try {
-        const asiaRes = await axios.get(`${baseURL}/api/asiaState/get`);
+        const asiaRes = await axios.get(`${apiUrl}/asiaState/get`);
         const asiaData = Array.isArray(asiaRes.data)
           ? asiaRes.data
           : asiaRes.data.data || [];
@@ -141,7 +142,7 @@ const CountryTourDetails = () => {
         );
         setImage(foundTour);
 
-        const countryRes = await axios.get(`${baseURL}/api/country/get`);
+        const countryRes = await axios.get(`${apiUrl}/country/get`);
         const countryData = Array.isArray(countryRes.data?.data)
           ? countryRes.data.data
           : Array.isArray(countryRes.data)
@@ -179,7 +180,7 @@ const CountryTourDetails = () => {
     if (!tour || fromAsia) return;
     const fetchFaqs = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/countrytoursfaq/get`);
+        const res = await axios.get(`${apiUrl}/countrytoursfaq/get`);
         const filtered = Array.isArray(res.data)
           ? res.data.filter((faq) => String(faq.tour_id) === String(tour?.id))
           : [];

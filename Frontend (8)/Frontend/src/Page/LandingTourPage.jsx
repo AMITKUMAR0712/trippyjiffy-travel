@@ -34,6 +34,7 @@ const LandingTourPage = () => {
   const [showModal, setShowModal] = useState(false);
   const modalTimer = useRef(null);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+  const apiUrl = import.meta.env.VITE_API_URL || `${baseURL}/api`;
 
   // Fetch landing page data from API using the hook
   const { data: apiPageData, loading: pageLoading, error: pageError } = useLandingPageData(slug || "golden-triangle");
@@ -69,8 +70,8 @@ const LandingTourPage = () => {
       if (!page || !baseURL) return;
       try {
         const [toursRes, statesRes] = await Promise.all([
-          axios.get(`${baseURL}/api/tours/get`),
-          axios.get(`${baseURL}/api/state/get`).catch(() => ({ data: [] })),
+          axios.get(`${apiUrl}/tours/get`),
+          axios.get(`${apiUrl}/state/get`).catch(() => ({ data: [] })),
         ]);
 
         const tours = Array.isArray(toursRes.data) ? toursRes.data : [];
