@@ -44,7 +44,7 @@ const TourDetails = () => {
         item_id: tour.id,
         item_type: "india",
         title: tour.tour_name || "Tour",
-        image: tour.image ? formatImageURL(tour.image) : "https://via.placeholder.com/600x400",
+        image: tour.image ? formatImageURL(tour.image) : "https://placehold.co/600x400",
         url: window.location.pathname
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -66,7 +66,7 @@ const TourDetails = () => {
         item_id: tour.id,
         item_type: "india",
         title: tour.tour_name || "Tour",
-        image: tour.image ? formatImageURL(tour.image) : "https://via.placeholder.com/600x400",
+        image: tour.image ? formatImageURL(tour.image) : "https://placehold.co/600x400",
         url: window.location.pathname
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -80,7 +80,7 @@ const TourDetails = () => {
   const toggleFaq = (id) => setOpenFaq(openFaq === id ? null : id);
 
   const formatImageURL = (img) => {
-    return getImgUrl(img) || "https://via.placeholder.com/600x400?text=No+Image";
+    return getImgUrl(img) || "https://placehold.co/600x400?text=No+Image";
   };
 
   // Helper: extract first text block for meta description (safe)
@@ -326,7 +326,7 @@ const TourDetails = () => {
                 ? formatImageURL(tour.image)
                 : tourState?.image
                   ? formatImageURL(tourState.image)
-                  : "https://via.placeholder.com/600x400?text=No+Image"
+                  : "https://placehold.co/600x400?text=No+Image"
             }
             alt={tour.tour_name || tourState?.state_name || "Tour Image"}
           />

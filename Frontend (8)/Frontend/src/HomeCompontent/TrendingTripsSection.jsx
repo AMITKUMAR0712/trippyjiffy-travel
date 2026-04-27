@@ -35,7 +35,7 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
         item_id: item.id,
         item_type: "india",
         title: item.title,
-        image: item.images?.[0] || "https://via.placeholder.com/300x200",
+        image: item.images?.[0] || "https://placehold.co/300x200",
         url: item.detailPath || `/india-tours/${item.id}/${slugify(item.state_name)}`
       }, {
         headers: { Authorization: `Bearer ${token}` }

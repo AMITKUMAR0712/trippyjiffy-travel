@@ -190,12 +190,12 @@ const CountryState = () => {
 
   const getCountryImage = () => {
     if (!selectedCountry)
-      return "https://via.placeholder.com/1200x400?text=No+Image";
+      return "https://placehold.co/1200x400?text=No+Image";
 
     const imgs = normalizeImages(selectedCountry.images);
     if (imgs.length > 0) return imgs[0];
 
-    return "https://via.placeholder.com/1200x400?text=No+Image";
+    return "https://placehold.co/1200x400?text=No+Image";
   };
 
   return (
@@ -270,7 +270,7 @@ const CountryState = () => {
                         ))
                       ) : (
                         <img
-                          src="https://via.placeholder.com/300x200?text=No+Image"
+                          src="https://placehold.co/300x200?text=No+Image"
                           alt="No State Image"
                           className={Style.TourImage}
                         />

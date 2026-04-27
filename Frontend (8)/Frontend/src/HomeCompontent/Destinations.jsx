@@ -272,7 +272,7 @@ const DestinationCard = memo(({ item, slugify, type }) => {
         item_id: item.id,
         item_type: type === "tour" ? "india" : type === "country" ? "country" : "upcoming",
         title: item.title,
-        image: imageUrl || "https://via.placeholder.com/300x200",
+        image: imageUrl || "https://placehold.co/300x200",
         url: getLink()
       }, {
         headers: { Authorization: `Bearer ${token}` }

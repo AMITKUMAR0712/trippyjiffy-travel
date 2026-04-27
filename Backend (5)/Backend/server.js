@@ -53,35 +53,40 @@ import translateRoutes from "./routes/translateRoutes.js";
 import upcomingTripsRoutes from "./routes/upcomingTripsRoutes.js";
 import userFeaturesRoutes from "./routes/userFeaturesRoutes.js";
 
-// ✅ Use all routes
-app.use('/api/chatbot', chatbotRoutes);
-app.use("/api/landing-pages", landingPageRoutes);
-app.use("/api/settings", settingsRoutes);
-app.use("/api/translate", translateRoutes);
-app.use("/api/upcoming-trips", upcomingTripsRoutes);
-app.use("/api/user-features", userFeaturesRoutes);
+// ✅ Helper to support both with and without /api prefix
+const mountRoute = (path, route) => {
+  app.use([`/api${path}`, path], route);
+};
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/enquiry", enquiryRoutes);
-app.use("/api", forgetRoutes);
-app.use("/api/contact", contactRoutes);
-app.use("/api/blogs", blogRoutes);
-app.use("/api/feedback", feedbackRoutes);
-app.use("/api/category-india", categoryIndiaRoutes);
-app.use("/api/state", stateRoutes);
-app.use("/api/tours", toursRoutes);
-app.use("/api/asia", asiaRoutes);
-app.use("/api/country", countryRoutes);
-app.use("/api/asiastate", asiastateRoutes);
-app.use("/api/faq", stateFaqRoutes);
-app.use("/api/countrytoursfaq", countryToursFaqRoutes);
-app.use("/api", combinedRoutes);
-app.use("/api/payment", paymentRoutes);
-app.use("/api/bussiancontent", bussiancontentRoutes);
-app.use("/api/user-documents", userDocumentRoutes);
-app.use("/api/user-document", userDocumentspdfRoutes);
-app.use("/api/reviews", reviewsRoutes);
+// ✅ Use all routes
+mountRoute('/chatbot', chatbotRoutes);
+mountRoute("/landing-pages", landingPageRoutes);
+mountRoute("/settings", settingsRoutes);
+mountRoute("/translate", translateRoutes);
+mountRoute("/upcoming-trips", upcomingTripsRoutes);
+mountRoute("/user-features", userFeaturesRoutes);
+
+mountRoute("/admin", adminRoutes);
+mountRoute("/users", userRoutes);
+mountRoute("/enquiry", enquiryRoutes);
+mountRoute("", forgetRoutes);
+mountRoute("/contact", contactRoutes);
+mountRoute("/blogs", blogRoutes);
+mountRoute("/feedback", feedbackRoutes);
+mountRoute("/category-india", categoryIndiaRoutes);
+mountRoute("/state", stateRoutes);
+mountRoute("/tours", toursRoutes);
+mountRoute("/asia", asiaRoutes);
+mountRoute("/country", countryRoutes);
+mountRoute("/asiastate", asiastateRoutes);
+mountRoute("/faq", stateFaqRoutes);
+mountRoute("/countrytoursfaq", countryToursFaqRoutes);
+mountRoute("", combinedRoutes);
+mountRoute("/payment", paymentRoutes);
+mountRoute("/bussiancontent", bussiancontentRoutes);
+mountRoute("/user-documents", userDocumentRoutes);
+mountRoute("/user-document", userDocumentspdfRoutes);
+mountRoute("/reviews", reviewsRoutes);
 
 // ✅ Start Server
 const PORT = process.env.PORT || 5000;

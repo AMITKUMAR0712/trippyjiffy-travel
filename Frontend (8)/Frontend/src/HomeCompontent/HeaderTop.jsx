@@ -17,7 +17,7 @@ const HeaderTop = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/settings`);
+        const res = await axios.get(`${baseURL}/api/settings/get`);
         if (res.data && res.data.tickerMessages) {
            let parsed = typeof res.data.tickerMessages === 'string' ? JSON.parse(res.data.tickerMessages) : res.data.tickerMessages;
            if (Array.isArray(parsed) && parsed.length > 0) {

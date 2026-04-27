@@ -18,7 +18,7 @@ const BlogCard = memo(({ item, getFirstParagraph }) => {
       ? item.image.startsWith("http")
         ? item.image
         : `${baseURL}/api/uploads/${item.image.replace(/^\/?uploads\//, "")}`
-      : "https://via.placeholder.com/600x400?text=No+Image";
+      : "https://placehold.co/600x400?text=No+Image";
 
   return (
     <div className={Style.BlogWrap}>
@@ -123,7 +123,7 @@ const Blog = () => {
             spaceBetween={30}
             slidesPerView={3}
             grabCursor={true}
-            loop={true}
+            loop={blogs.length >= 4}
             speed={800}
             breakpoints={{
               0: { slidesPerView: 1 },

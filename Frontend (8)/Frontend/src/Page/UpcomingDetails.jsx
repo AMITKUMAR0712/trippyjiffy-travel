@@ -33,7 +33,7 @@ const UpcomingDetails = () => {
         item_id: trip.id,
         item_type: "upcoming",
         title: trip.title || "Upcoming Trip",
-        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://via.placeholder.com/600x400",
+        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://placehold.co/600x400",
         url: window.location.pathname
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -55,7 +55,7 @@ const UpcomingDetails = () => {
         item_id: trip.id,
         item_type: "upcoming",
         title: trip.title || "Upcoming Trip",
-        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://via.placeholder.com/600x400",
+        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://placehold.co/600x400",
         url: window.location.pathname
       }, {
         headers: { Authorization: `Bearer ${token}` }
