@@ -104,6 +104,20 @@ const TourDetails = () => {
     }
   };
 
+  const hasValidData = (jsonString) => {
+    if (!jsonString) return false;
+    try {
+      const parsed = typeof jsonString === "string" ? JSON.parse(jsonString) : jsonString;
+      if (parsed?.blocks?.length === 1 && parsed.blocks[0].type === "paragraph") {
+        const text = parsed.blocks[0].data.text.replace(/<[^>]*>/g, "").trim().toLowerCase();
+        return text !== "not available" && text !== "n/a" && text !== "";
+      }
+      return parsed?.blocks?.length > 0;
+    } catch {
+      return String(jsonString).replace(/<[^>]*>/g, "").trim().toLowerCase() !== "not available";
+    }
+  };
+
   // 🟢 Fetch Tour
   useEffect(() => {
     const fetchTourData = async () => {
@@ -494,7 +508,7 @@ const TourDetails = () => {
                 </div>
               )}
 
-              {safeRender(tour.supplemental_activities) && (
+              {hasValidData(tour.supplemental_activities) && (
                 <div id="supplemental" className={Style.Supplemental}>
                   <h3>Supplemental Activities</h3>
                   {safeRender(tour.supplemental_activities)}

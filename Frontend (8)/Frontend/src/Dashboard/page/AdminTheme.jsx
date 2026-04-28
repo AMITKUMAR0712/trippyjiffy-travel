@@ -53,6 +53,48 @@ const AdminTheme = () => {
     }));
   };
 
+  const handleTickerChange = (index, value) => {
+    try {
+      let parsed = typeof settings.tickerMessages === 'string' ? JSON.parse(settings.tickerMessages) : (settings.tickerMessages || []);
+      if (!Array.isArray(parsed)) parsed = [];
+      parsed[index] = value;
+      setSettings(prev => ({ ...prev, tickerMessages: JSON.stringify(parsed) }));
+    } catch(e) {
+      setSettings(prev => ({ ...prev, tickerMessages: JSON.stringify([value]) }));
+    }
+  };
+
+  const addTickerMessage = () => {
+    try {
+      let parsed = typeof settings.tickerMessages === 'string' ? JSON.parse(settings.tickerMessages) : (settings.tickerMessages || []);
+      if (!Array.isArray(parsed)) parsed = [];
+      parsed.push("New Announcement");
+      setSettings(prev => ({ ...prev, tickerMessages: JSON.stringify(parsed) }));
+    } catch(e) {
+      setSettings(prev => ({ ...prev, tickerMessages: JSON.stringify(["New Announcement"]) }));
+    }
+  };
+
+  const removeTickerMessage = (index) => {
+    try {
+      let parsed = typeof settings.tickerMessages === 'string' ? JSON.parse(settings.tickerMessages) : (settings.tickerMessages || []);
+      if (!Array.isArray(parsed)) parsed = [];
+      parsed.splice(index, 1);
+      setSettings(prev => ({ ...prev, tickerMessages: JSON.stringify(parsed) }));
+    } catch(e) {
+      // ignore
+    }
+  };
+
+  const getTickerMessages = () => {
+    try {
+      let parsed = typeof settings.tickerMessages === 'string' ? JSON.parse(settings.tickerMessages) : settings.tickerMessages;
+      return Array.isArray(parsed) ? parsed : [];
+    } catch(e) {
+      return [];
+    }
+  };
+
   const applyPreset = (preset) => {
     setSettings(prev => ({
       ...prev,
@@ -90,8 +132,8 @@ const AdminTheme = () => {
     <div className={Style.AdminTheme}>
       <header className={Style.header}>
         <div>
-          <h1>Design Studio</h1>
-          <p>The core identity and visual engine of TrippyJiffy.</p>
+          <h1>Design Studio & Settings</h1>
+          <p>The core identity, visual engine, and dynamic configurations of TrippyJiffy.</p>
         </div>
         <div className={Style.presets}>
           {PRESETS.map(p => (
@@ -118,6 +160,12 @@ const AdminTheme = () => {
           onClick={() => setActiveTab('typography')}
         >
           <FiType style={{ marginRight: 8 }} /> Typography
+        </button>
+        <button 
+          className={`${Style.tab} ${activeTab === 'marquee' ? Style.active : ""}`}
+          onClick={() => setActiveTab('marquee')}
+        >
+          <FiType style={{ marginRight: 8 }} /> Top Header Texts
         </button>
         <button 
           className={`${Style.tab} ${activeTab === 'advanced' ? Style.active : ""}`}
@@ -206,6 +254,48 @@ const AdminTheme = () => {
                     This font is currently set to <strong>{settings.fontFamily}</strong>.
                   </p>
                 </div>
+              </motion.div>
+            )}
+
+            {activeTab === 'marquee' && (
+              <motion.div
+                key="marquee"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+              >
+                <div className={Style.sectionTitle}>
+                  <FiLayout /> Top Header Announcements
+                </div>
+                <p style={{ marginBottom: 20, color: '#64748b' }}>
+                  Manage the sliding text messages shown at the very top of the website.
+                </p>
+                
+                {getTickerMessages().map((msg, index) => (
+                  <div key={index} style={{ display: 'flex', gap: 10, marginBottom: 15 }}>
+                    <input 
+                      type="text" 
+                      value={msg} 
+                      onChange={(e) => handleTickerChange(index, e.target.value)}
+                      style={{ flex: 1, padding: '10px 15px', borderRadius: 8, border: '1px solid #e2e8f0' }}
+                    />
+                    <button 
+                      type="button" 
+                      onClick={() => removeTickerMessage(index)}
+                      style={{ padding: '10px 15px', background: '#ef4444', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' }}
+                    >
+                      <FiTrash2 />
+                    </button>
+                  </div>
+                ))}
+                
+                <button 
+                  type="button" 
+                  onClick={addTickerMessage}
+                  style={{ padding: '10px 20px', background: '#10b981', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer', marginTop: 10 }}
+                >
+                  + Add New Message
+                </button>
               </motion.div>
             )}
 

@@ -146,6 +146,20 @@ const CountryTourDetails = () => {
       .join(" ");
   };
 
+  const hasValidData = (jsonString) => {
+    if (!jsonString) return false;
+    try {
+      const parsed = typeof jsonString === "string" ? JSON.parse(jsonString) : jsonString;
+      if (parsed?.blocks?.length === 1 && parsed.blocks[0].type === "paragraph") {
+        const text = parsed.blocks[0].data.text.replace(/<[^>]*>/g, "").trim().toLowerCase();
+        return text !== "not available" && text !== "n/a" && text !== "";
+      }
+      return parsed?.blocks?.length > 0;
+    } catch {
+      return String(jsonString).replace(/<[^>]*>/g, "").trim().toLowerCase() !== "not available";
+    }
+  };
+
   // build a short meta description (first ~160 chars) from description/faq/itinerary
   const buildMetaDescription = () => {
     const sources = [];
@@ -206,9 +220,15 @@ const CountryTourDetails = () => {
         }
 
         if (foundTour) {
-          const related = asiaData.filter(
-            (t) => t?.asia_id === foundTour?.asia_id && t?.id !== foundTour?.id
+          let related = asiaData.filter(
+            (t) => t?.asia_id === foundTour?.asia_id && Number(t?.id) !== Number(asiastateId)
           );
+          
+          // Fallback: If no tours in the same country, just show other popular asia tours
+          if (related.length === 0) {
+            related = asiaData.filter((t) => Number(t?.id) !== Number(asiastateId)).slice(0, 5);
+          }
+
           setRelatedTours(related);
         } else {
           setRelatedTours([]);
@@ -453,10 +473,12 @@ const CountryTourDetails = () => {
                 {safeRender(tour.exclusions)}
               </div>
 
-              <div id="supplemental" className={Style.Supplemental}>
-                <h3>Supplemental Activities</h3>
-                {safeRender(tour.supplemental_activities)}
-              </div>
+              {hasValidData(tour.supplemental_activities) && (
+                <div id="supplemental" className={Style.Supplemental}>
+                  <h3>Supplemental Activities</h3>
+                  {safeRender(tour.supplemental_activities)}
+                </div>
+              )}
             </div>
           </div>
 

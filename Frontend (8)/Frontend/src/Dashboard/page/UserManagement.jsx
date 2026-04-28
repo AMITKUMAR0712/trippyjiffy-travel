@@ -619,32 +619,33 @@ const UserManagement = () => {
   };
 
   // ✅ Send PDF to User (FIXED)
-const handleSendPDFToUser = (userId) => {
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.accept = "application/pdf";
+  const handleSendPDFToUser = (userId) => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "application/pdf";
 
-  fileInput.onchange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    fileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-    const formData = new FormData();
-    formData.append("pdf", file); // ✅ backend expects 'pdf' field name
+      const formData = new FormData();
+      formData.append("pdf", file);
+      formData.append("user_id", userId);
 
-    try {
-      await axios.post(`${baseURL}/api/user-documents/upload/${userId}`, formData, {
-        headers: { ...headers, "Content-Type": "multipart/form-data" },
-      });
-      showTemporaryAlert("📄 PDF uploaded and sent to user successfully!");
-      fetchAllPDFs(); // refresh PDF list
-    } catch (err) {
-      console.error("Send PDF Error:", err);
-      showTemporaryAlert("❌ Failed to upload PDF");
-    }
+      try {
+        await axios.post(`${baseURL}/api/user-documents/upload`, formData, {
+          headers: { ...headers, "Content-Type": "multipart/form-data" },
+        });
+        showTemporaryAlert("📄 PDF uploaded and sent to user successfully!");
+        fetchAllPDFs(); // refresh PDF list
+      } catch (err) {
+        console.error("Send PDF Error:", err);
+        showTemporaryAlert("❌ Failed to upload PDF");
+      }
+    };
+
+    fileInput.click();
   };
-
-  fileInput.click();
-};
 
 
   // Overlay

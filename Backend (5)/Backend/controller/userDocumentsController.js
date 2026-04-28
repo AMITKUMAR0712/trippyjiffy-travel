@@ -25,7 +25,7 @@ export const upload = multer({
 
 export const uploadPDF = async (req, res) => {
   try {
-    const user_id = req.user?.id || null; 
+    const user_id = req.body.user_id || req.user?.id || null; 
     const { pdf_text } = req.body;
 
     let pdf_name = null;
