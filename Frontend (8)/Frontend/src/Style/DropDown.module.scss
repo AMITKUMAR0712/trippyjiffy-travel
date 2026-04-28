@@ -3,7 +3,7 @@
 .NavList {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -15,18 +15,18 @@
 
 .NavItem {
   position: relative;
-  padding: 10px 0;
+  padding: 8px 0;
 
   .MenuLink {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     font-size: 14px;
     font-weight: 600;
     color: $text-main;
     cursor: pointer;
     transition: $transition-base;
-    padding: 8px 12px;
+    padding: 7px 11px;
     border-radius: $radius-md;
 
     span, a {
@@ -51,11 +51,11 @@
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 220px;
+  min-width: 210px;
   background: $bg-white;
   border-radius: $radius-lg;
   box-shadow: $shadow-xl;
-  padding: 15px 0;
+  padding: 12px 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(15px);
@@ -70,7 +70,7 @@
   }
 
   &.IndiaWrapper, &.AsiaWrapper {
-    min-width: 260px;
+    min-width: 250px;
   }
 }
 
@@ -81,11 +81,11 @@
 }
 
 .DropItem {
-  padding: 0 10px;
+  padding: 0 8px;
 
   a, .CategoryLink {
     display: block;
-    padding: 10px 15px;
+    padding: 8px 12px;
     font-size: 14px;
     font-weight: 500;
     color: $text-main;
@@ -96,20 +96,20 @@
     &:hover {
       background: $primary-light;
       color: $primary;
-      padding-left: 20px;
+      padding-left: 16px;
     }
   }
 }
 
 .StateList {
   list-style: none;
-  padding-left: 15px;
-  margin: 5px 0;
+  padding-left: 12px;
+  margin: 4px 0;
   border-left: 2px solid #f1f5f9;
 
   li a {
     font-size: 13px;
-    padding: 6px 15px;
+    padding: 5px 12px;
     color: $text-light;
     &:hover { color: $primary; background: none; }
   }

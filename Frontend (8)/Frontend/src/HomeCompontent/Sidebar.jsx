@@ -65,6 +65,13 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
   const navData = [
     { name: "Home", path: "/" },
     {
+      name: "Explore",
+      categories: [
+        { name: "All Destinations", path: "/explore" },
+        { name: "Upcoming Trips", path: "/upcoming" },
+      ],
+    },
+    {
       name: "India Tours",
       categories: indiaTours.map((region) => ({
         ...region,

@@ -143,12 +143,18 @@ const Header = () => {
 
     const navData = [
         { name: "Home", path: "/" },
+        {
+            name: "Explore",
+            categories: [
+                { name: "All Destinations", path: "/explore" },
+                { name: "Upcoming Trips", path: "/upcoming" },
+            ],
+        },
         { name: "India Tours", categories: indiaTours },
         { name: "Overseas Tours", categories: asiaTours },
         {
             name: "Landing Pages",
             categories: [
-                { name: "Upcoming Trips", path: "/upcoming" },
                 { name: "Golden Triangle", path: "/landing-pages/golden-triangle" },
                 { name: "South India Tour", path: "/landing-pages/south-india" },
                 { name: "Rajasthan", path: "/landing-pages/rajasthan" },
@@ -223,7 +229,7 @@ const Header = () => {
                                 <Link to={isLoggedIn ? "/user" : "/register"} aria-label={isLoggedIn ? "Dashboard" : "Register"}>
                                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
                                         <FaUserCircle
-                                            size={26}
+                                            size={24}
                                             color={isLoggedIn ? "var(--primary-color, #d35400)" : "#64748b"}
                                             aria-hidden="true"
                                             style={{ transition: "all 0.3s ease" }}
@@ -241,8 +247,8 @@ const Header = () => {
                                                 position: "absolute",
                                                 bottom: "14px",
                                                 right: 0,
-                                                width: "10px",
-                                                height: "10px",
+                                                width: "8px",
+                                                height: "8px",
                                                 backgroundColor: "#22c55e",
                                                 border: "2px solid #fff",
                                                 borderRadius: "50%"
