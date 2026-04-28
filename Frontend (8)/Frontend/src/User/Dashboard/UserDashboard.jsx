@@ -22,9 +22,30 @@ const UserDashboard = () => {
     }
   }, []);
 
+  const [wishlistCount, setWishlistCount] = useState("0");
+
+  useEffect(() => {
+    const fetchWishlistCount = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+        const { data } = await axios.get(`${baseURL}/api/user-features/wishlist`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (data && data.wishlist) {
+          setWishlistCount(data.wishlist.length.toString());
+        }
+      } catch (err) {
+        console.error("Error fetching wishlist count", err);
+      }
+    };
+    fetchWishlistCount();
+  }, []);
+
   const stats = [
     { label: "Booked Trips", value: "0", icon: <Trophy color="#f59e0b" />, color: "amber" },
-    { label: "Wishlist", value: "0", icon: <TrendingUp color="#3b82f6" />, color: "blue" },
+    { label: "Wishlist", value: wishlistCount, icon: <TrendingUp color="#3b82f6" />, color: "blue" },
     { label: "Destinations", value: "Global", icon: <MapPin color="#10b981" />, color: "green" },
     { label: "Active Plan", value: "Free", icon: <ShieldCheck color="#6366f1" />, color: "indigo" }
   ];

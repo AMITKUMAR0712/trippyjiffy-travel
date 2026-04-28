@@ -6,7 +6,9 @@ import {
   Menu, 
   Bell, 
   Search,
-  ChevronRight
+  ChevronRight,
+  MessageSquare,
+  FileText
 } from "lucide-react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -28,6 +30,9 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
     return "User Panel";
   };
 
+  const [showNotif, setShowNotif] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
   const fetchUserName = async () => {
     const token = localStorage.getItem("token");
     if (!token) return setUserName("Guest");
@@ -36,9 +41,41 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
       const response = await axios.get(`${baseURL}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setUserName(response.data?.name || "Guest");
+      const userData = response.data;
+      setUserName(userData?.name || "Guest");
+      
+      let newNotifs = [];
+      if (userData?.admin_message) {
+         newNotifs.push({
+           id: "msg",
+           title: "New Message from Admin",
+           desc: userData.admin_message.length > 30 ? userData.admin_message.substring(0, 30) + "..." : userData.admin_message,
+           icon: <MessageSquare size={16} color="#3b82f6" />,
+           path: "/user/announcement"
+         });
+      }
+
+      // Fetch documents too
+      try {
+         const docRes = await axios.get(`${baseURL}/api/user-documents/user`, {
+           headers: { Authorization: `Bearer ${token}` },
+         });
+         const docs = docRes.data.pdfs || [];
+         if (docs.length > 0) {
+            newNotifs.push({
+               id: "doc",
+               title: "New Document Available",
+               desc: `You have ${docs.length} document${docs.length > 1 ? "s" : ""} uploaded by admin.`,
+               icon: <FileText size={16} color="#f97316" />,
+               path: "/user/announcement"
+            });
+         }
+      } catch (err) {}
+
+      setNotifications(newNotifs);
+
     } catch (error) {
-      console.error("Failed to fetch user:", error);
+      console.error("Failed to fetch user data for header:", error);
       setUserName("Guest");
     }
   };
@@ -76,10 +113,57 @@ const Header = ({ toggleSidebar, isSidebarOpen }) => {
           <input type="text" placeholder="Search..." />
         </div>
 
-        <button className={Style.iconBtn}>
-          <Bell size={20} />
-          <span className={Style.notificationBadge} />
-        </button>
+        <div className={Style.notificationWrapper}>
+          <button 
+            className={`${Style.iconBtn} ${notifications.length > 0 ? Style.hasUnread : ""}`}
+            onClick={() => setShowNotif(!showNotif)}
+          >
+            <Bell size={20} />
+            {notifications.length > 0 && (
+              <span className={Style.notificationBadge}>
+                {notifications.length}
+              </span>
+            )}
+          </button>
+          
+          {showNotif && (
+            <div className={Style.notifDropdown}>
+              <div className={Style.notifHeader}>
+                <h4>Notifications</h4>
+                <span>{notifications.length} New</span>
+              </div>
+              <div className={Style.notifList}>
+                {notifications.length > 0 ? (
+                  notifications.map((notif, idx) => (
+                    <div 
+                      key={idx} 
+                      className={Style.notifItem}
+                      onClick={() => {
+                        setShowNotif(false);
+                        navigate(notif.path);
+                      }}
+                    >
+                      <div className={Style.notifIconWrap}>{notif.icon}</div>
+                      <div className={Style.notifContent}>
+                        <p className={Style.notifTitle}>{notif.title}</p>
+                        <p className={Style.notifDesc}>{notif.desc}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className={Style.emptyNotif}>
+                    <p>You're all caught up!</p>
+                  </div>
+                )}
+              </div>
+              <div className={Style.notifFooter}>
+                <button onClick={() => { setShowNotif(false); navigate("/user/announcement"); }}>
+                  View All Messages
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className={Style.userProfile}>
           <div className={Style.userInfo}>
