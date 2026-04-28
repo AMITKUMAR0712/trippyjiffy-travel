@@ -20,8 +20,8 @@
   .slide {
     position: relative;
     width: 100%;
-    height: 80vh;
-    min-height: 600px;
+    height: 100%;
+    min-height: 100%;
   }
 
   .bannerImage {
@@ -258,16 +258,16 @@
 @media (max-width: 768px) {
   .Banner {
     height: auto;
-    min-height: 100vh; 
+    min-height: 80vh; 
 
     .slide {
-      height: 100vh; 
-      min-height: 550px;
+      height: 100%; 
+      min-height: 100%;
     }
 
     .contentWrapper {
       padding: 80px 16px 40px; 
-      min-height: 100vh;
+      min-height: 80vh;
       align-items: center;
       display: flex;
     }
@@ -330,11 +330,13 @@
       }
 
       .features {
-        flex-direction: row; // Keep row but scale down
-        gap: 15px;
+        flex-direction: row;
+        gap: 10px;
         margin-top: 25px;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 5px;
 
         .separator {
           display: block;
@@ -342,12 +344,22 @@
           opacity: 0.5;
         }
 
-        .featureItem strong {
-          font-size: 20px;
-        }
+        .featureItem {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
 
-        .featureItem span {
-          font-size: 10px;
+          strong {
+            font-size: 18px;
+            white-space: nowrap;
+          }
+
+          span {
+            font-size: 10px;
+            text-align: center;
+            line-height: 1.2;
+          }
         }
       }
     }
@@ -356,10 +368,16 @@
 
 @media (max-width: 480px) {
   .Banner {
-    min-height: 90vh;
+    min-height: 75vh;
 
     .slide {
-      min-height: 90vh;
+      height: 100%;
+      min-height: 100%;
+    }
+    
+    .contentWrapper {
+      min-height: 75vh;
+      padding: 60px 16px 30px;
     }
 
     .Bannertext .badge {

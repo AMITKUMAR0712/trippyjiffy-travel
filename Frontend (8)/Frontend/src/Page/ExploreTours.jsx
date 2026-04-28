@@ -1,26 +1,35 @@
 import React, { useEffect, useState, memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Style from "../Style/ExploreTours.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
+import { Heart, Scale } from "lucide-react";
+import { toast } from "sonner";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
-const DestinationCard = memo(({ item, slugify, type }) => {
+const DestinationCard = memo(({ item, slugify, type, handleAction }) => {
   const imageUrl = getImgUrl(item.images?.[0]) || "";
+  const detailsPath = type === "tour"
+    ? `/india-tours/${item.id}/${slugify(item.state_name)}`
+    : `/asia-tours/${slugify(item.country_name)}`;
 
   return (
     <Link
       key={`${type}-${item.id}`}
-      to={
-        type === "tour"
-          ? `/india-tours/${item.id}/${slugify(item.state_name)}`
-          : `/asia-tours/${slugify(item.country_name)}`
-      }
+      to={detailsPath}
       className={Style.card}
       style={{ "--bg-image": `url("${imageUrl}")` }}
     >
+      <div className={Style.cardActions}>
+         <button onClick={(e) => handleAction(e, "wishlist", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
+            <Heart size={18} />
+         </button>
+         <button onClick={(e) => handleAction(e, "compare", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Compare">
+            <Scale size={18} />
+         </button>
+      </div>
       <div className={Style.badge}>{type === "tour" ? "India" : "Asia"}</div>
       <div className={Style.content}>
         <h2 className={Style.title}>{item.title}</h2>
@@ -43,6 +52,34 @@ const DestinationCard = memo(({ item, slugify, type }) => {
 
 const ExploreTours = () => {
   const [tours, setTours] = useState([]);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleAction = async (e, action, item) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!token) {
+      toast.error(`Please login to add to ${action}`);
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${baseURL}/api/user-features/${action}`, {
+        item_id: item.id,
+        item_type: item.type === "tour" ? "india" : "asia",
+        title: item.title,
+        image: item.images?.[0] || "https://placehold.co/300x200",
+        url: item.detailPath
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data.success) toast.success(`Added to ${action}!`);
+    } catch (err) {
+      toast.error(err.response?.data?.message || `Failed to add to ${action}`);
+    }
+  };
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all"); // 'all', 'india', 'asia'
@@ -211,6 +248,7 @@ const ExploreTours = () => {
                 item={item} 
                 slugify={slugify} 
                 type={item.type} 
+                handleAction={handleAction}
               />
             ))}
           </div>
@@ -231,18 +269,29 @@ const ExploreTours = () => {
             </div>
 
             <div className={Style.upcomingGrid}>
-              {upcoming.map((trip) => (
-                <Link key={trip.id} to={`/upcoming/${trip.id}`} className={Style.upcomingCard}>
-                  <div className={Style.upcomingImg}>
-                    <img src={getImgUrl(trip.banner_image || trip.images?.[0])} alt={trip.title} />
-                    <div className={Style.upcomingTag}>Coming Soon</div>
-                  </div>
-                  <div className={Style.upcomingInfo}>
-                    <h3>{trip.title}</h3>
-                    <span>View Itinerary →</span>
-                  </div>
-                </Link>
-              ))}
+              {upcoming.map((trip) => {
+                const detailsPath = `/upcoming/${trip.id}`;
+                return (
+                  <Link key={trip.id} to={detailsPath} className={Style.upcomingCard}>
+                    <div className={Style.cardActions}>
+                       <button onClick={(e) => handleAction(e, "wishlist", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
+                          <Heart size={16} />
+                       </button>
+                       <button onClick={(e) => handleAction(e, "compare", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Compare">
+                          <Scale size={16} />
+                       </button>
+                    </div>
+                    <div className={Style.upcomingImg}>
+                      <img src={getImgUrl(trip.banner_image || trip.images?.[0])} alt={trip.title} />
+                      <div className={Style.upcomingTag}>Coming Soon</div>
+                    </div>
+                    <div className={Style.upcomingInfo}>
+                      <h3>{trip.title}</h3>
+                      <span>View Itinerary →</span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
 
             <div className={Style.viewAllWrap}>

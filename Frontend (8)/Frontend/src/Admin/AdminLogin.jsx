@@ -26,6 +26,9 @@ const AdminLogin = () => {
 
       if (res.data.success && res.data.admin) {
         localStorage.setItem("adminData", JSON.stringify(res.data.admin));
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+        }
         setMessage("Login successful!");
         navigate("/admin/dashboard");
       } else {

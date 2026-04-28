@@ -451,7 +451,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Style from "../Style/UserManagement.module.scss";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+const rawBaseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+const baseURL = rawBaseURL.replace(/\/api\/?$/, "");
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
