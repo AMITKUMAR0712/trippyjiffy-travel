@@ -4,7 +4,7 @@ import axios from "axios";
 import Style from "../Style/ExploreTours.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
-import { Heart, Scale } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
@@ -25,9 +25,6 @@ const DestinationCard = memo(({ item, slugify, type, handleAction }) => {
       <div className={Style.cardActions}>
          <button onClick={(e) => handleAction(e, "wishlist", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
             <Heart size={18} />
-         </button>
-         <button onClick={(e) => handleAction(e, "compare", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Compare">
-            <Scale size={18} />
          </button>
       </div>
       <div className={Style.badge}>{type === "tour" ? "India" : "Asia"}</div>
@@ -276,9 +273,6 @@ const ExploreTours = () => {
                     <div className={Style.cardActions}>
                        <button onClick={(e) => handleAction(e, "wishlist", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
                           <Heart size={16} />
-                       </button>
-                       <button onClick={(e) => handleAction(e, "compare", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Compare">
-                          <Scale size={16} />
                        </button>
                     </div>
                     <div className={Style.upcomingImg}>

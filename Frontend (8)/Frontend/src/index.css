@@ -656,6 +656,8 @@ body {
    ================================================================ */
 .section {
   padding: var(--section-py) var(--section-px);
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 5000px;
 }
 
 /* ================================================================

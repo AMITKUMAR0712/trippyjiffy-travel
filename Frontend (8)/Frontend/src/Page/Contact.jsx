@@ -3,7 +3,6 @@ import Style from "../Style/Contact.module.scss";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SEO from "../utils/SEO";
-import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -99,30 +98,18 @@ const Contact = () => {
 
 
       {/* HEADER IMAGE */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className={Style.ContactImg}
-      >
+      <div className={Style.ContactImg}>
         <img
           src="https://wallpapers.com/images/hd/wooden-blocks-contact-us-vh58juahu6kzh7i8.jpg"
           alt="contact"
         />
-      </motion.div>
+      </div>
 
       {/* WRAPPER */}
       <div className={Style.wrapper}>
         <div className={Style.ContactFlex}>
           {/* LEFT - FORM */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-            className={Style.ContactLeft}
-          >
+          <div className={Style.ContactLeft}>
             <div className={Style.ContactPlan}>
               <h2>We'd love to hear from you</h2>
               <h1>Contact Us</h1>
@@ -206,16 +193,10 @@ const Contact = () => {
                 Send Message
               </button>
             </form>
-          </motion.div>
+          </div>
 
           {/* RIGHT - INFO */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className={Style.ContactRight}
-          >
+          <div className={Style.ContactRight}>
             <h2>Contact Information</h2>
             <p>
               <strong>Email:</strong>
@@ -231,7 +212,7 @@ const Contact = () => {
               <br />
               <Link to="tel:+918527454549">+91 85274 54549</Link>
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

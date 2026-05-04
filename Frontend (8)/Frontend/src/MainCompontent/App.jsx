@@ -41,7 +41,7 @@ const App = () => {
 
     // Apply font to body
     document.body.style.fontFamily = settings.fontFamily + ", sans-serif";
-    
+
     // Handle dark theme body class
     if (settings.darkTheme) {
       document.body.classList.add("dark-theme");

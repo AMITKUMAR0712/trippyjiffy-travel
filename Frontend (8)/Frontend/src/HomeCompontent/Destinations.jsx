@@ -241,7 +241,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
-import { ArrowUpRight, MapPin, Heart, Scale } from "lucide-react";
+import { ArrowUpRight, MapPin, Heart } from "lucide-react";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
@@ -294,9 +294,6 @@ const DestinationCard = memo(({ item, slugify, type }) => {
       <div className={Style.cardActions}>
          <button onClick={(e) => handleAction(e, "wishlist")} className={Style.iconBtn} title="Add to Wishlist">
             <Heart size={18} />
-         </button>
-         <button onClick={(e) => handleAction(e, "compare")} className={Style.iconBtn} title="Add to Compare">
-            <Scale size={18} />
          </button>
       </div>
       <div className={Style.content}>

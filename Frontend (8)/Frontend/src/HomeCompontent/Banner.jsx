@@ -94,6 +94,9 @@ const Banner = () => {
                 className={Style.bannerImage} 
                 loading={idx === 0 ? "eager" : "lazy"} 
                 fetchpriority={idx === 0 ? "high" : "auto"}
+                decoding={idx === 0 ? "sync" : "async"}
+                width="1920"
+                height="1080"
               />
               <div className={Style.overlay}></div>
             </div>

@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import Style from "../Style/UpcomingLanding.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
-import { Heart, Scale } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 
 const UpcomingLanding = () => {
@@ -91,9 +91,6 @@ const UpcomingLanding = () => {
                 <div className={Style.cardActions}>
                    <button onClick={(e) => handleAction(e, "wishlist", trip)} className={Style.iconBtn} title="Add to Wishlist">
                       <Heart size={16} />
-                   </button>
-                   <button onClick={(e) => handleAction(e, "compare", trip)} className={Style.iconBtn} title="Add to Compare">
-                      <Scale size={16} />
                    </button>
                 </div>
                 <div className={Style.cardImg}>

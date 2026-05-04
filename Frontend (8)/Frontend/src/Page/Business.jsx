@@ -2,7 +2,6 @@ import React, { memo, useState } from "react";
 import Style from "../Style/Business.module.scss";
 import BusinessImage from "../Img/BusinessDisk 1.jpg";
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 const Business = () => {
@@ -92,31 +91,19 @@ const Business = () => {
 
 
       {/* Banner */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className={Style.BusinessImage}
-      >
+      <div className={Style.BusinessImage}>
         <img src={BusinessImage} alt="Banner" />
 
         <div className={Style.BusinessWith}>
           <h1>Partner with TrippyJiffy</h1>
         </div>
-      </motion.div>
+      </div>
 
       {/* Wrapper */}
       <div className={Style.wrapper}>
         <div className={Style.BusinessFlex}>
           {/* LEFT FORM */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-            className={Style.BusinessLeft}
-          >
+          <div className={Style.BusinessLeft}>
             <div className={Style.ContactFormWrapper}>
               <h2>Business Form</h2>
 
@@ -212,16 +199,10 @@ const Business = () => {
                 </button>
               </form>
             </div>
-          </motion.div>
+          </div>
 
           {/* RIGHT CONTENT */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className={Style.BusinessRight}
-          >
+          <div className={Style.BusinessRight}>
             <h2>A committed initiative by TrippyJiffy.</h2>
             <p>
               We understand that many travel companies across India and abroad
@@ -234,7 +215,7 @@ const Business = () => {
             </p>
             <p>We help you expand your presence with confidence.</p>
             <p>Even a single booking is enough to show you how we work.</p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

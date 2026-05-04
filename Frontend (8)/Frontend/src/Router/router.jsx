@@ -78,7 +78,6 @@ const Announcements = lazy(() => import("../User/Dashboard/Announcements.jsx"));
 const PaymentModel = lazy(() => import("../User/Dashboard/PaymentModel.jsx"));
 const UserDocument = lazy(() => import("../User/UserDocument.jsx"));
 const Wishlist = lazy(() => import("../User/Dashboard/Wishlist.jsx"));
-const Compare = lazy(() => import("../User/Dashboard/Compare.jsx"));
 
 const router = createBrowserRouter([
   {
@@ -166,7 +165,6 @@ const router = createBrowserRouter([
           { path: "PaymentModel", element: <Suspense fallback={<PageLoader />}><PaymentModel /></Suspense> },
           { path: "UserDocument", element: <Suspense fallback={<PageLoader />}><UserDocument /></Suspense> },
           { path: "wishlist", element: <Suspense fallback={<PageLoader />}><Wishlist /></Suspense> },
-          { path: "compare", element: <Suspense fallback={<PageLoader />}><Compare /></Suspense> },
         ],
       },
     ],

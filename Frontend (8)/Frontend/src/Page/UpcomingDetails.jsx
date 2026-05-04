@@ -10,7 +10,7 @@ import { getImgUrl } from "../utils/getImgUrl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
-import { Heart, Scale } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 
 const UpcomingDetails = () => {
@@ -44,27 +44,7 @@ const UpcomingDetails = () => {
     }
   };
 
-  const handleAddToCompare = async () => {
-    if (!token) {
-      toast.error("Please login to compare trips");
-      navigate("/login");
-      return;
-    }
-    try {
-      const res = await axios.post(`${baseURL}/api/user-features/compare`, {
-        item_id: trip.id,
-        item_type: "upcoming",
-        title: trip.title || "Upcoming Trip",
-        image: getImgUrl(trip.banner_image || (Array.isArray(trip.images) && trip.images[0])) || "https://placehold.co/600x400",
-        url: window.location.pathname
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.data.success) toast.success("Added to compare!");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add to compare");
-    }
-  };
+
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -106,7 +86,6 @@ const UpcomingDetails = () => {
           <h1>{trip.title}</h1>
           <div className={Style.actionButtons}>
              <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
-             <button onClick={handleAddToCompare} className={Style.actionBtn}><Scale size={18} /> Compare</button>
           </div>
         </div>
       </section>

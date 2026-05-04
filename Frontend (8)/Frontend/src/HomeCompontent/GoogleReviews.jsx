@@ -6,35 +6,33 @@ export default function ElfsightTest({ className = "" }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // remove any previous elfsight script to avoid duplicates while testing
-    const prev = document.querySelector('script[data-elfsight="platform"]');
-    if (prev) prev.remove();
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadScript();
+        observer.disconnect();
+      }
+    }, { rootMargin: '200px' });
+
+    if (containerRef.current) observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const loadScript = () => {
+    if (document.querySelector('script[data-elfsight="platform"]')) return;
 
     const script = document.createElement("script");
     script.src = "https://elfsightcdn.com/platform.js";
-    script.async = false; // try non-async for test
+    script.async = true;
     script.setAttribute("data-elfsight", "platform");
 
     script.onload = () => {
-      console.log("Elfsight script loaded");
-      // attempt to force widget init if function exists
       if (window.elfsight && typeof window.elfsight.init === "function") {
         window.elfsight.init();
-        console.log("Elfsight init called");
       }
     };
-
-    script.onerror = (e) => {
-      console.error("Elfsight script failed to load", e);
-    };
-
     document.body.appendChild(script);
-
-    return () => {
-      // do not remove script permanently; only for tests you may remove
-      // document.body.removeChild(script);
-    };
-  }, []);
+  };
 
   useEffect(() => {
     const el = containerRef.current;
@@ -42,6 +40,7 @@ export default function ElfsightTest({ className = "" }) {
 
     let scrollPos = 0;
     const speed = 0.5;
+    let animationFrame;
 
     const tick = () => {
       if (!el) return;
@@ -50,10 +49,23 @@ export default function ElfsightTest({ className = "" }) {
         scrollPos = 0;
       }
       el.scrollLeft = scrollPos;
+      animationFrame = requestAnimationFrame(tick);
     };
 
-    const interval = setInterval(tick, 30);
-    return () => clearInterval(interval);
+    const startObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        animationFrame = requestAnimationFrame(tick);
+      } else {
+        cancelAnimationFrame(animationFrame);
+      }
+    });
+
+    startObserver.observe(el);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      startObserver.disconnect();
+    };
   }, []);
 
   return (

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "../Style/Enquiry.module.scss";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   User, Mail, Phone, Navigation, MapPin,
   CalendarDays, Hotel, Users, Baby,
@@ -83,22 +82,15 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
     return (
       <div className={Style.Page} style={{ backgroundImage: `url(${bg})` }}>
         <div className={Style.BgOverlay} />
-        <motion.div
-          className={Style.Card}
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.div className={Style.SuccessIcon}
-            initial={{ scale: 0 }} animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}>
+        <div className={Style.Card}>
+          <div className={Style.SuccessIcon}>
             <CheckCircle2 size={56} />
-          </motion.div>
+          </div>
           <h2 className={Style.SuccessTitle}>Enquiry Received! ✈</h2>
           <p className={Style.SuccessMsg}>
             We've received your travel request and our team will reach out to you shortly. Get ready for an incredible journey!
           </p>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -115,12 +107,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
         {[...Array(7)].map((_, i) => <div key={i} className={Style.Particle} />)}
       </div>
 
-      <motion.div
-        className={Style.Card}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.65, ease: "easeOut" }}
-      >
+      <div className={Style.Card}>
         {/* Header */}
         <div className={Style.CardHeader}>
           <div className={Style.HeaderIcon}><Plane size={24} /></div>
@@ -223,7 +210,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
             }
           </button>
         </form>
-      </motion.div>
+      </div>
     </div>
   );
 };

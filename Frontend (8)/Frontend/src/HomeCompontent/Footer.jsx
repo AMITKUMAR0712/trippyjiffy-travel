@@ -122,7 +122,7 @@ const Footer = () => {
         >
           <motion.div variants={itemVariants} className={Style.FooterWrap}>
             <div className={Style.FooterImage}>
-              <img src={Logo} alt="Footer Logo" />
+              <img src={Logo} alt="Footer Logo" width="160" height="60" loading="lazy" />
             </div>
             <p>Where unforgettable memories don't come with a price tag!</p>
 

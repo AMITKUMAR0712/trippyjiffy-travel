@@ -12,8 +12,7 @@ import {
   ChevronRight,
   ShieldCheck,
   Home,
-  Heart,
-  Scale
+  Heart
 } from "lucide-react";
 import Style from "../Dashboard/Style/Sidebar.module.scss";
 
@@ -40,7 +39,6 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
     { name: "Messages", path: "/user/announcement", icon: <Bell size={20} /> },
     { name: "My Documents", path: "/user/UserDocument", icon: <FileText size={20} /> },
     { name: "Wishlist", path: "/user/wishlist", icon: <Heart size={20} /> },
-    { name: "Compare Tours", path: "/user/compare", icon: <Scale size={20} /> },
   ];
 
   return (

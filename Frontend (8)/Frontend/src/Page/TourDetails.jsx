@@ -15,7 +15,7 @@ import {
 } from "react-icons/fi";
 import { Link as ScrollLink } from "react-scroll";
 import Brief from "../Img/Untitled.png";
-import { Heart, Scale } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 // ----------------- HELMET -----------------
 import { Helmet } from "react-helmet-async";
@@ -55,27 +55,7 @@ const TourDetails = () => {
     }
   };
 
-  const handleAddToCompare = async () => {
-    if (!token) {
-      toast.error("Please login to compare tours");
-      navigate("/login");
-      return;
-    }
-    try {
-      const res = await axios.post(`${baseURL}/api/user-features/compare`, {
-        item_id: tour.id,
-        item_type: "india",
-        title: tour.tour_name || "Tour",
-        image: tour.image ? formatImageURL(tour.image) : "https://placehold.co/600x400",
-        url: window.location.pathname
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.data.success) toast.success("Added to compare!");
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add to compare");
-    }
-  };
+
 
   const toggleFaq = (id) => setOpenFaq(openFaq === id ? null : id);
 
@@ -352,7 +332,6 @@ const TourDetails = () => {
             </h1>
             <div className={Style.actionButtons}>
                <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
-               <button onClick={handleAddToCompare} className={Style.actionBtn}><Scale size={18} /> Compare</button>
             </div>
           </div>
         </div>

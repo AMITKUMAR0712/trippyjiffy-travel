@@ -31,6 +31,8 @@ const BlogCard = memo(({ item, getFirstParagraph }) => {
             className={Style.BlogImage}
             loading="lazy"
             decoding="async"
+            width="600"
+            height="400"
           />
         </picture>
       </Link>

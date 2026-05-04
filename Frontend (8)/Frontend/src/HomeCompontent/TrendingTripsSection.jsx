@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import Style from "../Style/Destinations.module.scss";
 import ContactUsForm from "./ContactUsForm";
 import { getImgUrl } from "../utils/getImgUrl";
-import { Heart, Scale } from "lucide-react";
+import { Heart } from "lucide-react";
 import { toast } from "sonner";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
@@ -169,9 +169,6 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
                     <div className={Style.cardActions}>
                        <button onClick={(e) => handleAction(e, "wishlist", item)} className={Style.iconBtn} title="Add to Wishlist">
                           <Heart size={18} />
-                       </button>
-                       <button onClick={(e) => handleAction(e, "compare", item)} className={Style.iconBtn} title="Add to Compare">
-                          <Scale size={18} />
                        </button>
                     </div>
                     <div className={Style.content}>

@@ -2,7 +2,6 @@ import React from "react";
 import Style from "../Style/About.module.scss";
 import AboutImg from "../Img/travel.jpg";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { FaWhatsapp, FaComments, FaHeart, FaPencilAlt } from "react-icons/fa";
 import Director from "../Img/director2.jpeg";
 import Director1 from "../Img/director1.jpeg";
@@ -45,13 +44,7 @@ const About = () => {
       </div>
 
       <div className={Style.wrapper}>
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-          className={Style.Abouttrippy}
-        >
+        <div className={Style.Abouttrippy}>
           <h2>About Trippy Jiffy</h2>
           <p>
             TrippyJiffy (Neelasha Travels LLP) is your go-to travel and tourism
@@ -68,26 +61,14 @@ const About = () => {
             Our expert travel advice and competitive pricing make us the perfect
             partner for your next journey.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.2 }
-            }
-          }}
-          className={Style.AboutExperts}
-        >
+        <div className={Style.AboutExperts}>
           <div className={Style.AboutTrip}>
             <h2>Experts in Customizing Your Trip</h2>
 
             <div className={Style.ExpertGrid}>
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={Style.ExpertCard}>
+              <div className={Style.ExpertCard}>
                 <FaWhatsapp className={Style.icon} />
                 <div>
                   <h3>Staying connected</h3>
@@ -96,9 +77,9 @@ const About = () => {
                     based on your interests and needs.
                   </p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={Style.ExpertCard}>
+              <div className={Style.ExpertCard}>
                 <FaComments className={Style.icon} />
                 <div>
                   <h3>Seamless coordination</h3>
@@ -106,17 +87,17 @@ const About = () => {
                     We handle all planning & support you throughout the journey.
                   </p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={Style.ExpertCard}>
+              <div className={Style.ExpertCard}>
                 <FaHeart className={Style.icon} />
                 <div>
                   <h3>Shaping experiences</h3>
                   <p>Less time researching, more time enjoying your trip.</p>
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className={Style.ExpertCard}>
+              <div className={Style.ExpertCard}>
                 <FaPencilAlt className={Style.icon} />
                 <div>
                   <h3>Solving challenges</h3>
@@ -125,14 +106,14 @@ const About = () => {
                     smooth.
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
 
         <div className={Style.AboutMeet}>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <div>
             <h2>Meet Our Team</h2>
             <h4>TrippyJiffy’s Most Valuable Asset</h4>
             <p>
@@ -140,16 +121,10 @@ const About = () => {
               travel experiences.
             </p>
             <h3>Leadership Team</h3>
-          </motion.div>
+          </div>
 
           <div className={Style.AboutFlexmeet}>
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              className={Style.AboutWrapDisk}
-            >
+            <div className={Style.AboutWrapDisk}>
               <img src={Director} alt="Arpita Srivastava" />
               <h2>Arpita Srivastava</h2>
               <p>
@@ -169,15 +144,9 @@ const About = () => {
                 realities.
               </p>
               <h2>Managing Director</h2>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className={Style.AboutWrapDisk}
-            >
+            <div className={Style.AboutWrapDisk}>
               <img src={Director1} alt="Shailee Srivastava" />
               <h2>Shailee Srivastava</h2>
               <p>
@@ -197,17 +166,11 @@ const About = () => {
                 for delivering outstanding travel experiences.
               </p>
               <h2>Director Operations & Sales</h2>
-            </motion.div>
+            </div>
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-          className={Style.AboutCertificates}
-        >
+        <div className={Style.AboutCertificates}>
           <div className={Style.AboutCertificatesDisk}>
             <h2>Ministry of Tourism Certificates</h2>
             <p>
@@ -216,22 +179,14 @@ const About = () => {
             </p>
           </div>
           <div className={Style.AboutCertificatesFlex}>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ ease: "easeOut" }}
-              className={Style.AboutCertificatesLeft}
-            >
+            <div className={Style.AboutCertificatesLeft}>
               <img src={Certificates1} alt="Certificates1" />
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ ease: "easeOut" }}
-              className={Style.AboutCertificatesRight}
-            >
+            </div>
+            <div className={Style.AboutCertificatesRight}>
               <img src={Certificates2} alt="Certificates2" />
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
