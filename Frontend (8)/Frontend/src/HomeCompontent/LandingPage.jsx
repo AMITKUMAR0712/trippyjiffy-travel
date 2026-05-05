@@ -12,8 +12,10 @@ import Certificates2 from "../Img/Certificates2.jpeg";
 import InsiderDealsForm from "../Page/InsiderDealsForm";
 
 import { createPortal } from "react-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const LandingPage = () => {
+
   const [showEnquiry, setShowEnquiry] = useState(false);
   const slides = useMemo(
     () => [
@@ -67,7 +69,9 @@ const LandingPage = () => {
 
   return (
     <div className={Style.tjBody}>
+      <ScrollToTop />
       {showEnquiry && createPortal(
+
         <div className={Style.modalOverlay} onClick={() => setShowEnquiry(false)}>
           <div className={Style.modalContent} onClick={(e) => e.stopPropagation()}>
             <button className={Style.closeBtn} onClick={() => setShowEnquiry(false)}>✕</button>

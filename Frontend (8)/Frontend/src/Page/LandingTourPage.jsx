@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Helmet } from "react-helmet-async";
+import SEO from "../HomeCompontent/SEO";
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -223,10 +223,12 @@ const LandingTourPage = () => {
         "--accent": page.theme?.accent,
       }}
     >
-      <Helmet>
-        <title>{page.seo?.title || page.title}</title>
-        <meta name="description" content={page.seo?.description || page.hero?.subtitle} />
-      </Helmet>
+      <SEO 
+        title={page.seo?.title || page.title}
+        description={page.seo?.description || page.hero?.subtitle}
+        keywords={page.seo?.keywords || "travel, tours, trippyjiffy"}
+        ogImage={formatImageURL(page.hero?.slides?.[0])}
+      />
 
       {/* NEW AUTO LEAD POPUP */}
       <AutoLeadPopup delay={4000} context={`Landing Page: ${page.title}`} />

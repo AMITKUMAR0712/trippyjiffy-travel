@@ -99,7 +99,7 @@ const Compare = () => {
                 <div className={Style.emptyDocs}>
                    <Scale size={48} />
                    <p>Your compare list is currently empty. Add up to 3 tours to compare them here!</p>
-                   <Link to="/explore" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
+                   <Link to="/explore-all-destinations" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
                      Explore Tours
                    </Link>
                 </div>

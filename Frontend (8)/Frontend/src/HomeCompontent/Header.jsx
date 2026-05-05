@@ -146,8 +146,8 @@ const Header = () => {
         {
             name: "Explore",
             categories: [
-                { name: "All Destinations", path: "/explore" },
-                { name: "Upcoming Trips", path: "/upcoming" },
+                { name: "All Destinations", path: "/explore-all-destinations" },
+                { name: "Upcoming Trips", path: "/upcoming-best-tours" },
             ],
         },
         { name: "India Tours", categories: indiaTours },

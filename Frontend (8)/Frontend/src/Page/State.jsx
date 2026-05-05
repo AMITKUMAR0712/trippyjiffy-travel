@@ -8,6 +8,7 @@ import Style from "../Style/State.module.scss";
 import InsiderDealsForm from "./InsiderDealsForm";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
+import SEO from "../HomeCompontent/SEO";
 
 const State = () => {
   const { stateId, stateName } = useParams();
@@ -264,7 +265,7 @@ const State = () => {
               </div>
 
               <div className={Style.StateBlockRight}>
-                <h1>{state.state_name}</h1>
+                <h2>{state.state_name}</h2>
 
                 {relatedTours.map((tour) => (
                   <div key={tour.id} className={Style.TourBox}>
@@ -341,20 +342,12 @@ const State = () => {
 
   return (
     <>
-   <Helmet>
-  <title>{formattedTitle}</title>
-
-  <meta
-    name="description"
-    content={`Explore best tours of ${bannerTitle} with TrippyJiffy.`}
-  />
-
-  {/* ✅ CANONICAL URL (dynamic) */}
-  <link
-    rel="canonical"
-    href={window.location.href}
-  />
-</Helmet>
+      <SEO 
+        title={bannerTitle}
+        isDestination={true}
+        description={`Book your ${bannerTitle} tour package with TrippyJiffy. Best ${bannerTitle} trip cost, 5-day itineraries, and customized travel plans for an unforgettable journey.`}
+        keywords={`${bannerTitle} tour package, ${bannerTitle} trip cost, ${bannerTitle} itinerary, explore ${bannerTitle}, TrippyJiffy`}
+      />
 
 
       <div className={`${Style.StatePage} ${showEnquiry ? Style.blurred : ""}`}>
@@ -374,22 +367,22 @@ const State = () => {
             }}
           />
 
-          <div className={Style.StateText}>
-            <motion.div 
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                backdropFilter: "blur(8px)",
-                padding: "20px 40px",
-                borderRadius: "15px",
-                border: "1px solid rgba(255, 255, 255, 0.2)"
-              }}
-            >
-              <h2>{bannerTitle}</h2>
-            </motion.div>
-          </div>
+              <div className={Style.StateText}>
+                <motion.div 
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  style={{
+                    background: "rgba(255, 255, 255, 0.15)",
+                    backdropFilter: "blur(8px)",
+                    padding: "20px 40px",
+                    borderRadius: "15px",
+                    border: "1px solid rgba(255, 255, 255, 0.2)"
+                  }}
+                >
+                  <h1>{bannerTitle} <span>Tour Packages</span></h1>
+                </motion.div>
+              </div>
         </motion.div>
 
         <div className={Style.wrapper}>

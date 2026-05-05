@@ -172,7 +172,7 @@ const TrendingTripsSection = ({ title = "Trending Trips", limit = 8, featuredTri
                        </button>
                     </div>
                     <div className={Style.content}>
-                      <h2 className={Style.title}>{item.title}</h2>
+                      <h3 className={Style.title}>{item.title}</h3>
                       <p className={Style.copy}>
                         {infoText || "Explore the best experience with Trippy Jiffy premium tours."}
                       </p>

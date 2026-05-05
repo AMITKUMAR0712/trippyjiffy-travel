@@ -18,8 +18,7 @@ import Brief from "../Img/Untitled.png";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 // ----------------- HELMET -----------------
-import { Helmet } from "react-helmet-async";
-import SEO from "../utils/SEO";
+import SEO from "../HomeCompontent/SEO";
 
 const TourDetails = () => {
   const { tourId } = useParams();
@@ -274,11 +273,12 @@ const TourDetails = () => {
   return (
     <div className={Style.TourDetails}>
       <SEO
-        title={metaTitle}
-        description={metaDescription}
-        keywords={`${tourState?.state_name || ""}, tour packages, travel guide, ${tour.tour_name || ""}, trippyjiffy tours`}
+        title={tour.tour_name || tourState?.state_name}
+        isDestination={true}
+        description={`Get the best ${tour.tour_name || tourState?.state_name} tour package deals. Detailed ${tour.tour_name} itinerary, trip cost, and expert travel guide by TrippyJiffy.`}
+        keywords={`${tour.tour_name} tour package, ${tour.tour_name} trip cost, ${tour.tour_name} itinerary, ${tourState?.state_name} travel, trippyjiffy tours`}
         ogImage={tour.image ? formatImageURL(tour.image) : formatImageURL(tourState?.image)}
-        canonicalUrl={window.location.href}
+        canonical={window.location.href}
         structuredData={{
           "@context": "https://schema.org",
           "@type": "TouristTrip",
@@ -327,8 +327,8 @@ const TourDetails = () => {
           <div className={Style.TourDetailsNAme}>
             <h1>
               {tour.tour_name
-                ? `${tour.tour_name} - ${tourState?.state_name || "Unknown"} Tour`
-                : `${tourState?.state_name || "Unknown"} Tour`}
+                ? `${tour.tour_name} Tour Package`
+                : `${tourState?.state_name || "Unknown"} Tour Package`}
             </h1>
             <div className={Style.actionButtons}>
                <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>

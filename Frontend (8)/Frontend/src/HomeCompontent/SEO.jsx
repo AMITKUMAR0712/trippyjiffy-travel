@@ -8,13 +8,21 @@ const SEO = ({
   ogImage, 
   ogUrl, 
   canonical,
-  structuredData 
+  structuredData,
+  isDestination = false
 }) => {
   const siteName = "TrippyJiffy";
-  const fullTitle = title ? `${title} | ${siteName}` : siteName;
-  const defaultDesc = "TrippyJiffy - Explore India like never before. Best travel agency for curated tours, itineraries, and experiences across India and Asia.";
-  const defaultKeywords = "travel India, tour packages, TrippyJiffy, curated tours, Asia travel, vacation planning";
-  const defaultOgImage = "https://trippyjiffy.com/og-banner.jpg"; // Replace with actual URL
+  
+  // Smart Title Formula: [Destination] Tour Package | TrippyJiffy
+  const formattedTitle = isDestination && title 
+    ? `${title} Tour Package | Best Deals` 
+    : title;
+
+  const fullTitle = formattedTitle ? `${formattedTitle} | ${siteName}` : `Best Tour Packages & Holiday Deals | ${siteName}`;
+  
+  const defaultDesc = "TrippyJiffy - Explore India's 4th Dimension. Best travel agency for curated tour packages, customized itineraries, and unique travel experiences across India and Asia.";
+  const defaultKeywords = "tour packages, holiday packages, travel packages, India tours, Asia travel, vacation planning, TrippyJiffy";
+  const defaultOgImage = "https://trippyjiffy.com/og-banner.jpg"; 
 
   return (
     <Helmet>
@@ -22,7 +30,8 @@ const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description || defaultDesc} />
       <meta name="keywords" content={keywords || defaultKeywords} />
-      {canonical && <link rel="canonical" href={canonical} />}
+      <link rel="canonical" href={canonical || (typeof window !== 'undefined' ? window.location.origin + window.location.pathname : '')} />
+
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />

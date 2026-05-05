@@ -12,9 +12,9 @@ const Homepage = () => {
   return (
     <div>
       <SEO 
-        title="Explore Amazing Tours & Destinations"
-        description="Discover exciting tours, travel destinations, blogs, and testimonials with TrippyJiffy Travel. Start your adventure today!"
-        keywords="TrippyJiffy homepage, India travel packages, adventure tours India, travel blog India"
+        title="Best Tour Packages, Holiday Packages & Travel Deals"
+        description="Book the best tour packages and holiday packages with TrippyJiffy. Explore curated India tours and Asia travel deals at unbeatable prices. Plan your dream vacation today!"
+        keywords="tour packages, holiday packages, travel packages, India travel, adventure tours, TrippyJiffy"
         structuredData={{
           "@context": "https://schema.org",
           "@type": "WebSite",

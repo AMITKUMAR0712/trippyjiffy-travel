@@ -251,7 +251,7 @@ const DestinationCard = memo(({ item, slugify, type }) => {
   const token = localStorage.getItem("token");
 
   const getLink = () => {
-    if (type === "upcoming") return item.link || `/upcoming/${item.id}`;
+    if (type === "upcoming") return item.link || `/upcoming-best-tours/${item.id}`;
     return type === "tour"
       ? `/india-tours/${item.id}/${slugify(item.state_name)}`
       : `/asia-tours/${slugify(item.country_name)}`;
@@ -297,13 +297,15 @@ const DestinationCard = memo(({ item, slugify, type }) => {
          </button>
       </div>
       <div className={Style.content}>
-        <h2 className={Style.title}>{item.title}</h2>
+        <h3 className={Style.title}>{item.title}</h3>
         <p className={Style.copy}>
           {item.tags?.length > 0
             ? (Array.isArray(item.tags) ? item.tags.slice(0, 2).join(" • ") : item.tags)
             : "Explore the hidden treasures of this amazing destination with Trippy Jiffy."}
         </p>
-        <div className={Style.btn}>View Details</div>
+        <div className={Style.btn}>
+          {type === "upcoming" ? "Explore Trip" : type === "tour" ? "Discover Tour" : "Explore Now"}
+        </div>
       </div>
     </Link>
   );
@@ -520,7 +522,7 @@ const Destinations = () => {
             </Swiper>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', marginBottom: '40px' }}>
-              <Link to="/upcoming" className={Style.viewAllBtn}>
+              <Link to="/upcoming-best-tours" className={Style.viewAllBtn}>
                 Explore All Upcoming Adventures →
               </Link>
             </div>

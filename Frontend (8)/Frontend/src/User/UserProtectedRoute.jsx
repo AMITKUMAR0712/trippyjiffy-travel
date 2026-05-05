@@ -1,4 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
+import ScrollToTop from "../HomeCompontent/ScrollToTop";
 
 const UserProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -7,7 +8,13 @@ const UserProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  return children ? children : <Outlet />;
+  return (
+    <>
+      <ScrollToTop />
+      {children ? children : <Outlet />}
+    </>
+  );
 };
 
 export default UserProtectedRoute;
+

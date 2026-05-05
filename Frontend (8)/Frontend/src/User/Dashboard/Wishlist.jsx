@@ -99,7 +99,7 @@ const Wishlist = () => {
                 <div className={Style.emptyDocs}>
                    <Heart size={48} />
                    <p>Your wishlist is currently empty. Explore our tours and save your favorites here!</p>
-                   <Link to="/explore" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
+                   <Link to="/explore-all-destinations" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
                      Explore Tours
                    </Link>
                 </div>

@@ -6,6 +6,8 @@ import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import SEO from "../HomeCompontent/SEO";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
@@ -209,6 +211,12 @@ const ExploreTours = () => {
     <div className={Style.ExploreContainer}>
       <div className={Style.wrapper}>
         
+        <SEO 
+          title="All India Tours & Overseas Holiday Packages"
+          description="Explore our complete collection of India tours and overseas holiday packages. Find the best trip costs and detailed itineraries for your next adventure with TrippyJiffy."
+          keywords="India tours, overseas holiday packages, tour packages, travel destinations, Asia tours, TrippyJiffy"
+        />
+
         <div className={Style.header}>
           <h1>Explore <span>Destinations</span></h1>
           <p>Discover all our mesmerizing tours across India and Asia. Your next adventure starts here.</p>
@@ -267,7 +275,7 @@ const ExploreTours = () => {
 
             <div className={Style.upcomingGrid}>
               {upcoming.map((trip) => {
-                const detailsPath = `/upcoming/${trip.id}`;
+                const detailsPath = `/upcoming-best-tours/${trip.id}`;
                 return (
                   <Link key={trip.id} to={detailsPath} className={Style.upcomingCard}>
                     <div className={Style.cardActions}>
@@ -289,7 +297,7 @@ const ExploreTours = () => {
             </div>
 
             <div className={Style.viewAllWrap}>
-              <Link to="/upcoming" className={Style.viewAllBtn}>View All Upcoming Trips</Link>
+              <Link to="/upcoming-best-tours" className={Style.viewAllBtn}>View All Upcoming Trips</Link>
             </div>
           </div>
         )}

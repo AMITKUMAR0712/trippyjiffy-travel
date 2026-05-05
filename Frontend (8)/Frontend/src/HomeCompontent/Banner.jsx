@@ -112,7 +112,7 @@ const Banner = () => {
           className={Style.Bannertext}
         >
           <span className={Style.badge}>Explore the 4th Dimension</span>
-          <h1>Unlock India's Hidden<span>Treasures</span></h1>
+          <h1>Discover Best <span>Tour Packages</span> & Holiday Deals</h1>
           <p>
             Experience the magic of India like never before. From the peaks of the Himalayas
             to the serene backwaters of Kerala, your journey starts here.

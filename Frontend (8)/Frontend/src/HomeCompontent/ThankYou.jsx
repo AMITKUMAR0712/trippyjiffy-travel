@@ -68,10 +68,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Style from "../Style/ThankYou.module.scss";
+import ScrollToTop from "./ScrollToTop";
 
 const ThankYou = () => {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0); // ScrollToTop handles this now
 
     // Google Ads Conversion Event
     if (window.gtag) {
@@ -83,7 +84,9 @@ const ThankYou = () => {
 
   return (
     <div className={Style.thankBody}>
+      <ScrollToTop />
       <div className={Style.container}>
+
         <div className={Style.checkWrap}>
           <div className={Style.checkCircle}>
             <div className={Style.checkTick}>✔</div>

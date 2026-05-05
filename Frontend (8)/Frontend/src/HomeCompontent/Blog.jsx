@@ -39,7 +39,7 @@ const BlogCard = memo(({ item, getFirstParagraph }) => {
 
       <div className={Style.content}>
         <Link to={`/blog/${item.id}`} className={Style.noLink}>
-          <h1>{item?.title || "Untitled Blog"}</h1>
+          <h3>{item?.title || "Untitled Blog"}</h3>
         </Link>
 
         <p className={Style.meta}>
@@ -108,9 +108,9 @@ const Blog = () => {
   return (
     <div className={Style.Blog}>
       <div className={Style.wrapper}>
-        <h1 className={Style.sectionTitle}>
+        <h2 className={Style.sectionTitle}>
           Latest Travel <span>Blogs</span>
-        </h1>
+        </h2>
 
         {loading ? (
           <div className={Style.BlogSkeletons}>

@@ -8,7 +8,7 @@ import Disk from "../Img/disk.jpg";
 import { renderBlocks } from "../utils/utils";
 
 // ⭐ Helmet Import
-import SEO from "../utils/SEO";
+import SEO from "../HomeCompontent/SEO";
 
 const BlogDetails = () => {
   const { id } = useParams();

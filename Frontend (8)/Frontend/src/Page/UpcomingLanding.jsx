@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet-async";
+import SEO from "../HomeCompontent/SEO";
 import Style from "../Style/UpcomingLanding.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
@@ -47,7 +47,7 @@ const UpcomingLanding = () => {
         item_type: "upcoming",
         title: item.title,
         image: item.images?.[0] || item.banner_image || "https://placehold.co/300x200",
-        url: `/upcoming/${item.id}`
+        url: `/upcoming-best-tours/${item.id}`
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -59,10 +59,11 @@ const UpcomingLanding = () => {
 
   return (
     <div className={Style.container}>
-      <Helmet>
-        <title>Upcoming Trips & Adventures | TrippyJiffy</title>
-        <meta name="description" content="Explore our curated upcoming group trips, treks, and international adventures. Book your slot now!" />
-      </Helmet>
+      <SEO 
+        title="Upcoming Trips 2026 | Group Departures"
+        description="Join our upcoming group trips and adventures in 2026. Best group tour packages for domestic and international destinations. Book your slot with TrippyJiffy now!"
+        keywords="upcoming trips 2026, group departures, adventure tours, weekend trips, TrippyJiffy upcoming tours"
+      />
 
       <div className={Style.hero}>
         <motion.div 
@@ -101,7 +102,7 @@ const UpcomingLanding = () => {
                   <h3>{trip.title}</h3>
                   <p>{trip.description?.substring(0, 100)}...</p>
                   <div className={Style.footer}>
-                    <Link to={`/upcoming/${trip.id}`} className={Style.btn}>View Details</Link>
+                    <Link to={`/upcoming-best-tours/${trip.id}`} className={Style.btn}>View Details</Link>
                   </div>
                 </div>
               </motion.div>
