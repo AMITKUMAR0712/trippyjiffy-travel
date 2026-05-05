@@ -21,10 +21,6 @@ export default defineConfig({
             if (id.includes('framer-motion')) {
               return 'vendor-framer';
             }
-            if (id.includes('lucide-react')) {
-              return 'vendor-icons';
-            }
-            return 'vendor-core';
           }
         }
       }
