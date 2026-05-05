@@ -12,7 +12,7 @@ const Homepage = () => {
   return (
     <div>
       <SEO 
-        title="Best Tour Packages & Holiday Deals"
+        title="Best Tour Packages & Premium Holiday Deals"
         description="Book the best tour packages with TrippyJiffy. Explore curated India tours and Asia travel deals at unbeatable prices. Plan your dream vacation today!"
         keywords="tour packages, holiday packages, travel packages, India travel, adventure tours, TrippyJiffy"
         structuredData={{
