@@ -290,6 +290,18 @@ img {
   }
 }
 
+/* Hide the Google Translate tooltip and highlights */
+#goog-gt-tt, .VIpgJd-yAWNEb-hvhgnd-OEVmcd, .goog-tooltip, .VIpgJd-yAWNEb-hvhgnd-l4eHX {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
 /* Ensure the widget stays visible */
 .skiptranslate {
   display: inline-block !important;
