@@ -319,7 +319,7 @@ const CountryTourDetails = () => {
               alt={tour.state_name ?? "Tour Image"}
             />
             <div className={Style.TourDetailsNAme}>
-              <h1>{image.state_name} Tour</h1>
+              <h1 title={`${image.state_name} Tour Packages`}>{image.state_name} Tour Packages</h1>
               <div className={Style.actionButtons}>
                  <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
               </div>

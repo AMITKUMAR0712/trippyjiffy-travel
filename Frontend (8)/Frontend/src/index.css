@@ -283,10 +283,11 @@ img {
 }
 
 @media (max-width: 480px) {
-  padding: 4px 8px;
-  font-size: 12px;
-  max-width: 120px;
-}
+  .goog-te-gadget .goog-te-combo {
+    padding: 4px 8px;
+    font-size: 12px;
+    max-width: 120px;
+  }
 }
 
 /* Ensure the widget stays visible */

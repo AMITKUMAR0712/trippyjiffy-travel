@@ -326,7 +326,7 @@ const TourDetails = () => {
             loading="lazy"
           />
           <div className={Style.TourDetailsNAme}>
-            <h1>
+            <h1 title={tour.tour_name ? `${tour.tour_name} Tour Packages` : `${tourState?.state_name || "Unknown"} Tour Packages`}>
               {tour.tour_name
                 ? `${tour.tour_name} Tour Package`
                 : `${tourState?.state_name || "Unknown"} Tour Package`}

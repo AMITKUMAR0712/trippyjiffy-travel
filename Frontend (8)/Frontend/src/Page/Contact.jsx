@@ -113,7 +113,7 @@ const Contact = () => {
           <div className={Style.ContactLeft}>
             <div className={Style.ContactPlan}>
               <h2>We'd love to hear from you</h2>
-              <h1>Contact Us</h1>
+              <h1 title="Contact TrippyJiffy Travel Agency">Contact TrippyJiffy Travel Agency</h1>
             </div>
 
             <form className={Style.ContactForm} onSubmit={handleSubmit}>

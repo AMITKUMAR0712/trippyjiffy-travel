@@ -134,8 +134,8 @@ const LandingPage = () => {
             <div className={Style.tjHeroLeft}>
               <div className={Style.tjPill}>✈️ Google Ads Exclusive Offer · Limited Slots</div>
 
-              <h1 className={Style.heroTitle}>
-                Custom-Made Trips <span className={Style.tjAccent}>at Honest Prices.</span>
+              <h1 className={Style.heroTitle} title="Custom-Made Tour Packages at Honest Prices">
+                Premium Travel Agency for Custom-Made Trips <span className={Style.tjAccent}>at Honest Prices.</span>
               </h1>
 
               <p className={Style.tjHeroSub}>

@@ -218,7 +218,7 @@ const ExploreTours = () => {
         />
 
         <div className={Style.header}>
-          <h1>Explore <span>Destinations</span></h1>
+          <h1 title="Explore Best Tour Packages and Destinations">Explore Best <span>Tour Packages</span> & Destinations</h1>
           <p>Discover all our mesmerizing tours across India and Asia. Your next adventure starts here.</p>
         </div>
 

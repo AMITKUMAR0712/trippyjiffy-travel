@@ -96,7 +96,7 @@ const BlogPage = () => {
         <div className={Style.BlogPageTop}>
           <img src={BlogImg} alt="Travel Blog" />
           <div className={Style.BlogTravel}>
-            <h1>Travel Blog</h1>
+            <h1 title="Travel Blogs and Tour Guides">Travel Blog & Destination Guides</h1>
             <p>Stories, tips, and guides for your next adventure</p>
           </div>
         </div>

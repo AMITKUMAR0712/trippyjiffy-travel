@@ -106,7 +106,7 @@ const Banner = () => {
       <div className={Style.contentWrapper}>
         <div className={Style.Bannertext}>
           <span className={Style.badge}>Explore the 4th Dimension</span>
-          <h1>Discover Best <span>Tour Packages</span> & Holiday Deals</h1>
+          <h1 title="Best Tour Packages and Holiday Deals">Best Travel Agency for <span>Tour Packages</span> & Custom Holiday Deals</h1>
           <p>
             Experience the magic of India like never before. From the peaks of the Himalayas
             to the serene backwaters of Kerala, your journey starts here.
