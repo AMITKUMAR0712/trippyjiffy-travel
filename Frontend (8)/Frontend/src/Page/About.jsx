@@ -8,8 +8,7 @@ import Director1 from "../Img/director1.jpeg";
 import Certificates1 from "../Img/Certificates1.jpeg";
 import Certificates2 from "../Img/Certificates2.jpeg";
 
-import { Helmet } from "react-helmet-async";
-import SEO from "../utils/SEO";
+import SEO from "../HomeCompontent/SEO";
 
 const About = () => {
 
@@ -19,9 +18,9 @@ const About = () => {
 
       <SEO
         title="About Us"
-        description="Learn more about TrippyJiffy (Neelasha Travels LLP), your trusted partner for hotel bookings, holiday packages, and custom travel itineraries across India and Asia."
+        description="TrippyJiffy (Neelasha Travels LLP), your trusted partner for hotel bookings, holiday packages, and custom travel itineraries across India and Asia."
         keywords="TrippyJiffy, Neelasha Travels LLP, travel agency India, holiday packages, custom trips, about TrippyJiffy"
-        canonicalUrl={window.location.href}
+        canonical={window.location.href}
       />
       <script type="application/ld+json">
         {JSON.stringify({

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Style from "../Style/Contact.module.scss";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import SEO from "../utils/SEO";
+import SEO from "../HomeCompontent/SEO";
 import { toast } from "sonner";
 
 const Contact = () => {
@@ -71,7 +71,7 @@ const Contact = () => {
         title="Contact Us"
         description="Get in touch with TrippyJiffy for travel assistance, custom tour packages, hotel bookings, and 24/7 support. We're here to help you plan your perfect journey."
         keywords="contact TrippyJiffy, travel support, travel booking India, tour assistance"
-        canonicalUrl={window.location.href}
+        canonical={window.location.href}
       />
       <script type="application/ld+json">
         {JSON.stringify({
