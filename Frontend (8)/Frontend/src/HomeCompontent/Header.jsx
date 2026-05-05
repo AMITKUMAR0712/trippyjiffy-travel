@@ -180,7 +180,7 @@ const Header = () => {
                             <Link to="/">
                                 <img
                                     src={logo}
-                                    alt="Trippy Travels Logo"
+                                    alt="TrippyJiffy - Best Travel Agency, India Tours & Asia Travel"
                                     width="160"
                                     height="60"
                                     decoding="async"

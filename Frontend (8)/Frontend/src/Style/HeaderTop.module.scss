@@ -50,24 +50,16 @@
   font-weight: 700;
   letter-spacing: 0.5px;
   
-  /* Colorful gradient text */
-  background: linear-gradient(90deg, #f97316, #fbbf24, #f97316);
-  background-size: 200% auto;
+  /* Colorful gradient text - static to prevent forced reflows */
+  background: linear-gradient(90deg, #f97316, #fbbf24);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  animation: shine 3s linear infinite;
 }
 
 .marqueeIcon {
   color: #fbbf24; /* Base icon color to pop against dark background */
-}
-
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
 }
 
 @keyframes scrollText {

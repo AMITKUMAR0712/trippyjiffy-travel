@@ -15,12 +15,12 @@ const SEO = ({
   
   // Smart Title Formula: [Destination] Tour Package | TrippyJiffy
   const formattedTitle = isDestination && title 
-    ? `${title} Tour Package | Best Deals` 
+    ? `${title} Tour | Best Deals` 
     : title;
 
-  const fullTitle = formattedTitle ? `${formattedTitle} | ${siteName}` : `Best Tour Packages & Holiday Deals | ${siteName}`;
+  const fullTitle = formattedTitle ? `${formattedTitle} | ${siteName}` : `Best Tour Packages | ${siteName}`;
   
-  const defaultDesc = "TrippyJiffy - Explore India's 4th Dimension. Best travel agency for curated tour packages, customized itineraries, and unique travel experiences across India and Asia.";
+  const defaultDesc = "TrippyJiffy offers curated tour packages, customized itineraries, and unique travel experiences across India and Asia. Explore the 4th dimension of travel.";
   const defaultKeywords = "tour packages, holiday packages, travel packages, India tours, Asia travel, vacation planning, TrippyJiffy";
   const defaultOgImage = "https://trippyjiffy.com/og-banner.jpg"; 
 

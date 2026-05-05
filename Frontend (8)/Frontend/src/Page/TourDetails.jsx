@@ -322,7 +322,8 @@ const TourDetails = () => {
                   ? formatImageURL(tourState.image)
                   : "https://placehold.co/600x400?text=No+Image"
             }
-            alt={tour.tour_name || tourState?.state_name || "Tour Image"}
+            alt={`${tour.tour_name || tourState?.state_name || "Tour"} Package by TrippyJiffy`}
+            loading="lazy"
           />
           <div className={Style.TourDetailsNAme}>
             <h1>
@@ -389,7 +390,7 @@ const TourDetails = () => {
               {safeTimelineRender(tour.routing) && (
                 <div id="brief" className={Style.Route}>
                   <h3>Brief Itinerary</h3>
-                  <img src={Brief} alt="brief" />
+                  <img src={Brief} alt="Brief Itinerary - TrippyJiffy Tours" loading="lazy" />
                   <div className={Style.timeline}>
                     {safeTimelineRender(tour.routing)}
                   </div>

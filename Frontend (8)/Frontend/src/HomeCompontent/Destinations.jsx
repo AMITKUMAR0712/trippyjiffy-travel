@@ -288,9 +288,9 @@ const DestinationCard = memo(({ item, slugify, type }) => {
       key={`${type}-${item.id}`}
       to={getLink()}
       className={Style.card}
-      style={{ "--bg-image": `url("${imageUrl}")` }}
       target={type === "upcoming" && item.link ? "_blank" : "_self"}
     >
+      <img src={imageUrl} alt={item.title} loading="lazy" decoding="async" className={Style.cardBgImg} />
       <div className={Style.cardActions}>
          <button onClick={(e) => handleAction(e, "wishlist")} className={Style.iconBtn} title="Add to Wishlist">
             <Heart size={18} />
@@ -301,7 +301,7 @@ const DestinationCard = memo(({ item, slugify, type }) => {
         <p className={Style.copy}>
           {item.tags?.length > 0
             ? (Array.isArray(item.tags) ? item.tags.slice(0, 2).join(" • ") : item.tags)
-            : "Explore the hidden treasures of this amazing destination with Trippy Jiffy."}
+            : "Discover the best tour packages with TrippyJiffy."}
         </p>
         <div className={Style.btn}>
           {type === "upcoming" ? "Explore Trip" : type === "tour" ? "Discover Tour" : "Explore Now"}

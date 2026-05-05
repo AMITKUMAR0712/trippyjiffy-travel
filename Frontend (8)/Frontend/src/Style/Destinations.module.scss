@@ -116,16 +116,14 @@
     --d: 700ms;
     --e: cubic-bezier(0.19, 1, 0.22, 1);
 
-    &:before {
-      content: "";
+    .cardBgImg {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 110%;
-      background-size: cover;
-      background-position: center;
-      background-image: var(--bg-image);
+      object-fit: cover;
+      object-position: center;
       transition: transform calc(var(--d) * 1.5) var(--e);
       pointer-events: none;
       z-index: 0;
@@ -265,7 +263,7 @@
       &:focus-within {
         align-items: center;
 
-        &:before {
+        .cardBgImg {
           transform: translateY(-4%);
         }
 

@@ -198,18 +198,28 @@ const Footer = () => {
 
           <motion.div variants={itemVariants} className={Style.FooterWrap3}>
             <h2>Contact Us</h2>
-            <ul>
-              <li>
-                <FaEnvelope aria-hidden="true" /> travelqueries@trippyjiffy.com
-              </li>
-              <li>
-                <FaPhoneAlt aria-hidden="true" /> 9870210896 , 8527454549
-              </li>
-              <li>
-                <FaMapMarkerAlt aria-hidden="true" />
-                <span>Sector 1, Vikas Nagar Lucknow 226022 (India)</span>
-              </li>
-            </ul>
+            <address style={{ fontStyle: 'normal' }}>
+              <ul>
+                <li>
+                  <a href="mailto:travelqueries@trippyjiffy.com" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    <FaEnvelope aria-hidden="true" /> travelqueries@trippyjiffy.com
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+919870210896" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    <FaPhoneAlt aria-hidden="true" /> +91 98702 10896
+                  </a>
+                  {' , '}
+                  <a href="tel:+918527454549" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    85274 54549
+                  </a>
+                </li>
+                <li>
+                  <FaMapMarkerAlt aria-hidden="true" />
+                  <span>Sector 1, Vikas Nagar Lucknow 226022 (India)</span>
+                </li>
+              </ul>
+            </address>
           </motion.div>
         </motion.div>
 

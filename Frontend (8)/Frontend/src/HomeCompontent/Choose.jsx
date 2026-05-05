@@ -35,7 +35,7 @@ const Choose = () => {
             <div className={Style.imgWrapper}>
               <img 
                 src={ChoseImage} 
-                alt="Choose Us" 
+                alt="Why Choose TrippyJiffy for Tour Packages" 
                 loading="lazy"
                 width="600"
                 height="600"

@@ -12,8 +12,8 @@ const Homepage = () => {
   return (
     <div>
       <SEO 
-        title="Best Tour Packages, Holiday Packages & Travel Deals"
-        description="Book the best tour packages and holiday packages with TrippyJiffy. Explore curated India tours and Asia travel deals at unbeatable prices. Plan your dream vacation today!"
+        title="Best Tour Packages & Holiday Deals"
+        description="Book the best tour packages with TrippyJiffy. Explore curated India tours and Asia travel deals at unbeatable prices. Plan your dream vacation today!"
         keywords="tour packages, holiday packages, travel packages, India travel, adventure tours, TrippyJiffy"
         structuredData={{
           "@context": "https://schema.org",

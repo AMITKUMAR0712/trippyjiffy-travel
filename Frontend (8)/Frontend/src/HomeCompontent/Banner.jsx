@@ -5,7 +5,6 @@ import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import axios from "axios";
 import { useDebounce } from "../hooks/useDebounce";
 import { Search, MapPin, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -90,7 +89,7 @@ const Banner = () => {
             <div className={Style.slide}>
               <img 
                 src={img} 
-                alt={`banner-${idx + 1}`} 
+                alt={`TrippyJiffy Tour Packages Banner ${idx + 1}`} 
                 className={Style.bannerImage} 
                 loading={idx === 0 ? "eager" : "lazy"} 
                 fetchpriority={idx === 0 ? "high" : "auto"}
@@ -105,12 +104,7 @@ const Banner = () => {
       </Swiper>
 
       <div className={Style.contentWrapper}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className={Style.Bannertext}
-        >
+        <div className={Style.Bannertext}>
           <span className={Style.badge}>Explore the 4th Dimension</span>
           <h1>Discover Best <span>Tour Packages</span> & Holiday Deals</h1>
           <p>
@@ -137,14 +131,8 @@ const Banner = () => {
                 <span>Search</span>
               </button>
 
-              <AnimatePresence>
                 {showDropdown && filteredResults.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className={Style.searchResults}
-                  >
+                  <div className={Style.searchResults}>
                     {filteredResults.map((item) => (
                       <div
                         key={item.id}
@@ -156,9 +144,8 @@ const Banner = () => {
                         <ArrowRight size={14} className={Style.itemArrow} />
                       </div>
                     ))}
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
             </div>
           </div>
 
@@ -178,7 +165,7 @@ const Banner = () => {
               <span>Average Rating</span>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

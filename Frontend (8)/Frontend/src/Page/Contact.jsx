@@ -101,7 +101,8 @@ const Contact = () => {
       <div className={Style.ContactImg}>
         <img
           src="https://wallpapers.com/images/hd/wooden-blocks-contact-us-vh58juahu6kzh7i8.jpg"
-          alt="contact"
+          alt="Contact TrippyJiffy Travel Agency"
+          loading="lazy"
         />
       </div>
 
