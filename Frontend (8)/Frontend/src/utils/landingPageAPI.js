@@ -1,48 +1,61 @@
-/**
- * Landing Page Data - Now fetches from backend Prisma database
- * Instead of hardcoded data, use the useLandingPageData hook
- */
+const getApiUrl = () => {
+  const url = import.meta.env.VITE_API_URL || "http://localhost:5005/api";
+  return url.endsWith('/') ? url.slice(0, -1) : url;
+};
 
 export const getLandingPageDataFromAPI = async (slug) => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || "https://trippyjiffy.com/api";
+    const apiUrl = getApiUrl();
     const response = await fetch(`${apiUrl}/landing-pages/${slug}`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch landing page: ${response.statusText}`);
-    }
-
+    if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
     const result = await response.json();
-
-    if (result.success && result.data) {
-      return result.data.data; // Return the data object from the response
-    } else {
-      throw new Error("Invalid response format from server");
-    }
+    return result.success ? result.data : null;
   } catch (error) {
-    console.error(`Error fetching landing page '${slug}':`, error);
+    console.error(`Error fetching page ${slug}:`, error);
     throw error;
   }
 };
 
 export const getAllLandingPagesFromAPI = async () => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || "https://trippyjiffy.com/api";
+    const apiUrl = getApiUrl();
     const response = await fetch(`${apiUrl}/landing-pages/all`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch landing pages: ${response.statusText}`);
-    }
-
+    if (!response.ok) throw new Error(`Failed to fetch: ${response.statusText}`);
     const result = await response.json();
-
-    if (result.success && result.data) {
-      return result.data;
-    } else {
-      throw new Error("Invalid response format from server");
-    }
+    return result.success ? result.data : [];
   } catch (error) {
-    console.error("Error fetching all landing pages:", error);
+    console.error("Error fetching all pages:", error);
     throw error;
   }
 };
+
+export const upsertLandingPageAPI = async (pageData) => {
+  try {
+    const apiUrl = getApiUrl();
+    const response = await fetch(`${apiUrl}/landing-pages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pageData),
+    });
+    if (!response.ok) throw new Error(`Failed to save: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error("Error saving page:", error);
+    throw error;
+  }
+};
+
+export const deleteLandingPageAPI = async (id) => {
+  try {
+    const apiUrl = getApiUrl();
+    const response = await fetch(`${apiUrl}/landing-pages/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error(`Failed to delete: ${response.statusText}`);
+    return await response.json();
+  } catch (error) {
+    console.error(`Error deleting page ${id}:`, error);
+    throw error;
+  }
+};
+

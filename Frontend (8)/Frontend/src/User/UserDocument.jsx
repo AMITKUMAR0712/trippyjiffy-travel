@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { 
   FilePlus, 
   FileText, 
@@ -179,31 +179,24 @@ const UserDocument = () => {
           </div>
 
           <div className={Style.docsGrid}>
-            <AnimatePresence mode="popLayout">
+            <div style={{ display: "contents" }}>
               {fetchLoading ? (
                 <div key="loading" className={Style.loadingState}>
                    <div className={Style.spinner} />
                    <p>Fetching your documents...</p>
                 </div>
               ) : pdfs.length === 0 ? (
-                <motion.div 
+                <div 
                   key="empty"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
                   className={Style.emptyState}
                 >
                   <FileText size={48} />
                   <p>No documents found. Upload your first document now!</p>
-                </motion.div>
+                </div>
               ) : (
                 pdfs.map((pdf, idx) => (
-                  <motion.div
+                  <div
                     key={pdf.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ delay: idx * 0.05 }}
                     className={Style.docCard}
                   >
                     <div className={Style.docMain}>
@@ -239,10 +232,10 @@ const UserDocument = () => {
                         </button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))
               )}
-            </AnimatePresence>
+            </div>
           </div>
         </section>
       </div>

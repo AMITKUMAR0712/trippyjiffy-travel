@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+
 import { Mail, Lock, User, Chrome, Facebook, Linkedin, Instagram, Twitter } from "lucide-react";
 import { useMotionValue, useTransform, useSpring } from "framer-motion";
 import Style from "../Style/Login.module.scss";
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
   // 3D Tilt Logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
+
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
-  
+
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
@@ -79,7 +79,7 @@ const Login = () => {
 
   return (
     <div className={Style.Login}>
-      <motion.div 
+      <div
         className={Style.container}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -88,76 +88,73 @@ const Login = () => {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        {/* Left Section */}
-        <div className={Style.imageSection}>
-          <h2 className={Style.quote}>"Travel is the only thing you buy that makes you richer"</h2>
-          <div className={Style.socialIcons}>
-            <a href="#" className={Style.socialIcon}><Facebook size={18} /></a>
-            <a href="#" className={Style.socialIcon}><Twitter size={18} /></a>
-            <a href="#" className={Style.socialIcon}><Instagram size={18} /></a>
-          </div>
+      {/* Left Section */}
+      <div className={Style.imageSection}>
+        <h2 className={Style.quote}>"Travel is the only thing you buy that makes you richer"</h2>
+        <div className={Style.socialIcons}>
+          <a href="#" className={Style.socialIcon}><Facebook size={18} /></a>
+          <a href="#" className={Style.socialIcon}><Twitter size={18} /></a>
+          <a href="#" className={Style.socialIcon}><Instagram size={18} /></a>
+        </div>
+      </div>
+
+      {/* Right Section */}
+      <div className={Style.formSection}>
+        <div className={Style.brand}>
+          <h1>TrippyJiffy</h1>
         </div>
 
-        {/* Right Section */}
-        <div className={Style.formSection}>
-          <div className={Style.brand}>
-            <h1>TrippyJiffy</h1>
+
+
+        <form onSubmit={handleSubmit} autoComplete="on">
+          <div className={Style.inputGroup}>
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              autoComplete="email"
+              placeholder="example@mail.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+            <User className={Style.inputIcon} size={18} />
           </div>
 
-
-
-          <form onSubmit={handleSubmit} autoComplete="on">
-            <div className={Style.inputGroup}>
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                placeholder="example@mail.com"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              <User className={Style.inputIcon} size={18} />
-            </div>
-
-            <div className={Style.inputGroup}>
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                autoComplete="current-password"
-                placeholder="••••••••"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-              <Lock className={Style.inputIcon} size={18} />
-            </div>
-
-            <Link to="/forgot-password" className={Style.forgotLink}>
-              Forgot Your Password?
-            </Link>
-
-            <button type="submit" className={Style.submitBtn} disabled={isLoading}>
-              {isLoading ? "Signing In..." : "Enter"}
-            </button>
-          </form>
-
-          <div className={Style.registerPrompt}>
-            Don't have an account? <Link to="/register">Register</Link>
+          <div className={Style.inputGroup}>
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              autoComplete="current-password"
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <Lock className={Style.inputIcon} size={18} />
           </div>
 
-          {message && <div className={Style.Message}>{message}</div>}
+          <Link to="/forgot-password" className={Style.forgotLink}>
+            Forgot Your Password?
+          </Link>
+
+          <button type="submit" className={Style.submitBtn} disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Enter"}
+          </button>
+        </form>
+
+        <div className={Style.registerPrompt}>
+          Don't have an account? <Link to="/register">Register</Link>
         </div>
-      </motion.div>
+
+        {message && <div className={Style.Message}>{message}</div>}
+      </div>
     </div>
+    </div >
   );
 };
 

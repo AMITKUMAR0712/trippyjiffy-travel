@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+
 import {
   LayoutDashboard,
   User,
@@ -49,13 +49,11 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
             <ShieldCheck size={24} color="#f97316" />
           </div>
           {isOpen && (
-            <motion.span 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
+            <span 
               className={Style.logoText}
             >
               User Panel
-            </motion.span>
+            </span>
           )}
         </div>
         {!isMobile && (
@@ -79,15 +77,13 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
               <>
                 <span className={Style.icon}>{item.icon}</span>
                 {isOpen && (
-                  <motion.span 
-                    initial={{ opacity: 0, x: -10 }} 
-                    animate={{ opacity: 1, x: 0 }} 
+                  <span 
                     className={Style.linkText}
                   >
                     {item.name}
-                  </motion.span>
+                  </span>
                 )}
-                {isActive && <motion.div layoutId="activeNav" className={Style.activeIndicator} />}
+                {isActive && <div layoutId="activeNav" className={Style.activeIndicator} />}
               </>
             )}
           </NavLink>

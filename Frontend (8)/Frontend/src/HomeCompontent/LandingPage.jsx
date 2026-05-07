@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import Style from "../Style/LandingPage.module.scss";
 
 import logo from "../Img/trippylogo.png";
-import Banner1 from "../Img/people-doi-pha-tang-against-sky-sunrise_1048944-4357386.jpeg";
-import Banner2 from "../Img/hiker-looking-mountains-from-great-wall-china-sunset_1048944-9830948.jpeg";
-import Banner3 from "../Img/l1.jpeg";
+import Banner1 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/1.webp";
+import Banner2 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/2.webp";
+import Banner3 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/3.webp";
+import Banner4 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/4.webp";
 
 import Certificates1 from "../Img/Certificates1.jpeg";
 import Certificates2 from "../Img/Certificates2.jpeg";
@@ -22,6 +23,7 @@ const LandingPage = () => {
       { img: Banner1, tag: "Handpicked Stays" },
       { img: Banner2, tag: "Curated Experiences" },
       { img: Banner3, tag: "Smooth Transfers" },
+      { img: Banner4, tag: "Authentic Adventures" },
     ],
     []
   );
@@ -199,9 +201,8 @@ const LandingPage = () => {
                       key={idx}
                       src={s.img}
                       alt={s.tag}
-                      className={`${Style.tjHeroImage} ${
-                        idx === activeSlide ? Style.isActive : Style.isHidden
-                      }`}
+                      className={`${Style.tjHeroImage} ${idx === activeSlide ? Style.isActive : Style.isHidden
+                        }`}
                     />
                   ))}
                 </div>
@@ -431,7 +432,7 @@ const LandingPage = () => {
               <div className={Style.footerCol}>
                 <h4>Quick Links</h4>
                 <button type="button" onClick={() => scrollToId("about")}>Blogs</button>
-                <button type="button" onClick={() => scrollToId("why")}>Customer’s Valuable Feedbacks</button>
+                <button type="button" onClick={() => scrollToId("why")}>Valuable Customer Feedback</button>
                 <button type="button" onClick={() => scrollToId("about")}>About Us</button>
                 <button type="button" onClick={() => setShowEnquiry(true)}>Plan Your Trip</button>
                 <button type="button" onClick={() => scrollToId("tj-enquiry")}>Pay Now</button>
@@ -441,9 +442,8 @@ const LandingPage = () => {
 
               <div className={Style.footerCol}>
                 <h4>Tours</h4>
-                <button type="button" onClick={() => scrollToId("about")}>India Tours</button>
-                <button type="button" onClick={() => scrollToId("about")}>Overseas Tours</button>
-                <button type="button" onClick={() => scrollToId("about")}>Weekend Tour</button>
+                <a href="/family-tours" style={{ display: 'block', color: 'inherit', textDecoration: 'none', marginBottom: '8px' }}>Family Tours</a>
+                <a href="/upcoming-best-tours" style={{ display: 'block', color: 'inherit', textDecoration: 'none', marginBottom: '8px' }}>Upcoming Tours</a>
               </div>
 
               <div className={Style.footerCol}>

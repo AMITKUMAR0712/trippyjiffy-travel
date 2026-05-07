@@ -10,7 +10,9 @@ import gal4 from "../Img/l1.jpeg";
 import gal5 from "../Img/people-doi-pha-tang-against-sky-sunrise_1048944-4357386.jpeg";
 import gal6 from "../Img/hiker-looking-mountains-from-great-wall-china-sunset_1048944-9830948.jpeg";
 
-const baseURL_IMG = import.meta.env.VITE_API_BASE_URL_IMG || "https://trippyjiffy.com/api/uploads";
+const apiBase = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+const baseURL_IMG = `${apiBase}/api/uploads`;
+
 
 // Map exact db paths to actual Vite imported hashes
 const LOCAL_ASSET_MAP = {
@@ -33,12 +35,24 @@ const LOCAL_ASSET_MAP = {
 export const getImgUrl = (url) => {
   if (!url) return "";
 
-  // 0. If it maps directly to an internally compiled Vite asset, intercept it!
-  if (LOCAL_ASSET_MAP[url]) {
-    return LOCAL_ASSET_MAP[url];
+  // Normalize URL for mapping check (handle both /api/uploads/file.jpg and file.jpg)
+  const normalizedUrl = typeof url === "string" 
+    ? (url.startsWith("/") ? url : `/${url}`).replace(/^\/uploads\//, "/api/uploads/")
+    : url;
+
+  // 0. Check internal asset map with normalized path
+  if (LOCAL_ASSET_MAP[normalizedUrl]) {
+    return LOCAL_ASSET_MAP[normalizedUrl];
   }
 
-  // 1. If it's a full URL, check if it's a "bad" one (localhost or old IP)
+  // Also check if just the filename matches anything in the map
+  const filenameOnly = typeof url === "string" ? url.split("/").pop() : "";
+  const matchByFilename = Object.entries(LOCAL_ASSET_MAP).find(([key]) => key.endsWith(`/${filenameOnly}`));
+  if (matchByFilename) {
+    return matchByFilename[1];
+  }
+
+  // 1. Handle absolute URLs
   if (typeof url === "string" && (url.startsWith("http://") || url.startsWith("https://"))) {
     if (url.includes("localhost") || url.includes("127.0.0.1") || url.includes("187.127.139.99")) {
       const filename = url.split("/").pop();
@@ -47,16 +61,22 @@ export const getImgUrl = (url) => {
     return url;
   }
 
-  // 2. Otherwise, treat it as a path/filename and normalize it
-  let filename = url;
+  // 2. Handle paths/filenames
+  let finalFilename = url;
   if (typeof url === "string") {
-    filename = url
-      .replace(/^https?:\/\/[^\/]+/, "") // Remove domain if any (though handled above)
+    finalFilename = url
+      .replace(/^https?:\/\/[^\/]+/, "")
       .replace(/^\/?api\/uploads\//, "")
       .replace(/^\/?uploads\//, "")
       .replace(/^\//, "");
   }
 
-  return `${baseURL_IMG}/${filename}`;
+  // If it's a blob or data URL, return as is
+  if (typeof url === "string" && (url.startsWith("blob:") || url.startsWith("data:"))) {
+    return url;
+  }
+
+  return `${baseURL_IMG}/${finalFilename}`;
 };
+
 

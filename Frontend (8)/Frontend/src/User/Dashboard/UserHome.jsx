@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+
 import Style from "../Dashboard/Style/UserHome.module.scss";
 import Header from "../Dashboard/Header.jsx";
 import Sidebar from "../Dashboard/Sidebar.jsx";
@@ -26,13 +26,9 @@ const UserdHome = () => {
   return (
     <div className={Style.dashboardLayout}>
       {/* Sidebar with AnimatePresence for mobile */}
-      <AnimatePresence mode="wait">
+      <div style={{ display: "contents" }}>
         {(isSidebarOpen || !isMobile) && (
-          <motion.div
-            initial={isMobile ? { x: -300 } : false}
-            animate={{ x: 0 }}
-            exit={{ x: -300 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          <div>
             className={Style.dashboardLayoutLeft}
           >
             <Sidebar
@@ -40,16 +36,13 @@ const UserdHome = () => {
               toggleSidebar={toggleSidebar}
               isMobile={isMobile}
             />
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
 
       {/* Overlay for mobile when sidebar is open */}
       {isMobile && isSidebarOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div
           className={Style.overlay}
           onClick={toggleSidebar}
         />
@@ -58,14 +51,11 @@ const UserdHome = () => {
       <div className={`${Style.rightContent} ${!isSidebarOpen && !isMobile ? Style.expanded : ""}`}>
         <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
         <main className={Style.pageContent}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
             key={window.location.pathname}
           >
             <Outlet />
-          </motion.div>
+          </div>
         </main>
       </div>
     </div>

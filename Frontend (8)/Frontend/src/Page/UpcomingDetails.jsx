@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import Style from "../Style/UpcomingDetails.module.scss";
 import InsiderDealsForm from "./InsiderDealsForm";
@@ -64,8 +63,8 @@ const UpcomingDetails = () => {
   if (loading) return <div className={Style.loader}>...</div>;
   if (!trip) return <div className={Style.error}>Trip not found</div>;
 
-  const itinerary = Array.isArray(trip.details) 
-    ? trip.details 
+  const itinerary = Array.isArray(trip.details)
+    ? trip.details
     : (typeof trip.details === 'string' ? JSON.parse(trip.details) : []);
   const images = Array.isArray(trip.images) ? trip.images : [];
 
@@ -85,7 +84,7 @@ const UpcomingDetails = () => {
           <span className={Style.tag}>Limited Batch</span>
           <h1>{trip.title}</h1>
           <div className={Style.actionButtons}>
-             <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
+            <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
           </div>
         </div>
       </section>
@@ -110,8 +109,8 @@ const UpcomingDetails = () => {
                 ))}
               </div>
               <div className={Style.miniSwiperWrap}>
-                <Swiper 
-                  modules={[Autoplay]} spaceBetween={5} slidesPerView={3.5} 
+                <Swiper
+                  modules={[Autoplay]} spaceBetween={5} slidesPerView={3.5}
                   autoplay={{ delay: 2500 }} grabCursor={true}
                   breakpoints={{ 480: { slidesPerView: 5.5 } }}
                 >
@@ -157,22 +156,20 @@ const UpcomingDetails = () => {
       {/* Mobile Action Bar */}
       <div className={Style.mobileAction}>
         <a href={`https://wa.me/919870210896}`} className={Style.waBtn} target="_blank" rel="noopener noreferrer">
-           <i className="fa-brands fa-whatsapp"></i>
+          <i className="fa-brands fa-whatsapp"></i>
         </a>
         <button className={Style.enquireBtn} onClick={() => setShowMobileForm(true)}>Enquire Now</button>
       </div>
 
       {/* Mobile Form Drawer */}
-      <AnimatePresence>
-        {showMobileForm && (
-          <motion.div className={Style.mobileFormOverlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowMobileForm(false)}>
-            <motion.div className={Style.formContent} initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={{ type: "spring", damping: 25, stiffness: 200 }} onClick={(e) => e.stopPropagation()}>
-              <button className={Style.close} onClick={() => setShowMobileForm(false)}>&times;</button>
-              <InsiderDealsForm context={`Mobile Drawer: ${trip.title}`} />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showMobileForm && (
+        <div className={Style.mobileFormOverlay} onClick={() => setShowMobileForm(false)}>
+          <div className={Style.formContent} onClick={(e) => e.stopPropagation()}>
+            <button className={Style.close} onClick={() => setShowMobileForm(false)}>&times;</button>
+            <InsiderDealsForm context={`Mobile Drawer: ${trip.title}`} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

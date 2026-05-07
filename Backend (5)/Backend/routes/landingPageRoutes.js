@@ -18,6 +18,7 @@ router.get("/:slug", getLandingPageBySlug);
 router.post("/", upsertLandingPage);
 
 // Delete landing page (admin)
-router.delete("/:slug", deleteLandingPage);
+router.delete("/:id", deleteLandingPage);
+
 
 export default router;

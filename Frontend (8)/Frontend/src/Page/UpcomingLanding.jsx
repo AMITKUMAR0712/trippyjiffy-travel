@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import SEO from "../HomeCompontent/SEO";
 import Style from "../Style/UpcomingLanding.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
@@ -59,21 +58,19 @@ const UpcomingLanding = () => {
 
   return (
     <div className={Style.container}>
-      <SEO 
-        title="Upcoming Trips 2026 | Group Departures"
-        description="Join our upcoming group trips and adventures in 2026. Best group tour packages for domestic and international destinations. Book your slot with TrippyJiffy now!"
-        keywords="upcoming trips 2026, group departures, adventure tours, weekend trips, TrippyJiffy upcoming tours"
+      <SEO
+        title="Upcoming Trips 2026 | Group Departures & Travelling Packages in India"
+        description="Join our upcoming group trips and travelling packages in India for 2026. Best group tour packages for domestic and international destinations. Book your slot with TrippyJiffy now!"
+        keywords="upcoming trips 2026, group departures, travelling packages in india, family tours, weekend trips, TrippyJiffy"
       />
 
       <div className={Style.hero}>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className={Style.heroContent}
         >
           <h1>Upcoming <span>Adventures</span></h1>
           <p>Handpicked experiences for the modern traveller. Join our upcoming cohorts.</p>
-        </motion.div>
+        </div>
       </div>
 
       <div className={Style.wrapper}>
@@ -82,17 +79,14 @@ const UpcomingLanding = () => {
         ) : (
           <div className={Style.grid}>
             {trips.map((trip, idx) => (
-              <motion.div 
+              <div
                 key={trip.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
                 className={Style.card}
               >
                 <div className={Style.cardActions}>
-                   <button onClick={(e) => handleAction(e, "wishlist", trip)} className={Style.iconBtn} title="Add to Wishlist">
-                      <Heart size={16} />
-                   </button>
+                  <button onClick={(e) => handleAction(e, "wishlist", trip)} className={Style.iconBtn} title="Add to Wishlist">
+                    <Heart size={16} />
+                  </button>
                 </div>
                 <div className={Style.cardImg}>
                   <img src={getImgUrl(trip.banner_image || (trip.images?.[0]))} alt={trip.title} />
@@ -105,7 +99,7 @@ const UpcomingLanding = () => {
                     <Link to={`/upcoming-best-tours/${trip.id}`} className={Style.btn}>View Details</Link>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

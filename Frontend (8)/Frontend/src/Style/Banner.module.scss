@@ -6,7 +6,9 @@
   min-height: 600px;
   position: relative;
   overflow: hidden;
-  background: #1a1a1a url('/Banner_LCP.webp') center/cover no-repeat;
+  background: #1a1a1a; // Dark base color for stability
+  contain: layout; // Optimization to prevent layout leakage
+
 
   .swiperContainer {
     width: 100%;
@@ -257,8 +259,8 @@
 
 @media (max-width: 768px) {
   .Banner {
-    height: auto;
-    min-height: 80vh; 
+    height: 80vh; // Removed 'auto' to fix CLS
+    min-height: 600px; 
 
     .slide {
       height: 100%; 
@@ -368,7 +370,8 @@
 
 @media (max-width: 480px) {
   .Banner {
-    min-height: 75vh;
+    height: 75vh;
+    min-height: 500px;
 
     .slide {
       height: 100%;

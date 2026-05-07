@@ -12,7 +12,7 @@ import {
   FaPlane,
   FaGlobeAmericas
 } from "react-icons/fa";
-import { motion } from "framer-motion";
+
 
 import Style from "../Style/Footer.module.scss";
 import Logo from "../Img/trippylogo.png";
@@ -55,8 +55,9 @@ const Footer = () => {
   ];
 
   const usefulLinks = [
+    { name: "Family Tours", path: "/family-tours" },
     { name: "Blogs", path: "/blogpage" },
-    { name: "Customer’s Valuable Feedbacks", path: "/feedback-form" },
+    { name: "Valuable Customer Feedback", path: "/feedback-form" },
     { name: "About Us", path: "/about-us" },
     { name: "Plan Your Trip", path: "/enquiry-form" },
     { name: "Pay Now", path: "/payment" },
@@ -89,38 +90,15 @@ const Footer = () => {
     <footer className={Style.Footer}>
       {/* Animated Airplane Crossing */}
       <div className={Style.airplaneTrack}>
-        <motion.div 
-          className={Style.airplane}
-          animate={{ x: ["-10vw", "110vw"], y: [0, -20, 0, 15, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-        >
-          <FaPlane />
-        </motion.div>
-        <motion.div 
-          className={Style.airplane2}
-          animate={{ x: ["-10vw", "110vw"], y: [10, -10, 15, -5, 10] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear", delay: 4 }}
-        >
-          <FaPlane />
-        </motion.div>
-        <motion.div 
-          className={Style.airplane3}
-          animate={{ x: ["-10vw", "110vw"], y: [-15, 5, -20, 5, -15] }}
-          transition={{ duration: 24, repeat: Infinity, ease: "linear", delay: 8 }}
-        >
-          <FaPlane />
-        </motion.div>
+        <div className={Style.airplane}><FaPlane /></div>
+        <div className={Style.airplane2}><FaPlane /></div>
+        <div className={Style.airplane3}><FaPlane /></div>
+        <div className={Style.airplane4}><FaPlane /></div>
       </div>
 
       <div className={Style.wrapper}>
-        <motion.div 
-          className={Style.FooterFlex}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={containerVariants}
-        >
-          <motion.div variants={itemVariants} className={Style.FooterWrap}>
+        <div className={Style.FooterFlex}>
+          <div className={Style.FooterWrap}>
             <div className={Style.FooterImage}>
               <img src={Logo} alt="Footer Logo" width="160" height="60" loading="lazy" />
             </div>
@@ -143,9 +121,9 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className={Style.FooterWrap1}>
+          <div className={Style.FooterWrap1}>
             <h2>Quick Links</h2>
             <ul>
               {usefulLinks.map((link, i) => (
@@ -154,9 +132,9 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className={Style.FooterWrap2}>
+          <div className={Style.FooterWrap2}>
             <h2>India Tours</h2>
             <ul>
               {indiaTours.length > 0 ? (
@@ -173,9 +151,9 @@ const Footer = () => {
                 <li>Loading...</li>
               )}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className={Style.FooterWrap2}>
+          <div className={Style.FooterWrap2}>
             <h2>Overseas Tours</h2>
             <ul>
               {asiaTours.length > 0 ? (
@@ -194,9 +172,9 @@ const Footer = () => {
                 <li>Loading...</li>
               )}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className={Style.FooterWrap3}>
+          <div className={Style.FooterWrap3}>
             <h2>Contact Us</h2>
             <address style={{ fontStyle: 'normal' }}>
               <ul>
@@ -220,27 +198,17 @@ const Footer = () => {
                 </li>
               </ul>
             </address>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className={Style.FooterBottom}
-        >
+        <div className={Style.FooterBottom}>
           <p>
-            <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              style={{ display: 'inline-block', marginRight: '8px' }}
-            >
-              <FaGlobeAmericas style={{ color: 'var(--primary-color, #d35400)' }} /> 
-            </motion.span>
+            <span style={{ display: 'inline-block', marginRight: '8px' }}>
+              <FaGlobeAmericas style={{ color: 'var(--primary-color, #d35400)' }} />
+            </span>
             © {new Date().getFullYear()} Trippyjiffy Travel. All Rights Reserved. Empowering your next journey.
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

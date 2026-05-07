@@ -1,39 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+
 import { User, Mail, Phone, Lock, Globe, Eye, EyeOff, UserPlus } from "lucide-react";
 import { useMotionValue, useTransform, useSpring } from "framer-motion";
 import Style from "../Style/Register.module.scss";
 
 const Register = () => {
   const navigate = useNavigate();
-
-  // 3D Tilt Logic
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -82,19 +55,7 @@ const Register = () => {
 
   return (
     <div className={Style.Register}>
-      <motion.div 
-        className={Style.container}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        initial={{ opacity: 0, scale: 0.9, x: 50 }}
-        animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
+      <div className={Style.container}>
         {/* Left Section (Image) */}
         <div className={Style.imageSection}>
           <h2 className={Style.quote}>"The world is a book and those who do not travel read only one page"</h2>
@@ -202,7 +163,7 @@ const Register = () => {
 
           {message && <div className={Style.Message}>{message}</div>}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

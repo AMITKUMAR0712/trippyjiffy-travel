@@ -16,7 +16,7 @@ const MobileBottomNav = () => {
 
   const navItems = [
     { icon: <Home size={20} />, label: "Home", path: "/" },
-    { icon: <Compass size={20} />, label: "Explore", path: "/explore-all-destinations" },
+    { icon: <Compass size={20} />, label: "Explore", path: "/family-tours" },
     {
       icon: null,
       label: "Plan",

@@ -273,10 +273,10 @@ const TourDetails = () => {
   return (
     <div className={Style.TourDetails}>
       <SEO
-        title={tour.tour_name || tourState?.state_name}
+        title={tour.tour_name ? `${tour.tour_name} Tour Package | Best Itinerary & Deals` : `${tourState?.state_name} Tour Packages`}
         isDestination={true}
         description={`Get the best ${tour.tour_name || tourState?.state_name} tour package deals. Detailed ${tour.tour_name} itinerary, trip cost, and expert travel guide by TrippyJiffy.`}
-        keywords={`${tour.tour_name} tour package, ${tour.tour_name} trip cost, ${tour.tour_name} itinerary, ${tourState?.state_name} travel, trippyjiffy tours`}
+        keywords={`${tour.tour_name} tour package, ${tour.tour_name} trip cost, ${tour.tour_name} itinerary, ${tourState?.state_name} travel, family tours, trippyjiffy`}
         ogImage={tour.image ? formatImageURL(tour.image) : formatImageURL(tourState?.image)}
         canonical={window.location.href}
         structuredData={{
@@ -315,24 +315,33 @@ const TourDetails = () => {
       <div className={Style.TourImages}>
         <div key={tour.id} className={Style.TourItem}>
           <img
-            src={
-              tour.image
-                ? formatImageURL(tour.image)
-                : tourState?.image
-                  ? formatImageURL(tourState.image)
-                  : "https://placehold.co/600x400?text=No+Image"
-            }
+            src={(() => {
+              let imgSrc = tour.image || tourState?.image;
+              if (typeof imgSrc === 'string') {
+                imgSrc = imgSrc.trim();
+                if (imgSrc.startsWith('[')) {
+                  try {
+                    const arr = JSON.parse(imgSrc);
+                    imgSrc = Array.isArray(arr) ? arr[0] : imgSrc;
+                  } catch { }
+                } else if (imgSrc.includes(',')) {
+                  imgSrc = imgSrc.split(',')[0].trim();
+                }
+              }
+              return imgSrc ? formatImageURL(imgSrc) : "https://placehold.co/1400x750?text=Tour+Image";
+            })()}
             alt={`${tour.tour_name || tourState?.state_name || "Tour"} Package by TrippyJiffy`}
-            loading="lazy"
+            loading="eager"
+            onError={(e) => { e.currentTarget.src = "https://placehold.co/1400x650?text=Tour+Image"; }}
           />
           <div className={Style.TourDetailsNAme}>
-            <h1 title={tour.tour_name ? `${tour.tour_name} Tour Packages` : `${tourState?.state_name || "Unknown"} Tour Packages`}>
+            <h1 title={tour.tour_name ? `${tour.tour_name.replace(/\s+tours?\s*$/i, "")} Tour Packages` : `${(tourState?.state_name || "Unknown").replace(/\s+tours?\s*$/i, "")} Tour Packages`}>
               {tour.tour_name
-                ? `${tour.tour_name} Tour Package`
-                : `${tourState?.state_name || "Unknown"} Tour Package`}
+                ? `${tour.tour_name.replace(/\s+tours?\s*$/i, "")} Tour Package`
+                : `${(tourState?.state_name || "Unknown").replace(/\s+tours?\s*$/i, "")} Tour Package`}
             </h1>
             <div className={Style.actionButtons}>
-               <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
+              <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
             </div>
           </div>
         </div>
@@ -499,7 +508,7 @@ const TourDetails = () => {
 
           {/* Right Section */}
           <div className={Style.TourDetailsFlexRight}>
-              <InsiderDealsForm context={`India Tour Detail: ${tour?.tour_name || ""}`} />
+            <InsiderDealsForm context={`India Tour Detail: ${tour?.tour_name || ""}`} />
 
             <div className={Style.TourDetailsFlexRightTours}>
               <h3>Recommended Tour</h3>

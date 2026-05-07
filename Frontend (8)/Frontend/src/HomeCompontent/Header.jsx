@@ -56,8 +56,10 @@ const Header = () => {
     const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
     const [indiaTours, setIndiaTours] = useState([]);
     const [asiaTours, setAsiaTours] = useState([]);
+    const [exclusivePages, setExclusivePages] = useState([]);
 
     const closeTimeout = React.useRef(null);
+
 
     const toggleDropdown = (index, isClick = false) => {
         if (closeTimeout.current) {
@@ -122,8 +124,26 @@ const Header = () => {
                 setAsiaTours([]);
             }
         };
+
+        const fetchExclusives = async () => {
+            try {
+                const res = await axios.get(`${baseURL}/api/landing-pages/all`);
+                const pages = (res.data?.success ? res.data.data : (Array.isArray(res.data) ? res.data : []));
+                const formatted = pages.map(p => ({
+                    name: p.title,
+                    path: `/family-trips/${p.slug}`
+                }));
+                setExclusivePages(formatted);
+
+            } catch (error) {
+                console.error("Error fetching exclusives:", error);
+            }
+        };
+
         fetchAsiaTours();
+        fetchExclusives();
     }, [baseURL]);
+
 
     useEffect(() => {
         let ticking = false;
@@ -146,20 +166,17 @@ const Header = () => {
         {
             name: "Explore",
             categories: [
-                { name: "All Destinations", path: "/explore-all-destinations" },
+                { name: "All Destinations", path: "/family-tours" },
                 { name: "Upcoming Trips", path: "/upcoming-best-tours" },
             ],
         },
         { name: "India Tours", categories: indiaTours },
         { name: "Overseas Tours", categories: asiaTours },
         {
-            name: "Landing Pages",
-            categories: [
-                { name: "Golden Triangle", path: "/landing-pages/golden-triangle" },
-                { name: "South India Tour", path: "/landing-pages/south-india" },
-                { name: "Rajasthan", path: "/landing-pages/rajasthan" },
-            ],
+            name: "Exclusives",
+            categories: exclusivePages,
         },
+
         {
             name: "Reach Us",
             categories: [

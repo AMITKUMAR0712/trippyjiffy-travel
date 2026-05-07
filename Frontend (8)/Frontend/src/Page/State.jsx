@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
-import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import Style from "../Style/State.module.scss";
 import InsiderDealsForm from "./InsiderDealsForm";
@@ -216,52 +215,41 @@ const State = () => {
     if (!statesList || statesList.length === 0)
       return <p>No states found for this category.</p>;
 
-    const containerVariants = {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.1
-        }
-      }
-    };
-
-    const itemVariants = {
-      hidden: { y: 20, opacity: 0 },
-      visible: { y: 0, opacity: 1 }
-    };
-
     return (
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div>
         {statesList.map((state) => {
           const relatedTours = (tourData || []).filter(
             (t) => String(t.state_id) === String(state.id)
           );
 
           return (
-            <motion.div
+            <div
               key={state.id}
-              variants={itemVariants}
               className={Style.StateBlockFlex}
             >
               <div className={Style.StateBlockLeft}>
-                {normalizeImages(state).map((img, i) => (
-                  <img
-                    key={i}
-                    src={img}
-                    alt={state.state_name}
-                    width="200"
-                    loading="lazy"
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        "https://placehold.co/200x150?text=No+Image";
-                    }}
-                  />
-                ))}
+                {(() => {
+                  const imgs = normalizeImages(state);
+                  if (imgs.length === 0) return (
+                    <img
+                      src="https://placehold.co/200x150?text=No+Image"
+                      alt="No Image"
+                      width="200"
+                    />
+                  );
+                  return (
+                    <img
+                      src={imgs[0]}
+                      alt={state.state_name}
+                      width="200"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://placehold.co/200x150?text=No+Image";
+                      }}
+                    />
+                  );
+                })()}
               </div>
 
               <div className={Style.StateBlockRight}>
@@ -283,10 +271,10 @@ const State = () => {
                   <p style={{ color: "gray" }}>No tours available.</p>
                 )}
               </div>
-            </motion.div>
+            </div>
           );
         })}
-      </motion.div>
+      </div>
     );
   }, [statesList, tourData, normalizeImages]);
 
@@ -317,7 +305,21 @@ const State = () => {
     stateData?.image_url ||
     null;
 
-  const bannerImageURL = getImgUrl(bannerImgRaw) || "https://placehold.co/1200x400?text=No+Image";
+  const bannerImageURL = useMemo(() => {
+    let img = bannerImgRaw;
+    if (typeof img === "string") {
+      img = img.trim();
+      if (img.startsWith("[")) {
+        try {
+          const parsed = JSON.parse(img);
+          if (Array.isArray(parsed) && parsed.length > 0) img = parsed[0];
+        } catch (e) {}
+      } else if (img.includes(",")) {
+        img = img.split(",")[0].trim();
+      }
+    }
+    return getImgUrl(img) || "https://placehold.co/1200x400?text=No+Image";
+  }, [bannerImgRaw]);
 
   const bannerTitle =
     bannerData?.region_name || stateData?.state_name || stateName || "State";
@@ -343,20 +345,15 @@ const State = () => {
   return (
     <>
       <SEO 
-        title={bannerTitle}
+        title={`${bannerTitle} Tours | Best ${bannerTitle} Packages & Travel Guide`}
         isDestination={true}
-        description={`Book your ${bannerTitle} tour package with TrippyJiffy. Best ${bannerTitle} trip cost, 5-day itineraries, and customized travel plans for an unforgettable journey.`}
-        keywords={`${bannerTitle} tour package, ${bannerTitle} trip cost, ${bannerTitle} itinerary, explore ${bannerTitle}, TrippyJiffy`}
+        description={`Book your ${bannerTitle} tour package with TrippyJiffy. Explore the best ${bannerTitle} trip cost, itineraries, and customized vacation packages for an unforgettable journey.`}
+        keywords={`${bannerTitle} tour package, ${bannerTitle} trip cost, ${bannerTitle} itinerary, explore ${bannerTitle}, vacation packages, TrippyJiffy`}
       />
 
 
       <div className={`${Style.StatePage} ${showEnquiry ? Style.blurred : ""}`}>
-        <motion.div 
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className={Style.StateImage}
-        >
+        <div className={Style.StateBanner}>
           <img
             src={bannerImageURL}
             alt={bannerTitle}
@@ -368,10 +365,7 @@ const State = () => {
           />
 
               <div className={Style.StateText}>
-                <motion.div 
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
+                <div 
                   style={{
                     background: "rgba(255, 255, 255, 0.15)",
                     backdropFilter: "blur(8px)",
@@ -380,10 +374,10 @@ const State = () => {
                     border: "1px solid rgba(255, 255, 255, 0.2)"
                   }}
                 >
-                  <h1>{bannerTitle} <span>Tour Packages</span></h1>
-                </motion.div>
+                  <h1>{bannerTitle.replace(/\s+tours?\s*$/i, "")} <span>Tour Packages</span></h1>
+                </div>
               </div>
-        </motion.div>
+        </div>
 
         <div className={Style.wrapper}>
           <div className={Style.StateFlex}>

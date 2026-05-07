@@ -119,7 +119,7 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
                 <span className={Style.pulseDot}></span>
                 {activeUsers} travelers planning right now
               </div>
-              <h4>Unlock Insider Travel Deals ✈️</h4>
+              <h4>Unlock Insider Travel Deals</h4>
               <p>Just 10 seconds to fill. No spam, promise.</p>
 
               <div className={Style.inputGroup}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+
 import { 
   Bell, 
   FileText, 
@@ -101,9 +101,7 @@ const Announcements = () => {
   if (error) return <div className={Style.errorState}>{error}</div>;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
+    <div
       className={Style.container}
     >
       <div className={Style.header}>
@@ -149,7 +147,7 @@ const Announcements = () => {
            
            <div className={Style.docsGrid}>
               {pdfs.length ? pdfs.map((pdf) => (
-                <motion.div 
+                <div 
                   whileHover={{ y: -4 }}
                   key={pdf.id} 
                   className={Style.docCard}
@@ -169,7 +167,7 @@ const Announcements = () => {
                         <Trash2 size={18} />
                      </button>
                   </div>
-                </motion.div>
+                </div>
               )) : (
                 <div className={Style.emptyDocs}>
                    <FileText size={48} />
@@ -183,9 +181,7 @@ const Announcements = () => {
       {/* Payment Modal */}
       {showPayment && (
         <div className={Style.modalOverlay} onClick={() => setShowPayment(false)}>
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             className={Style.modalContent} 
             onClick={e => e.stopPropagation()}
           >
@@ -196,10 +192,10 @@ const Announcements = () => {
             <div className={Style.modalBody}>
                <Payment isModal={true} />
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

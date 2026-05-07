@@ -149,7 +149,13 @@ const DashboardSidebar = ({ isOpen, toggleSidebar, isMobile }) => {
               <FaMapMarkedAlt className={Style.icon} /> Upcoming Trips
             </Link>
           </li>
+          <li>
+            <Link to="/admin/dashboard/admin-landing-pages" onClick={handleLinkClick}>
+              <FaGlobe className={Style.icon} /> Landing Pages
+            </Link>
+          </li>
         </ul>
+
       </aside>
     </>
   );

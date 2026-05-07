@@ -5,7 +5,7 @@ import axios from "axios";
 import Style from "../Style/HeaderTop.module.scss";
 
 const HeaderTop = () => {
-  const [language, setLanguage] = useState("Select Language  -->");
+  const [language, setLanguage] = useState("Select Language →");
   const [messages, setMessages] = useState([
     "The #1 Platform for Global & Domestic Travel Experiences",
     "Support for Multiple Languages Worldwide",
@@ -19,10 +19,10 @@ const HeaderTop = () => {
       try {
         const res = await axios.get(`${baseURL}/api/settings/get`);
         if (res.data && res.data.tickerMessages) {
-           let parsed = typeof res.data.tickerMessages === 'string' ? JSON.parse(res.data.tickerMessages) : res.data.tickerMessages;
-           if (Array.isArray(parsed) && parsed.length > 0) {
-              setMessages(parsed);
-           }
+          let parsed = typeof res.data.tickerMessages === 'string' ? JSON.parse(res.data.tickerMessages) : res.data.tickerMessages;
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setMessages(parsed);
+          }
         }
       } catch (err) {
         console.error("Error fetching ticker settings:", err);
@@ -108,13 +108,13 @@ const HeaderTop = () => {
       <div className={Style.marqueeContainer}>
         <div className={Style.marquee}>
           {[...messages, ...messages].map((msg, index) => {
-             const Icon = icons[index % icons.length];
-             return (
-               <span key={index} className={Style.marqueeItem}>
-                 <Icon size={14} className={Style.marqueeIcon} />
-                 {msg} 
-               </span>
-             );
+            const Icon = icons[index % icons.length];
+            return (
+              <span key={index} className={Style.marqueeItem}>
+                <Icon size={14} className={Style.marqueeIcon} />
+                {msg}
+              </span>
+            );
           })}
         </div>
       </div>
@@ -122,11 +122,11 @@ const HeaderTop = () => {
       <div className={Style.rightActions}>
         <button
           onClick={openTranslateDropdown}
-        className={Style.langBtn}
-      >
-        <FaGlobe />
-        <span className={Style.langText}>{language}</span>
-      </button>
+          className={Style.langBtn}
+        >
+          <FaGlobe />
+          <span className={Style.langText}>{language}</span>
+        </button>
 
         <div id="google_translate_element" className={Style.googleTranslate} />
       </div>

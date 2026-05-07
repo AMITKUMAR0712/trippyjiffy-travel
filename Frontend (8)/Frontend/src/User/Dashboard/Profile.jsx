@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { motion } from "framer-motion";
+
 import { 
   User, 
   Mail, 
@@ -47,9 +47,7 @@ const Profile = () => {
 
   return (
     <div className={Style.container}>
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+      <div
         className={Style.profileCard}
       >
         <div className={Style.header}>
@@ -113,7 +111,7 @@ const Profile = () => {
               </div>
            </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

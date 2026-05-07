@@ -11,15 +11,15 @@
 
     .TourItem {
       position: relative;
-      flex: 1 1 calc(33.333% - 20px);
+      width: 100%;
+      display: block;
       overflow: hidden;
 
       img {
         width: 100%;
-        height: 60vh;
-        min-height: 400px;
-        max-height: 650px;
+        height: 100vh;
         object-fit: cover;
+        object-position: center;
         display: block;
       }
 
@@ -146,8 +146,11 @@
 
   .wrapper {
     display: block;
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     margin: auto;
+    padding: 0 16px;
+    box-sizing: border-box;
 
     .TourDetailsFlex {
       display: flex;

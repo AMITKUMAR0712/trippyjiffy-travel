@@ -29,12 +29,18 @@
   position: relative;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
   animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  max-height: 90vh;
+  max-height: calc(100dvh - 32px);
   flex-direction: row;
 
   @media (max-width: 768px) {
     flex-direction: column;
-    max-width: 400px;
+    width: min(400px, 100%);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 

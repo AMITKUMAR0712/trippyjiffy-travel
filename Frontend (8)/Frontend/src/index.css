@@ -291,7 +291,10 @@ img {
 }
 
 /* Hide the Google Translate tooltip and highlights */
-#goog-gt-tt, .VIpgJd-yAWNEb-hvhgnd-OEVmcd, .goog-tooltip, .VIpgJd-yAWNEb-hvhgnd-l4eHX {
+#goog-gt-tt,
+.VIpgJd-yAWNEb-hvhgnd-OEVmcd,
+.goog-tooltip,
+.VIpgJd-yAWNEb-hvhgnd-l4eHX {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;

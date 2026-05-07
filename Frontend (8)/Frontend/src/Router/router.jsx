@@ -68,6 +68,8 @@ const AdminTheme = lazy(() => import("../Dashboard/page/AdminTheme.jsx"));
 const AdminPayments = lazy(() => import("../Dashboard/page/AdminPayments.jsx"));
 const AdminBussianContent = lazy(() => import("../Dashboard/page/AdminBussianContent.jsx"));
 const AdminUpcomingTrips = lazy(() => import("../Dashboard/page/AdminUpcomingTrips.jsx"));
+const AdminLandingPages = lazy(() => import("../Dashboard/page/AdminLandingPages.jsx"));
+
 
 // User Components
 const UserdHome = lazy(() => import("../User/Dashboard/UserHome.jsx"));
@@ -107,8 +109,8 @@ const router = createBrowserRouter([
       { path: "privacypolicy", element: <Suspense fallback={<PageLoader />}><PrivacyPolicy /></Suspense> },
       { path: "termscondition", element: <Suspense fallback={<PageLoader />}><TermsCondition /></Suspense> },
       { path: "payment", element: <Suspense fallback={<PageLoader />}><Payment /></Suspense> },
-      { path: "landing-pages/:slug", element: <Suspense fallback={<PageLoader />}><LandingTourPage /></Suspense> },
-      { path: "explore-all-destinations", element: <Suspense fallback={<PageLoader />}><ExploreTours /></Suspense> },
+      { path: "family-trips/:slug", element: <Suspense fallback={<PageLoader />}><LandingTourPage /></Suspense> },
+      { path: "family-tours", element: <Suspense fallback={<PageLoader />}><ExploreTours /></Suspense> },
       { path: "upcoming-best-tours", element: <Suspense fallback={<PageLoader />}><UpcomingLanding /></Suspense> },
       { path: "upcoming-best-tours/:id", element: <Suspense fallback={<PageLoader />}><UpcomingDetails /></Suspense> },
     ],
@@ -147,6 +149,8 @@ const router = createBrowserRouter([
           { path: "AdminBussianContent", element: <Suspense fallback={<PageLoader />}><AdminBussianContent /></Suspense> },
           { path: "admintheme", element: <Suspense fallback={<PageLoader />}><AdminTheme /></Suspense> },
           { path: "upcoming-trips", element: <Suspense fallback={<PageLoader />}><AdminUpcomingTrips /></Suspense> },
+          { path: "admin-landing-pages", element: <Suspense fallback={<PageLoader />}><AdminLandingPages /></Suspense> },
+
         ],
       },
     ],

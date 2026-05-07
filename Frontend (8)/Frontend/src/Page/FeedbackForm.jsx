@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Style from "../Style/FeedbackForm.module.scss";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { User, MapPin, Navigation, Camera, Star, MessageSquareHeart, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -71,46 +71,30 @@ const FeedbackForm = () => {
         ))}
       </div>
 
-      <AnimatePresence mode="wait">
+      <div style={{ display: "contents" }}>
         {submitted ? (
           /* ── SUCCESS SCREEN ── */
-          <motion.div
+          <div
             key="success"
             className={Style.Card}
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.85 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
           >
-            <motion.div
+            <div
               className={Style.SuccessIcon}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             >
               <CheckCircle2 size={60} />
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+            </div>
+            <h2
               className={Style.SuccessTitle}
             >
               Thank You, {formData.name || "Explorer"}! 🌍
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.55 }}
+            </h2>
+            <p
               className={Style.SuccessMsg}
             >
               Your story inspires others to explore the world. We're grateful
               you shared your journey with us.
-            </motion.p>
-            <motion.button
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
+            </p>
+            <button
               className={Style.ResetBtn}
               onClick={() => {
                 setSubmitted(false);
@@ -119,17 +103,13 @@ const FeedbackForm = () => {
               }}
             >
               Share Another Story
-            </motion.button>
-          </motion.div>
+            </button>
+          </div>
         ) : (
           /* ── FEEDBACK CARD ── */
-          <motion.div
+          <div
             key="form"
             className={Style.Card}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {/* Header */}
             <div className={Style.CardHeader}>
@@ -265,9 +245,9 @@ const FeedbackForm = () => {
                 )}
               </button>
             </form>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 };

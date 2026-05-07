@@ -67,16 +67,16 @@ const BlogPage = () => {
   return (
     <>
       <Helmet>
-        <title>Travel Blogs | TrippyJiffy</title>
+        <title>Travel Blogs & India Tour Sites Guide | TrippyJiffy</title>
 
         <meta
           name="description"
-          content="Explore amazing travel stories, tips, destination guides, and adventure articles on TrippyJiffy travel blog."
+          content="Explore amazing travel stories, tips, India tour sites guides, and family vacation packages articles on the TrippyJiffy travel blog."
         />
 
         <meta
           name="keywords"
-          content="travel blog, travel tips, adventure blog, trippyjiffy blogs"
+          content="travel blog, india tour sites, family tours, travelling packages in india, adventure blog, trippyjiffy blogs"
         />
 
         {/* ✅ CANONICAL URL */}

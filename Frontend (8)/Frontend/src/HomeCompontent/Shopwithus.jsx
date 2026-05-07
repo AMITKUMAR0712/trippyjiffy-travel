@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+
 import { ShoppingBag, Clock } from "lucide-react";
 import styles from "../Style/ShopWithUs.module.scss";
 // ----------------- HELMET -----------------
@@ -24,45 +24,33 @@ const ShopWithUs = () => {
       <div className={styles.glow}></div>
 
       {/* Animated Icon */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1, rotate: 360 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+      <div
         className={styles.iconWrapper}
       >
         <ShoppingBag size={80} color="#e43d12" />
-      </motion.div>
+      </div>
 
       {/* Title */}
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+      <h1
         className={styles.title}
       >
         Shop With Us
-      </motion.h1>
+      </h1>
 
       {/* Subheading */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
+      <p
         className={styles.subtitle}
       >
         This page is under development 🚧
-      </motion.p>
+      </p>
 
       {/* Coming soon animation */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, scale: [1, 1.1, 1] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+      <div
         className={styles.comingSoon}
       >
         <Clock className={styles.clockIcon} />
         <span>Coming Soon...</span>
-      </motion.div>
+      </div>
 
       {/* Footer note */}
       <p className={styles.footer}>

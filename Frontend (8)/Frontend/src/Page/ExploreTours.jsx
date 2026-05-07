@@ -6,7 +6,6 @@ import { getImgUrl } from "../utils/getImgUrl";
 import Loader from "../HomeCompontent/Loader.jsx";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
 import SEO from "../HomeCompontent/SEO";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
@@ -25,11 +24,11 @@ const DestinationCard = memo(({ item, slugify, type, handleAction }) => {
       style={{ "--bg-image": `url("${imageUrl}")` }}
     >
       <div className={Style.cardActions}>
-         <button onClick={(e) => handleAction(e, "wishlist", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
-            <Heart size={18} />
-         </button>
+        <button onClick={(e) => handleAction(e, "wishlist", { ...item, detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
+          <Heart size={18} />
+        </button>
       </div>
-      <div className={Style.badge}>{type === "tour" ? "India" : "Asia"}</div>
+      <div className={Style.badge}>{type === "tour" ? "India" : "Overseas"}</div>
       <div className={Style.content}>
         <h2 className={Style.title}>{item.title}</h2>
         <div className={Style.copy}>
@@ -38,8 +37,8 @@ const DestinationCard = memo(({ item, slugify, type, handleAction }) => {
               {Array.isArray(item.tags)
                 ? item.tags.slice(0, 2).join(" • ")
                 : typeof item.tags === "string"
-                ? item.tags.split(",").slice(0, 2).join(" • ")
-                : ""}
+                  ? item.tags.split(",").slice(0, 2).join(" • ")
+                  : ""}
             </span>
           )}
         </div>
@@ -49,7 +48,14 @@ const DestinationCard = memo(({ item, slugify, type, handleAction }) => {
   );
 });
 
-const ExploreTours = () => {
+const ExploreTours = ({
+  seoTitle = "Best Family Tours in India | India Tour Sites & Travelling Packages",
+  seoDesc = "Find the best family tours in India with TrippyJiffy. Explore top India tour sites, premium travelling packages in India, and exciting vacation packages for your loved ones.",
+  seoKeywords = "family tours, india tour sites, travelling packages in india, vacation packages",
+  h1Text = "Family Tours ",
+  h1SpanText = "in India",
+  subText = "Explore the best India tour sites and travelling packages in India. Book unforgettable vacation packages for your family today."
+}) => {
   const [tours, setTours] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -115,7 +121,7 @@ const ExploreTours = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top on mount
-    
+
     const fetchData = async () => {
       try {
         const [stateRes, countryRes] = await Promise.all([
@@ -163,7 +169,7 @@ const ExploreTours = () => {
               country_name: item.country_name || "Unknown Country",
               title: item.country_name || "Unknown Country",
               images: imgList.filter(Boolean),
-              tags: item.tags || ["International", "Asia"],
+              tags: item.tags || ["International", "Overseas"],
               type: "country",
             };
           });
@@ -181,12 +187,12 @@ const ExploreTours = () => {
   }, []);
 
   // Combine and sort alphabetically
-  const allDestinations = [...tours, ...countries].sort((a, b) => 
+  const allDestinations = [...tours, ...countries].sort((a, b) =>
     a.title.localeCompare(b.title)
   );
 
   const getFilteredData = () => {
-    switch(filter) {
+    switch (filter) {
       case 'india': return tours.sort((a, b) => a.title.localeCompare(b.title));
       case 'asia': return countries.sort((a, b) => a.title.localeCompare(b.title));
       default: return allDestinations;
@@ -210,33 +216,33 @@ const ExploreTours = () => {
   return (
     <div className={Style.ExploreContainer}>
       <div className={Style.wrapper}>
-        
-        <SEO 
-          title="All India Tours & Overseas Holiday Packages"
-          description="Explore our complete collection of India tours and overseas holiday packages. Find the best trip costs and detailed itineraries for your next adventure with TrippyJiffy."
-          keywords="India tours, overseas holiday packages, tour packages, travel destinations, Asia tours, TrippyJiffy"
+
+        <SEO
+          title={seoTitle}
+          description={seoDesc}
+          keywords={seoKeywords}
         />
 
         <div className={Style.header}>
-          <h1 title="Explore Best Tour Packages and Destinations">Explore Best <span>Tour Packages</span> & Destinations</h1>
-          <p>Discover all our mesmerizing tours across India and Asia. Your next adventure starts here.</p>
+          <h1 title={seoTitle}>{h1Text}<span>{h1SpanText}</span></h1>
+          <p>{subText}</p>
         </div>
 
         <div className={Style.filterTabs}>
-          <button 
-            className={filter === 'all' ? Style.activeBtn : ''} 
+          <button
+            className={filter === 'all' ? Style.activeBtn : ''}
             onClick={() => setFilter('all')}
           >
             All Locations
           </button>
-          <button 
-            className={filter === 'india' ? Style.activeBtn : ''} 
+          <button
+            className={filter === 'india' ? Style.activeBtn : ''}
             onClick={() => setFilter('india')}
           >
             India Tours
           </button>
-          <button 
-            className={filter === 'asia' ? Style.activeBtn : ''} 
+          <button
+            className={filter === 'asia' ? Style.activeBtn : ''}
             onClick={() => setFilter('asia')}
           >
             Overseas Tours
@@ -248,11 +254,11 @@ const ExploreTours = () => {
         ) : filteredData.length > 0 ? (
           <div className={Style.grid}>
             {filteredData.map((item) => (
-              <DestinationCard 
-                key={`${item.type}-${item.id}`} 
-                item={item} 
-                slugify={slugify} 
-                type={item.type} 
+              <DestinationCard
+                key={`${item.type}-${item.id}`}
+                item={item}
+                slugify={slugify}
+                type={item.type}
                 handleAction={handleAction}
               />
             ))}
@@ -279,9 +285,9 @@ const ExploreTours = () => {
                 return (
                   <Link key={trip.id} to={detailsPath} className={Style.upcomingCard}>
                     <div className={Style.cardActions}>
-                       <button onClick={(e) => handleAction(e, "wishlist", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
-                          <Heart size={16} />
-                       </button>
+                      <button onClick={(e) => handleAction(e, "wishlist", { ...trip, type: "upcoming", detailPath: detailsPath })} className={Style.iconBtn} title="Add to Wishlist">
+                        <Heart size={16} />
+                      </button>
                     </div>
                     <div className={Style.upcomingImg}>
                       <img src={getImgUrl(trip.banner_image || trip.images?.[0])} alt={trip.title} />

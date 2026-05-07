@@ -97,19 +97,26 @@ export const upsertLandingPage = async (req, res) => {
 // Delete landing page
 export const deleteLandingPage = async (req, res) => {
   try {
-    const { slug } = req.params;
+    const { id } = req.params;
+    console.log("[DEBUG] Backend Delete Request for ID:", id);
+
+    if (!id) {
+      return res.status(400).json({ success: false, message: "ID is required" });
+    }
 
     const page = await prisma.landing_page.delete({
-      where: { slug },
+      where: { id: Number(id) },
     });
+
+    console.log("[DEBUG] Deleted Page Record:", page);
 
     res.status(200).json({
       success: true,
-      message: `Landing page '${slug}' deleted successfully`,
+      message: `Landing page with ID '${id}' deleted successfully`,
       data: page,
     });
   } catch (error) {
-    console.error("Error deleting landing page:", error);
+    console.error("[DEBUG] Backend Delete Error:", error);
     res.status(500).json({
       success: false,
       message: "Failed to delete landing page",
@@ -117,3 +124,5 @@ export const deleteLandingPage = async (req, res) => {
     });
   }
 };
+
+

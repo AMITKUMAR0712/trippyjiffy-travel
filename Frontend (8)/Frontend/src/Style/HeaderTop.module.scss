@@ -45,11 +45,12 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-right: 40px; /* spacing between messages */
+  margin-right: 40px;
+  /* spacing between messages */
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  
+
   /* Colorful gradient text - static to prevent forced reflows */
   background: linear-gradient(90deg, #f97316, #fbbf24);
   -webkit-background-clip: text;
@@ -59,12 +60,18 @@
 }
 
 .marqueeIcon {
-  color: #fbbf24; /* Base icon color to pop against dark background */
+  color: #fbbf24;
+  /* Base icon color to pop against dark background */
 }
 
 @keyframes scrollText {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .rightActions {
@@ -81,7 +88,8 @@
   color: #fff;
   border: none;
   padding: 6px 16px;
-  border-radius: 50px; /* Modern Pill shape */
+  border-radius: 50px;
+  /* Modern Pill shape */
   cursor: pointer;
   font-weight: 700;
   font-size: 13px;
@@ -97,7 +105,7 @@
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(211, 84, 0, 0.3);
-    
+
     svg {
       transform: rotate(20deg);
     }
@@ -113,7 +121,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  
+
   :global(#google_translate_element) {
     display: flex;
     align-items: center;

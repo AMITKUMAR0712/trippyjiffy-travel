@@ -68,9 +68,9 @@ const Contact = () => {
     <div className={Style.Contact}>
       {/* ✅ DYNAMIC TITLE + DESCRIPTION */}
       <SEO 
-        title="Contact Us"
-        description="Get in touch with TrippyJiffy for travel assistance, custom tour packages, hotel bookings, and 24/7 support. We're here to help you plan your perfect journey."
-        keywords="contact TrippyJiffy, travel support, travel booking India, tour assistance"
+        title="Contact Us | TrippyJiffy Travel Support & Tour Booking"
+        description="Get in touch with TrippyJiffy for customized family tours, travelling packages in India, and 24/7 travel support. Plan your perfect journey today."
+        keywords="contact TrippyJiffy, travel support, family tours booking, travelling packages in India, tour assistance"
         canonical={window.location.href}
       />
       <script type="application/ld+json">

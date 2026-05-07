@@ -2,9 +2,10 @@ import React, { useEffect, useState, memo, useCallback } from "react";
 import Style from "../Style/Blog.module.scss";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/autoplay";
 import axios from "axios";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
@@ -120,17 +121,22 @@ const Blog = () => {
           </div>
         ) : blogs.length > 0 ? (
           <Swiper
-            modules={[Navigation]}
+            modules={[Navigation, Autoplay]}
             navigation={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
             spaceBetween={30}
             slidesPerView={3}
+            slidesPerGroup={1}
+            loop={blogs.length >= 3}
+            speed={1000}
             grabCursor={true}
-            loop={blogs.length >= 4}
-            speed={800}
             breakpoints={{
-              0: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
+              0: { slidesPerView: 1, spaceBetween: 15, autoplay: { delay: 2500 } },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 },
             }}
             className={Style.BlogSwiper}
           >

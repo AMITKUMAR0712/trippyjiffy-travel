@@ -203,7 +203,7 @@ const CountryTourDetails = () => {
           let related = asiaData.filter(
             (t) => t?.asia_id === foundTour?.asia_id && Number(t?.id) !== Number(asiastateId)
           );
-          
+
           // Fallback: If no tours in the same country, just show other popular asia tours
           if (related.length === 0) {
             related = asiaData.filter((t) => Number(t?.id) !== Number(asiastateId)).slice(0, 5);
@@ -321,7 +321,7 @@ const CountryTourDetails = () => {
             <div className={Style.TourDetailsNAme}>
               <h1 title={`${image.state_name} Tour Packages`}>{image.state_name} Tour Packages</h1>
               <div className={Style.actionButtons}>
-                 <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
+                <button onClick={handleAddToWishlist} className={Style.actionBtn}><Heart size={18} /> Wishlist</button>
               </div>
             </div>
           </div>
@@ -463,7 +463,7 @@ const CountryTourDetails = () => {
 
           {/* âœ… Right Sidebar */}
           <div className={Style.TourDetailsFlexRight}>
-              <InsiderDealsForm context={`Asia Tour Detail: ${tour?.state_name || ""}`} />
+            <InsiderDealsForm context={`Asia Tour Detail: ${tour?.state_name || ""}`} />
 
             {/* âœ… Popular Tours â€“ current open tour excluded */}
             <div className={Style.TourDetailsFlexRightTours}>

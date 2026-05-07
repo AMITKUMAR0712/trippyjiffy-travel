@@ -1,34 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 import Style from "../Style/Payment.module.scss";
-import { motion, AnimatePresence } from "framer-motion";
 import { ShieldCheck, Lock, CreditCard, MapPin, Star, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
+
+import PayImg1 from "../Img/Payment-20260507T162434Z-3-001/Payment/1.webp";
+import PayImg2 from "../Img/Payment-20260507T162434Z-3-001/Payment/2.webp";
+import PayImg3 from "../Img/Payment-20260507T162434Z-3-001/Payment/3.webp";
 
 // Travel images for the right-side slider
 const SLIDES = [
   {
-    img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=90",
-    label: "Santorini, Greece",
+    img: PayImg1,
+    label: "Exclusive Getaways",
   },
   {
-    img: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=900&q=90",
-    label: "Kerala Backwaters, India",
+    img: PayImg2,
+    label: "Seamless Travel",
   },
   {
-    img: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=900&q=90",
-    label: "Iceland Waterfalls",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=90",
-    label: "Alpine Mountains, Switzerland",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=900&q=90",
-    label: "Road to Adventures",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=90",
-    label: "Misty Highlands",
+    img: PayImg3,
+    label: "Luxury Stays",
   },
 ];
 
@@ -75,16 +66,11 @@ const ImageSlider = () => {
   return (
     <div className={Style.SliderPanel}>
       {/* Slides */}
-      <AnimatePresence custom={dir} initial={false}>
-        <motion.div
+      <div style={{ display: "contents" }}>
+        <div
           key={active}
           className={Style.Slide}
           custom={dir}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
         >
           <img
             src={SLIDES[active].img}
@@ -114,8 +100,8 @@ const ImageSlider = () => {
             </p>
             <p className={Style.QuoteAuthor}>— Anonymous Explorer</p>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      </div>
 
       {/* Arrow controls */}
       <button className={`${Style.Arrow} ${Style.ArrowLeft}`} onClick={handlePrev} aria-label="Previous">
@@ -232,12 +218,9 @@ const Payment = ({ isModal = false }) => {
   };
 
   const formContent = (
-    <motion.div
+    <div
       className={Style.FormPanel}
       style={isModal ? { padding: 0, background: 'transparent' } : {}}
-      initial={{ x: isModal ? 0 : 60, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <div 
         className={Style.FormInner}
@@ -267,15 +250,11 @@ const Payment = ({ isModal = false }) => {
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
+        <div style={{ display: "contents" }}>
           {!showDetailsForm ? (
-            <motion.div
+            <div
               key="payment-form"
               className={Style.FormBody}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.35 }}
             >
               <div className={Style.InputGroup}>
                 <label>Currency</label>
@@ -303,15 +282,11 @@ const Payment = ({ isModal = false }) => {
               <button onClick={handlePayment} className={Style.PayBtn}>
                 <Lock size={16} /> Pay Now Securely
               </button>
-            </motion.div>
+            </div>
           ) : (
-            <motion.form
+            <form
               key="details-form"
               className={Style.FormBody}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.35 }}
               onSubmit={handleDetailsSubmit}
             >
               <div className={Style.TxnBadge}>
@@ -368,9 +343,9 @@ const Payment = ({ isModal = false }) => {
               <button type="submit" className={Style.PayBtn}>
                 <ShieldCheck size={16} /> Submit Verification
               </button>
-            </motion.form>
+            </form>
           )}
-        </AnimatePresence>
+        </div>
 
         {/* Trust Badges */}
         <div className={Style.TrustRow}>
@@ -379,7 +354,7 @@ const Payment = ({ isModal = false }) => {
           <div className={Style.TrustBadge}><ShieldCheck size={14} /><span>Razorpay</span></div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 
   if (isModal) {
@@ -389,13 +364,9 @@ const Payment = ({ isModal = false }) => {
   return (
     <div className={Style.PaymentPage}>
       {/* ── LEFT: Image Slider ── */}
-      <motion.div
-        initial={{ x: -60, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
+      <div>
         <ImageSlider />
-      </motion.div>
+      </div>
 
       {/* ── RIGHT: Payment Form ── */}
       {formContent}

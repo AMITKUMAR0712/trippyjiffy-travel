@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Heart, Trash2, ExternalLink, CreditCard, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -49,9 +48,7 @@ const Wishlist = () => {
   if (loading) return <div className={Style.loadingState}>Loading your wishlist...</div>;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
+    <div
       className={Style.container}
     >
       <div className={Style.header}>
@@ -71,7 +68,7 @@ const Wishlist = () => {
         <section className={Style.docsSection}>
            <div className={Style.docsGrid}>
               {wishlist.length ? wishlist.map((item) => (
-                <motion.div 
+                <div 
                   whileHover={{ y: -4 }}
                   key={item.id} 
                   className={Style.docCard}
@@ -94,12 +91,12 @@ const Wishlist = () => {
                         <Trash2 size={18} />
                      </button>
                   </div>
-                </motion.div>
+                </div>
               )) : (
                 <div className={Style.emptyDocs}>
                    <Heart size={48} />
                    <p>Your wishlist is currently empty. Explore our tours and save your favorites here!</p>
-                   <Link to="/explore-all-destinations" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
+                   <Link to="/family-tours" style={{ padding: '10px 20px', background: '#f97316', color: '#fff', borderRadius: '8px', textDecoration: 'none' }}>
                      Explore Tours
                    </Link>
                 </div>
@@ -111,9 +108,7 @@ const Wishlist = () => {
       {/* Payment Modal */}
       {showPayment && (
         <div className={Style.modalOverlay} onClick={() => setShowPayment(false)}>
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
             className={Style.modalContent} 
             onClick={e => e.stopPropagation()}
           >
@@ -124,10 +119,10 @@ const Wishlist = () => {
             <div className={Style.modalBody}>
                <Payment isModal={true} />
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

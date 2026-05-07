@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { motion, AnimatePresence } from "framer-motion";
 import { User, Mail, Phone, ShieldCheck, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Style from "../Style/InsiderDealsForm.module.scss";
 
@@ -86,19 +85,11 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   };
 
   return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className={Style.formContainer}
-    >
-      <AnimatePresence mode="wait">
+    <div className={Style.formContainer}>
+      <div style={{ display: "contents" }}>
         {success ? (
-          <motion.div 
+          <div 
             key="success"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
             className={Style.successCard}
           >
             <div className={Style.successCircle}>
@@ -106,7 +97,7 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
             </div>
             <h3>Thank You, {formData.name.split(' ')[0]}!</h3>
             <p>Our lead travel architect has been notified. You'll receive the insider itinerary on WhatsApp/Email within 15 minutes.</p>
-          </motion.div>
+          </div>
         ) : (
           <form key="form" onSubmit={handleSubmit} className={Style.mainForm}>
             <div className={Style.liveBadge}>
@@ -121,7 +112,7 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
 
             <div className={Style.formFields}>
               {/* Name Field with Floating Label */}
-              <motion.div variants={itemVariants} className={Style.floatingGroup}>
+              <div className={Style.floatingGroup}>
                 <div className={Style.iconBox}><User size={18} /></div>
                 <input
                   type="text"
@@ -134,10 +125,10 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
                   autoComplete="name"
                 />
                 <label htmlFor="lead-name">Enter your full name</label>
-              </motion.div>
+              </div>
 
               {/* Phone Field with Floating Label */}
-              <motion.div variants={itemVariants} className={Style.floatingGroup}>
+              <div className={Style.floatingGroup}>
                 <div className={Style.iconBox}><Phone size={18} /></div>
                 <input
                   type="tel"
@@ -150,10 +141,10 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
                   autoComplete="tel"
                 />
                 <label htmlFor="lead-phone">WhatsApp Number (ex: +91...)</label>
-              </motion.div>
+              </div>
 
               {/* Email Field with Floating Label */}
-              <motion.div variants={itemVariants} className={Style.floatingGroup}>
+              <div className={Style.floatingGroup}>
                 <div className={Style.iconBox}><Mail size={18} /></div>
                 <input
                   type="email"
@@ -166,13 +157,10 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
                   autoComplete="email"
                 />
                 <label htmlFor="lead-email">Email for Itinerary</label>
-              </motion.div>
+              </div>
             </div>
 
-            <motion.button 
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <button
               type="submit" 
               className={Style.ctaBtn} 
               disabled={loading}
@@ -184,7 +172,7 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
                   Get Access Now <ArrowRight size={20} />
                 </>
               )}
-            </motion.button>
+            </button>
 
             <footer className={Style.footer}>
               <div className={Style.trustRow}>
@@ -194,8 +182,8 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
             </footer>
           </form>
         )}
-      </AnimatePresence>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 

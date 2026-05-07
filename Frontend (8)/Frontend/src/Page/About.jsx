@@ -17,9 +17,9 @@ const About = () => {
     <div className={Style.About}>
 
       <SEO
-        title="About Us"
-        description="TrippyJiffy (Neelasha Travels LLP), your trusted partner for hotel bookings, holiday packages, and custom travel itineraries across India and Asia."
-        keywords="TrippyJiffy, Neelasha Travels LLP, travel agency India, holiday packages, custom trips, about TrippyJiffy"
+        title="About TrippyJiffy | Best Travel Agency for Family Tours & Vacation Packages"
+        description="Learn more about TrippyJiffy. We specialize in custom family tours, travelling packages in India, and international vacation packages."
+        keywords="about TrippyJiffy, family tours, travelling packages in india, vacation packages, travel agency India"
         canonical={window.location.href}
       />
       <script type="application/ld+json">
@@ -139,7 +139,7 @@ const About = () => {
                 her ability to create seamless and innovative travel solutions
                 for clients worldwide. Driven by a vision to make every journey
                 memorable, Arpita continues to inspire her team to combine
-                expertise with empathy. Turning travel dreams into beautiful
+                expertise with empathy, turning travel dreams into beautiful
                 realities.
               </p>
               <h2>Managing Director</h2>
@@ -149,12 +149,12 @@ const About = () => {
               <img src={Director1} alt="Shailee Srivastava" />
               <h2>Shailee Srivastava</h2>
               <p>
-                With over 11 years of experience in the travel industry,Shailee
-                Shrivastava stands out as a dynamic leader who excels in both
+                With over 11 years of experience in the travel industry, Shailee
+                Srivastava stands out as a dynamic leader who excels in both
                 sales strategy and operational excellence. As the Director of
                 Sales & Operations at Trippy Jiffy, she plays a pivotal role in
                 driving business growth and ensuring seamless execution across
-                all departments. Shailee Srivastava in-depth understanding of travel
+                all departments. Shailee Srivastava's in-depth understanding of travel
                 dynamics, coupled with her exceptional team management skills,
                 enables her to lead high-performing teams that consistently
                 achieve and surpass targets. Her strategic vision, strong

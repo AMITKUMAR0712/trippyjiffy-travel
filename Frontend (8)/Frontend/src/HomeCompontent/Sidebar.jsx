@@ -9,20 +9,31 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
   const [indiaTours, setIndiaTours] = useState([]);
   const [asiaTours, setAsiaTours] = useState([]);
   const [countriesData, setCountriesData] = useState([]);
+  const [exclusivePages, setExclusivePages] = useState([]);
+
 
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [indiaRes, asiaRes, countryRes] = await Promise.all([
+        const [indiaRes, asiaRes, countryRes, exclusivesRes] = await Promise.all([
           axios.get(`${baseURL}/api/category-india/get`),
           axios.get(`${baseURL}/api/asia/get`),
           axios.get(`${baseURL}/api/country/get`),
+          axios.get(`${baseURL}/api/landing-pages/all`).catch(() => ({ data: [] }))
         ]);
         setIndiaTours(Array.isArray(indiaRes.data) ? indiaRes.data : []);
         setAsiaTours(Array.isArray(asiaRes.data) ? asiaRes.data : []);
         setCountriesData(Array.isArray(countryRes.data) ? countryRes.data : []);
+        
+        const pages = (exclusivesRes.data?.success ? exclusivesRes.data.data : (Array.isArray(exclusivesRes.data) ? exclusivesRes.data : []));
+        const formatted = pages.map(p => ({
+            name: p.title,
+            path: `/family-trips/${p.slug}`
+        }));
+        setExclusivePages(formatted);
+
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -30,6 +41,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
 
     fetchData();
   }, [baseURL]);
+
 
   // Close on escape key
   useEffect(() => {
@@ -67,7 +79,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
     {
       name: "Explore",
       categories: [
-        { name: "All Destinations", path: "/explore-all-destinations" },
+        { name: "All Destinations", path: "/family-tours" },
         { name: "Upcoming Trips", path: "/upcoming-best-tours" },
       ],
     },
@@ -86,13 +98,10 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
       })),
     },
     {
-      name: "Landing Pages",
-      categories: [
-        { name: "Golden Triangle", path: "/landing-pages/golden-triangle" },
-        { name: "South India Tour", path: "/landing-pages/south-india" },
-        { name: "Rajasthan", path: "/landing-pages/rajasthan" },
-      ],
+      name: "Exclusives",
+      categories: exclusivePages,
     },
+
     {
       name: "Reach Us",
       categories: [
@@ -160,6 +169,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                     ${openDropdown === index ? Style.showDropdown : ""} 
                     ${menu.name === "India Tours" ? Style.indiaDropdown : ""} 
                     ${menu.name === "Overseas Tours" ? Style.asiaDropdown : ""} 
+                    ${menu.name === "Explore" ? Style.exploreDropdown : ""} 
                     ${menu.name === "Reach Us" ? Style.reachDropdown : ""}`}
                 >
                   {menu.categories.map((cat, i) => {
@@ -230,7 +240,8 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                         )}
 
                         {(menu.name === "Reach Us" ||
-                          menu.name === "Landing Pages") && (
+                          menu.name === "Explore" ||
+                          menu.name === "Exclusives") && (
                           <Link
                             to={cat.path}
                             className={Style.ReachUsLink}

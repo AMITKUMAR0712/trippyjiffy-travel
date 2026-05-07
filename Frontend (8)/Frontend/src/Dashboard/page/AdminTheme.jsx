@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { 
   FiSettings, FiType, FiLayout, FiLayout as FiBox, 
   FiCheck, FiRefreshCw, FiEye, FiMoon, FiSun, FiTrash2 
@@ -177,13 +177,10 @@ const AdminTheme = () => {
 
       <form onSubmit={handleSubmit} className={Style.studioContent}>
         <div className={Style.controlPanel}>
-          <AnimatePresence mode="wait">
+          <div style={{ display: "contents" }}>
             {activeTab === 'colors' && (
-              <motion.div
+              <div
                 key="colors"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
               >
                 <div className={Style.sectionTitle}>
                   <FiLayout /> Brand & Interface Colors
@@ -218,15 +215,12 @@ const AdminTheme = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
 
             {activeTab === 'typography' && (
-              <motion.div
+              <div
                 key="typo"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
               >
                 <div className={Style.sectionTitle}>
                   <FiType /> Global Typography Setup
@@ -254,15 +248,12 @@ const AdminTheme = () => {
                     This font is currently set to <strong>{settings.fontFamily}</strong>.
                   </p>
                 </div>
-              </motion.div>
+              </div>
             )}
 
             {activeTab === 'marquee' && (
-              <motion.div
+              <div
                 key="marquee"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
               >
                 <div className={Style.sectionTitle}>
                   <FiLayout /> Top Header Announcements
@@ -296,15 +287,12 @@ const AdminTheme = () => {
                 >
                   + Add New Message
                 </button>
-              </motion.div>
+              </div>
             )}
 
             {activeTab === 'advanced' && (
-              <motion.div
+              <div
                 key="advanced"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
               >
                 <div className={Style.sectionTitle}>
                   <FiSettings /> Advanced Design Engine
@@ -356,9 +344,9 @@ const AdminTheme = () => {
                     onChange={handleChange} 
                   />
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
+          </div>
 
           <footer className={Style.actions}>
             <button type="submit" disabled={loading}>

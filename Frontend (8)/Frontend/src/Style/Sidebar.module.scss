@@ -91,8 +91,14 @@
   -webkit-overflow-scrolling: touch;
 
   /* Scrollbar */
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 4px;
+  }
 }
 
 .NavItem {
@@ -105,7 +111,8 @@
     cursor: pointer;
     padding: 14px 20px;
     transition: background 0.2s ease;
-    min-height: 52px; /* Touch-friendly */
+    min-height: 52px;
+    /* Touch-friendly */
 
     &:hover {
       background: #f8fafc;
@@ -170,9 +177,21 @@
   }
 }
 
-.indiaDropdown.showDropdown { max-height: 300px; }
-.asiaDropdown.showDropdown  { max-height: 600px; }
-.reachDropdown.showDropdown { max-height: 200px; }
+.indiaDropdown.showDropdown {
+  max-height: 300px;
+}
+
+.asiaDropdown.showDropdown {
+  max-height: 600px;
+}
+
+.reachDropdown.showDropdown {
+  max-height: 200px;
+}
+
+.exploreDropdown.showDropdown {
+  max-height: 150px;
+}
 
 /* Sidebar action buttons */
 .HeaderRight {
@@ -212,17 +231,23 @@
     &:active {
       transform: translateY(0);
     }
-    
+
     &:nth-child(2) {
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-      &:hover { box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3); }
+
+      &:hover {
+        box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+      }
     }
-    
+
     &:nth-child(3) {
       background: linear-gradient(135deg, #10b981, #059669);
       box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
-      &:hover { box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3); }
+
+      &:hover {
+        box-shadow: 0 6px 15px rgba(16, 185, 129, 0.3);
+      }
     }
   }
 }

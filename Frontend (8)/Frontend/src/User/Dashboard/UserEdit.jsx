@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+
 import { 
   User, 
   Mail, 
@@ -85,11 +85,7 @@ const UserEdit = () => {
   if (error || !user) return <div className={Style.errorState}>{error || "User data missing"}</div>;
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={Style.container}
-    >
+    <div className={Style.container}>
       <div className={Style.header}>
         <div className={Style.titleGroup}>
           <h2>Account Settings</h2>
@@ -190,7 +186,7 @@ const UserEdit = () => {
            </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

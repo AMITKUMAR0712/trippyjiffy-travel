@@ -11,8 +11,11 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import Style from "../Style/Banner.module.scss";
 // The first banner image is moved to public and preloaded in index.html for LCP optimization
-import Banner2 from "../Img/Banner2 (2).webp";
-import Banner3 from "../Img/Banner32.webp";
+const Banner1 = "/Banner_LCP.webp";
+import Banner2 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/2.webp";
+import Banner3 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/3.webp";
+import Banner4 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/4.webp";
+
 
 const Banner = () => {
   const [combinedData, setCombinedData] = useState([]);
@@ -84,12 +87,12 @@ const Banner = () => {
         speed={2000}
         className={Style.swiperContainer}
       >
-        {["/Banner_LCP.webp", Banner2, Banner3].map((img, idx) => (
+        {[Banner1, Banner2, Banner3, Banner4].map((img, idx) => (
           <SwiperSlide key={idx}>
             <div className={Style.slide}>
               <img 
                 src={img} 
-                alt={`TrippyJiffy Tour Packages Banner ${idx + 1}`} 
+                alt={idx === 0 ? "Best family tours in India" : idx === 1 ? "India tour packages" : "Affordable travelling packages in India"} 
                 className={Style.bannerImage} 
                 loading={idx === 0 ? "eager" : "lazy"} 
                 fetchpriority={idx === 0 ? "high" : "auto"}
@@ -106,10 +109,9 @@ const Banner = () => {
       <div className={Style.contentWrapper}>
         <div className={Style.Bannertext}>
           <span className={Style.badge}>Explore the 4th Dimension</span>
-          <h1 title="Best Tour Packages and Holiday Deals">Best Travel Agency for <span>Tour Packages</span> & Custom Holiday Deals</h1>
+          <h1 title="Best India Tours & Family Tour Packages">Best India Tours & <span>Family Tour Packages</span></h1>
           <p>
-            Experience the magic of India like never before. From the peaks of the Himalayas
-            to the serene backwaters of Kerala, your journey starts here.
+            Explore affordable travelling packages in India with customized family tours, honeymoon trips, group tours, and international holiday packages.
           </p>
 
           <div className={Style.searchContainer}>

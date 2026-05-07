@@ -292,9 +292,9 @@ const DestinationCard = memo(({ item, slugify, type }) => {
     >
       <img src={imageUrl} alt={item.title} loading="lazy" decoding="async" className={Style.cardBgImg} />
       <div className={Style.cardActions}>
-         <button onClick={(e) => handleAction(e, "wishlist")} className={Style.iconBtn} title="Add to Wishlist">
-            <Heart size={18} />
-         </button>
+        <button onClick={(e) => handleAction(e, "wishlist")} className={Style.iconBtn} title="Add to Wishlist">
+          <Heart size={18} />
+        </button>
       </div>
       <div className={Style.content}>
         <h3 className={Style.title}>{item.title}</h3>
@@ -304,7 +304,7 @@ const DestinationCard = memo(({ item, slugify, type }) => {
             : "Discover the best tour packages with TrippyJiffy."}
         </p>
         <div className={Style.btn}>
-          {type === "upcoming" ? "Explore Trip" : type === "tour" ? "Discover Tour" : "Explore Now"}
+          Explore Now
         </div>
       </div>
     </Link>
@@ -314,6 +314,7 @@ const DestinationCard = memo(({ item, slugify, type }) => {
 const Destinations = () => {
   const [tours, setTours] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [indiaCategory, setIndiaCategory] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -341,10 +342,11 @@ const Destinations = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [stateRes, countryRes, upcomingRes] = await Promise.all([
+        const [stateRes, countryRes, upcomingRes, indiaCatRes] = await Promise.all([
           axios.get(`${baseURL}/api/state/get`),
           axios.get(`${baseURL}/api/asia/get`),
           axios.get(`${baseURL}/api/upcoming-trips/get`),
+          axios.get(`${baseURL}/api/category-india/get`),
         ]);
 
         // -------- TOUR DATA --------
@@ -393,8 +395,18 @@ const Destinations = () => {
         const upcomingArray = Array.isArray(upcomingRes.data) ? upcomingRes.data : [];
         const filteredUpcoming = upcomingArray.filter(t => t.is_visible === 1);
 
+        // -------- INDIA CATEGORY DATA --------
+        const indiaCatArray = Array.isArray(indiaCatRes.data) ? indiaCatRes.data : [];
+        const formattedIndiaCat = indiaCatArray.map(item => ({
+          id: item.id,
+          state_name: item.region_name || "Unknown Region",
+          title: item.region_name || "Unknown Region",
+          images: [getValidImageUrl(item.image, item.image_url)].filter(Boolean),
+        }));
+
         setTours(uniqueTours);
         setCountries(uniqueCountries);
+        setIndiaCategory(formattedIndiaCat);
         setUpcoming(filteredUpcoming);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -447,6 +459,41 @@ const Destinations = () => {
               <div style={{ width: '100%', padding: '40px 0' }}><Loader text="Sourcing trending trips..." /></div>
             )
             : tours.map((item) => (
+              <SwiperSlide key={item.id}>
+                <DestinationCard item={item} slugify={slugify} type="tour" />
+              </SwiperSlide>
+            ))}
+        </Swiper>
+
+        {/* India Tours Category */}
+        <div className={Style.DestinationCardBlock}>
+          <h2>
+            India <span>Tours</span>
+          </h2>
+        </div>
+
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={4}
+          navigation
+          autoplay={{ delay: 2600, disableOnInteraction: false }}
+          speed={800}
+          observer={true}
+          observeParents={true}
+          loop={indiaCategory.length >= 8}
+          breakpoints={{
+            320: { slidesPerView: 1, loop: indiaCategory.length >= 2 },
+            768: { slidesPerView: 2, loop: indiaCategory.length >= 4 },
+            1024: { slidesPerView: 3, loop: indiaCategory.length >= 6 },
+            1400: { slidesPerView: 4, loop: indiaCategory.length >= 8 },
+          }}
+        >
+          {loading
+            ? (
+              <div style={{ width: '100%', padding: '40px 0' }}><Loader text="Arranging India tours..." /></div>
+            )
+            : indiaCategory.map((item) => (
               <SwiperSlide key={item.id}>
                 <DestinationCard item={item} slugify={slugify} type="tour" />
               </SwiperSlide>

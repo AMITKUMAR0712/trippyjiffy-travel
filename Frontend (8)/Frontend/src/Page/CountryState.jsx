@@ -211,9 +211,9 @@ const CountryState = () => {
         ? `${selectedCountry.country_name} – ${stateName.replace(
             /-/g,
             " "
-          )} | Best Tours & Travel Guide`
-        : `${selectedCountry.country_name} – Best Tours, States & Travel Info`
-      : "Country Details | TrippyJiffy"}
+          )} Vacation Packages | Best Tours`
+        : `${selectedCountry.country_name} Tour Sites & Vacation Packages`
+      : "Country Details & Vacation Packages | TrippyJiffy"}
   </title>
 
   <meta
@@ -221,9 +221,9 @@ const CountryState = () => {
     content={
       selectedCountry
         ? stateName
-          ? `Explore ${stateName.replace(/-/g, " ")} in ${selectedCountry.country_name}. View popular tours, attractions, and travel details at TrippyJiffy.`
-          : `Explore ${selectedCountry.country_name} states, popular tours, travel attractions, and enquiry options at TrippyJiffy.`
-        : "Explore international destinations, travel attractions, and tour packages with TrippyJiffy."
+          ? `Explore ${stateName.replace(/-/g, " ")} in ${selectedCountry.country_name}. View popular tours, attractions, and family vacation packages at TrippyJiffy.`
+          : `Explore ${selectedCountry.country_name} tour sites, popular travelling packages, and enquiry options at TrippyJiffy.`
+        : "Explore international destinations, travel attractions, and family vacation packages with TrippyJiffy."
     }
   />
 
@@ -238,11 +238,51 @@ const CountryState = () => {
       {/* ==================== TOP IMAGE ==================== */}
       <div className={Style.CountryStateImage}>
         <img
-          src={getCountryImage()}
+          src={(() => {
+            let img = getCountryImage();
+            if (typeof img === "string") {
+              img = img.trim();
+              if (img.startsWith("[")) {
+                try {
+                  const parsed = JSON.parse(img);
+                  if (Array.isArray(parsed) && parsed.length > 0) img = parsed[0];
+                } catch (e) {}
+              } else if (img.includes(",")) {
+                img = img.split(",")[0].trim();
+              }
+            }
+            return img || "https://placehold.co/1200x500?text=Country+Banner";
+          })()}
           alt={selectedCountry?.country_name || "Country"}
+          onError={(e) => { e.currentTarget.src = "https://placehold.co/1200x500?text=Country+Banner"; }}
         />
         <div className={Style.StateText}>
-          <h1>{selectedCountry?.country_name?.replace(/-/g, " ")}</h1>
+          <div 
+            style={{
+              background: "rgba(255, 255, 255, 0.15)",
+              backdropFilter: "blur(12px)",
+              padding: "40px 60px",
+              borderRadius: "24px",
+              border: "1px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+              maxWidth: "900px",
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px"
+            }}
+          >
+            <h1>{selectedCountry?.country_name?.replace(/-/g, " ")}</h1>
+            <span style={{ 
+              fontSize: "clamp(12px, 2vw, 18px)", 
+              letterSpacing: "8px", 
+              fontWeight: "400",
+              opacity: "0.9",
+              textTransform: "uppercase"
+            }}>
+              Curated Travel Experience
+            </span>
+          </div>
         </div>
       </div>
 
@@ -259,22 +299,23 @@ const CountryState = () => {
                   <div key={state.id} className={Style.StateBlockFlex}>
                     {/* LEFT: IMAGE */}
                     <div className={Style.StateBlockLeft}>
-                      {normalizeImages(state.state_image).length > 0 ? (
-                        normalizeImages(state.state_image).map((img, i) => (
+                      {(() => {
+                        const imgs = normalizeImages(state.state_image);
+                        return imgs.length > 0 ? (
                           <img
-                            key={i}
-                            src={img}
+                            src={imgs[0]}
                             alt={state.state_name}
                             className={Style.TourImage}
+                            onError={(e) => { e.currentTarget.src = "https://placehold.co/300x200?text=No+Image"; }}
                           />
-                        ))
-                      ) : (
-                        <img
-                          src="https://placehold.co/300x200?text=No+Image"
-                          alt="No State Image"
-                          className={Style.TourImage}
-                        />
-                      )}
+                        ) : (
+                          <img
+                            src="https://placehold.co/300x200?text=No+Image"
+                            alt="No State Image"
+                            className={Style.TourImage}
+                          />
+                        );
+                      })()}
                     </div>
 
                     {/* RIGHT: DETAILS */}
@@ -319,7 +360,7 @@ const CountryState = () => {
 
           {/* RIGHT SIDE */}
           <div className={Style.CountryStateFlexRight}>
-            <InsiderDealsForm context={`Asia Country Sidebar: ${selectedCountry?.country_name}`} />
+            <InsiderDealsForm context={`Overseas Country Sidebar: ${selectedCountry?.country_name}`} />
           </div>
         </div>
       </div>
@@ -334,7 +375,7 @@ const CountryState = () => {
             >
               X
             </button>
-            <InsiderDealsForm context={`Asia Country Modal: ${selectedCountry?.country_name}`} />
+            <InsiderDealsForm context={`Overseas Country Modal: ${selectedCountry?.country_name}`} />
           </div>
         </div>
       )}
