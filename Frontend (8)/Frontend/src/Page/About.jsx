@@ -51,7 +51,7 @@ const About = () => {
             effortlessly and efficiently.
           </p>
           <p>
-            We offer a comprehensive range of services, including hotel
+            We offer a comprehensive range of services, including hotels
             bookings, holiday packages, and custom travel itineraries. Whether
             you're planning a relaxing beach vacation, an adventurous trek, or a
             cultural exploration, we ensure a seamless experience.
