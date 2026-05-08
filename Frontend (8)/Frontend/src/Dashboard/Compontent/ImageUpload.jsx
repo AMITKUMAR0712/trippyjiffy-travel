@@ -4,7 +4,7 @@ import { FaUpload, FaSpinner, FaCheck } from 'react-icons/fa';
 
 const ImageUpload = ({ onUploadSuccess, currentImage, label }) => {
   const [uploading, setUploading] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5005";
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -36,7 +36,7 @@ const ImageUpload = ({ onUploadSuccess, currentImage, label }) => {
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         {currentImage && (
           <img 
-            src={currentImage.startsWith('/') ? `${baseURL}${currentImage}` : currentImage} 
+            src={currentImage.startsWith('/') || !currentImage.includes('://') ? (currentImage.startsWith('http') ? currentImage : `${baseURL}${currentImage.startsWith('/') ? '' : '/api/uploads/'}${currentImage}`) : currentImage} 
             alt="Preview" 
             style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '0.25rem', border: '1px solid #cbd5e1' }} 
           />

@@ -21,7 +21,7 @@ const AdminLandingPages = () => {
   const [pageData, setPageData] = useState({});
   const [activeSection, setActiveSection] = useState("general");
 
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5005";
+  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     fetchPages();
@@ -330,7 +330,7 @@ const AdminLandingPages = () => {
                   <div className={Style.previewGrid}>
                     {(pageData.hero?.slides || []).map((img, i) => (
                       <div key={i} className={Style.previewImgCard}>
-                        <img src={img.startsWith('/') ? `${baseURL}${img}` : img} alt="" />
+                        <img src={img.startsWith('/') || !img.includes('://') ? (img.startsWith('http') ? img : `${baseURL}${img.startsWith('/') ? '' : '/api/uploads/'}${img}`) : img} alt="" />
                         <button onClick={() => handleArrayUpdate("hero.slides", i, null, true)}>Remove</button>
                       </div>
                     ))}

@@ -99,7 +99,7 @@ export const updateBlog = async (req, res) => {
 
     await pool.query(
       "UPDATE blog SET title = ?, date = ?, paragraphs = ?, image = ? WHERE id = ?",
-      [title, date, paragraphs, image, id]
+      [title, date, JSON.stringify(paragraphs), image, id]
     );
 
     res.json({ message: "Blog updated successfully" });

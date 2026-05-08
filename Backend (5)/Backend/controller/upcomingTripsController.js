@@ -64,13 +64,14 @@ export const addUpcomingTrip = async (req, res) => {
   let banner_image = null;
 
   if (req.files) {
-    req.files.forEach(file => {
-      if (file.fieldname === 'banner_image') {
-        banner_image = file.filename;
-      } else if (file.fieldname === 'images') {
+    if (req.files.banner_image && req.files.banner_image[0]) {
+      banner_image = req.files.banner_image[0].filename;
+    }
+    if (req.files.images) {
+      req.files.images.forEach(file => {
         images.push(file.filename);
-      }
-    });
+      });
+    }
   }
 
   const visible = is_visible !== undefined ? is_visible : 1;
@@ -106,13 +107,14 @@ export const updateUpcomingTrip = async (req, res) => {
   let newBannerImage = null;
 
   if (req.files) {
-    req.files.forEach(file => {
-      if (file.fieldname === 'banner_image') {
-        newBannerImage = file.filename;
-      } else if (file.fieldname === 'images') {
+    if (req.files.banner_image && req.files.banner_image[0]) {
+      newBannerImage = req.files.banner_image[0].filename;
+    }
+    if (req.files.images) {
+      req.files.images.forEach(file => {
         newImages.push(file.filename);
-      }
-    });
+      });
+    }
   }
 
   try {

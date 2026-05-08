@@ -1,5 +1,5 @@
 const getApiUrl = () => {
-  const url = import.meta.env.VITE_API_URL || "http://localhost:5005/api";
+  const url = import.meta.env.VITE_API_URL || "https://trippyjiffy.com/api";
   return url.endsWith('/') ? url.slice(0, -1) : url;
 };
 
