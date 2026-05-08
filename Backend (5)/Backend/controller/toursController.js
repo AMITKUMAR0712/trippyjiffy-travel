@@ -1,5 +1,13 @@
 import pool from "../config/db.js";
 
+const stringifyIfObject = (val) => {
+  if (val && typeof val === "object") {
+    return JSON.stringify(val);
+  }
+  return val;
+};
+
+
 export const getAllTours = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM tours ORDER BY id DESC");
@@ -62,15 +70,15 @@ export const addTour = async (req, res) => {
       [
         state_id,
         title,
-        description || null,
-        routing || null,
-        sightseeing_points || null,
-        inclusions || null,
-        activities || null,
-        monument_info || null,
-        market_info || null,
-        supplemental_activities || null,
-        exclusions || null,
+        stringifyIfObject(description),
+        stringifyIfObject(routing),
+        stringifyIfObject(sightseeing_points),
+        stringifyIfObject(inclusions),
+        stringifyIfObject(activities),
+        stringifyIfObject(monument_info),
+        stringifyIfObject(market_info),
+        stringifyIfObject(supplemental_activities),
+        stringifyIfObject(exclusions),
       ]
     );
 
@@ -99,7 +107,7 @@ export const updateTour = async (req, res) => {
       .map((key) => `${key} = ?`)
       .join(", ");
 
-    const values = Object.values(fields);
+    const values = Object.values(fields).map(v => stringifyIfObject(v));
     values.push(id);
 
     await pool.query(`UPDATE tours SET ${updates} WHERE id = ?`, values);

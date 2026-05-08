@@ -28,14 +28,14 @@ model admin_backup {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model asia {
-  id           Int      @id
+  id           Int      @id @default(autoincrement())
   country_name String?  @db.VarChar(255)
   images       String?  @db.LongText
   is_visible   Boolean? @default(true)
 }
 
 model asiastate {
-  id          Int     @id
+  id          Int     @id @default(autoincrement())
   state_name  String  @db.VarChar(255)
   state_image String? @db.VarChar(255)
   asia_id     Int?
@@ -43,7 +43,7 @@ model asiastate {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model blog {
-  id         Int      @id
+  id         Int      @id @default(autoincrement())
   title      String   @db.VarChar(255)
   image      String?  @db.VarChar(500)
   date       DateTime @db.Date
@@ -66,13 +66,13 @@ model business_contacts {
 }
 
 model categoryindia {
-  id          Int     @id
+  id          Int     @id @default(autoincrement())
   region_name String  @db.VarChar(100)
   image       String? @db.VarChar(255)
 }
 
 model contact {
-  id                   Int       @id
+  id                   Int       @id @default(autoincrement())
   full_name            String    @db.VarChar(100)
   email                String    @db.VarChar(100)
   phone                String    @db.VarChar(20)
@@ -84,7 +84,7 @@ model contact {
 }
 
 model countrytours {
-  id                      Int     @id
+  id                      Int     @id @default(autoincrement())
   asiastate_id            Int
   title                   String  @db.VarChar(255)
   description             String? @db.LongText
@@ -101,7 +101,7 @@ model countrytours {
 }
 
 model countrytours_faq {
-  id         Int       @id
+  id         Int       @id @default(autoincrement())
   tour_id    Int
   question   String    @db.VarChar(255)
   answer     String    @db.Text
@@ -112,7 +112,7 @@ model countrytours_faq {
 }
 
 model doc {
-  id          Int       @id
+  id          Int       @id @default(autoincrement())
   user_id     Int
   pdf_name    String    @db.VarChar(255)
   pdf_file    Bytes?
@@ -203,7 +203,7 @@ model tours {
 }
 
 model tours_faq {
-  id         Int       @id
+  id         Int       @id @default(autoincrement())
   question   String    @db.VarChar(255)
   answer     String    @db.Text
   created_at DateTime? @default(now()) @db.Timestamp(0)

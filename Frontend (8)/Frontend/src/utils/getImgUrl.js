@@ -11,8 +11,7 @@ import gal5 from "../Img/people-doi-pha-tang-against-sky-sunrise_1048944-4357386
 import gal6 from "../Img/hiker-looking-mountains-from-great-wall-china-sunset_1048944-9830948.jpeg";
 
 const apiBase = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
-const baseURL_IMG = `${apiBase}/api/uploads`;
-
+const baseURL_IMG = `${apiBase.replace(/\/$/, "")}/api/uploads`;
 
 // Map exact db paths to actual Vite imported hashes
 const LOCAL_ASSET_MAP = {
@@ -35,48 +34,35 @@ const LOCAL_ASSET_MAP = {
 export const getImgUrl = (url) => {
   if (!url) return "";
 
-  // Normalize URL for mapping check (handle both /api/uploads/file.jpg and file.jpg)
-  const normalizedUrl = typeof url === "string" 
-    ? (url.startsWith("/") ? url : `/${url}`).replace(/^\/uploads\//, "/api/uploads/")
-    : url;
-
-  // 0. Check internal asset map with normalized path
-  if (LOCAL_ASSET_MAP[normalizedUrl]) {
-    return LOCAL_ASSET_MAP[normalizedUrl];
-  }
-
-  // Also check if just the filename matches anything in the map
-  const filenameOnly = typeof url === "string" ? url.split("/").pop() : "";
-  const matchByFilename = Object.entries(LOCAL_ASSET_MAP).find(([key]) => key.endsWith(`/${filenameOnly}`));
-  if (matchByFilename) {
-    return matchByFilename[1];
-  }
-
-  // 1. Handle absolute URLs
-  if (typeof url === "string" && (url.startsWith("http://") || url.startsWith("https://"))) {
-    if (url.includes("localhost") || url.includes("127.0.0.1") || url.includes("187.127.139.99")) {
-      const filename = url.split("/").pop();
-      return `${baseURL_IMG}/${filename}`;
-    }
-    return url;
-  }
-
-  // 2. Handle paths/filenames
-  let finalFilename = url;
-  if (typeof url === "string") {
-    finalFilename = url
-      .replace(/^https?:\/\/[^\/]+/, "")
-      .replace(/^\/?api\/uploads\//, "")
-      .replace(/^\/?uploads\//, "")
-      .replace(/^\//, "");
-  }
-
-  // If it's a blob or data URL, return as is
+  // 1. Check if it's a base64 or blob URL
   if (typeof url === "string" && (url.startsWith("blob:") || url.startsWith("data:"))) {
     return url;
   }
 
-  return `${baseURL_IMG}/${finalFilename}`;
+  // 2. Normalize: extract only the filename
+  let filename = url;
+  if (typeof url === "string") {
+    // Remove protocol and domain if present
+    filename = url.replace(/^https?:\/\/[^\/]+/, "");
+    // Remove /api/uploads/ or uploads/ prefixes
+    filename = filename.replace(/^\/?api\/uploads\//, "").replace(/^\/?uploads\//, "").replace(/^\//, "");
+  }
+
+  // 3. Check internal asset map with standard path
+  const normalizedPath = `/api/uploads/${filename}`;
+  if (LOCAL_ASSET_MAP[normalizedPath]) {
+    return LOCAL_ASSET_MAP[normalizedPath];
+  }
+
+  // 4. Handle absolute URLs (that aren't our domain or are already full)
+  if (typeof url === "string" && url.startsWith("http")) {
+    // If it's a localhost or old IP URL, redirect to production baseURL_IMG
+    if (url.includes("localhost") || url.includes("127.0.0.1") || url.includes("187.127.139.99")) {
+       return `${baseURL_IMG}/${filename}`;
+    }
+    return url;
+  }
+
+  // 5. Default: Append to production uploads path
+  return `${baseURL_IMG}/${filename}`;
 };
-
-
