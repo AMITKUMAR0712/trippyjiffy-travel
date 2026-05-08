@@ -154,3 +154,16 @@ export const deleteEnquiry = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const sendAdminMessage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { adminMessage } = req.body;
+    await pool.query("UPDATE enquiries SET admin_message = ? WHERE id = ?", [adminMessage, id]);
+    res.json({ message: "Announcement sent successfully" });
+  } catch (err) {
+    console.error("Send announcement error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+

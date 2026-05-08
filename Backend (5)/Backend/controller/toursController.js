@@ -14,7 +14,7 @@ export const getAllTours = async (req, res) => {
     res.json(rows);
   } catch (err) {
     console.error("Error fetching tours:", err);
-    res.status(500).json({ message: "Database error" });
+    res.status(500).json({ message: "Database error", error: err.message });
   }
 };
 
@@ -29,7 +29,7 @@ export const getTourById = async (req, res) => {
     res.json(rows[0]);
   } catch (err) {
     console.error("Error fetching tour:", err);
-    res.status(500).json({ message: "Database error" });
+    res.status(500).json({ message: "Database error", error: err.message });
   }
 };
 
@@ -90,7 +90,7 @@ export const addTour = async (req, res) => {
     });
   } catch (err) {
     console.error("Error adding tour:", err);
-    res.status(500).json({ message: "Database error" });
+    res.status(500).json({ message: "Database error", error: err.message });
   }
 };
 

@@ -7,8 +7,12 @@ import {
   removeFromWishlist,
   addToCompare,
   getCompare,
-  removeFromCompare
+  removeFromCompare,
+  getDashboardStats
 } from "../controller/userFeaturesController.js";
+
+// Dashboard Stats
+router.get("/dashboard-stats", verifyToken, getDashboardStats);
 
 // Wishlist Routes
 router.post("/wishlist", verifyToken, addToWishlist);

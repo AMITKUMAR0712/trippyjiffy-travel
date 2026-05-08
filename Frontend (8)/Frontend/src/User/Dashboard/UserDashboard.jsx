@@ -22,48 +22,45 @@ const UserDashboard = () => {
     }
   }, []);
 
-  const [wishlistCount, setWishlistCount] = useState("0");
+  const [stats, setStats] = useState({
+    bookedTrips: "0",
+    wishlist: "0",
+    destinations: "Global",
+    activePlan: "Free"
+  });
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    const fetchWishlistCount = async () => {
+    const fetchDashboardData = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
         const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
-        const { data } = await axios.get(`${baseURL}/api/user-features/wishlist`, {
+        const { data } = await axios.get(`${baseURL}/api/user-features/dashboard-stats`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        if (data && data.wishlist) {
-          setWishlistCount(data.wishlist.length.toString());
+        if (data && data.success) {
+          setStats({
+            bookedTrips: data.stats.bookedTrips.toString(),
+            wishlist: data.stats.wishlist.toString(),
+            destinations: data.stats.destinations,
+            activePlan: data.stats.activePlan
+          });
+          setActivities(data.recentActivities || []);
         }
       } catch (err) {
-        console.error("Error fetching wishlist count", err);
+        console.error("Error fetching dashboard stats", err);
       }
     };
-    fetchWishlistCount();
+    fetchDashboardData();
   }, []);
 
-  const stats = [
-    { label: "Booked Trips", value: "0", icon: <Trophy color="#f59e0b" />, color: "amber" },
-    { label: "Wishlist", value: wishlistCount, icon: <TrendingUp color="#3b82f6" />, color: "blue" },
-    { label: "Destinations", value: "Global", icon: <MapPin color="#10b981" />, color: "green" },
-    { label: "Active Plan", value: "Free", icon: <ShieldCheck color="#6366f1" />, color: "indigo" }
+  const statCards = [
+    { label: "Booked Trips", value: stats.bookedTrips, icon: <Trophy color="#f59e0b" />, color: "amber" },
+    { label: "Wishlist", value: stats.wishlist, icon: <TrendingUp color="#3b82f6" />, color: "blue" },
+    { label: "Destinations", value: stats.destinations, icon: <MapPin color="#10b981" />, color: "green" },
+    { label: "Active Plan", value: stats.activePlan, icon: <ShieldCheck color="#6366f1" />, color: "indigo" }
   ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 }
-  };
 
   return (
     <div className={Style.container}>
@@ -73,9 +70,7 @@ const UserDashboard = () => {
           <h1 className={Style.title}>
             Welcome back, <span className={Style.highlight}>{user.name}</span>! 👋
           </h1>
-          <p
-             className={Style.subtitle}
-          >
+          <p className={Style.subtitle}>
             Your next adventure is just a few clicks away. Explore your personalized travel dashboard.
           </p>
         </div>
@@ -87,10 +82,8 @@ const UserDashboard = () => {
       </section>
 
       {/* Stats Grid */}
-      <div
-        className={Style.statsGrid}
-      >
-        {stats.map((stat, idx) => (
+      <div className={Style.statsGrid}>
+        {statCards.map((stat, idx) => (
           <div key={idx} className={Style.statCard}>
              <div className={`${Style.statIcon} ${Style[stat.color]}`}>
                {stat.icon}
@@ -106,23 +99,33 @@ const UserDashboard = () => {
       {/* Main Content Grid */}
       <div className={Style.mainGrid}>
         {/* Recent Activity */}
-        <div
-          className={Style.contentCard}
-        >
+        <div className={Style.contentCard}>
           <div className={Style.cardHeader}>
             <h3>Recent Activities</h3>
             <button>View All <ArrowRight size={14} /></button>
           </div>
-          <div className={Style.emptyState}>
-            <Clock size={40} className={Style.emptyIcon} />
-            <p>No recent activity found. Start planning your journey!</p>
-          </div>
+          {activities.length > 0 ? (
+            <div className={Style.activityList}>
+              {activities.map((act, i) => (
+                <div key={i} className={Style.activityItem}>
+                  <div className={Style.activityDot} />
+                  <div className={Style.activityDetails}>
+                    <p>Enquiry for <strong>{act.destination}</strong></p>
+                    <span>{new Date(act.created_at).toLocaleDateString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={Style.emptyState}>
+              <Clock size={40} className={Style.emptyIcon} />
+              <p>No recent activity found. Start planning your journey!</p>
+            </div>
+          )}
         </div>
 
         {/* Quick Actions / Tips */}
-        <div
-          className={Style.contentCard}
-        >
+        <div className={Style.contentCard}>
           <div className={Style.cardHeader}>
              <h3>Travel Tips</h3>
              <AlertCircle size={20} color="#94a3b8" />

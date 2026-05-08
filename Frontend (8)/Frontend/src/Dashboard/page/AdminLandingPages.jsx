@@ -330,7 +330,7 @@ const AdminLandingPages = () => {
                   <div className={Style.previewGrid}>
                     {(pageData.hero?.slides || []).map((img, i) => (
                       <div key={i} className={Style.previewImgCard}>
-                        <img src={img.startsWith('/') || !img.includes('://') ? (img.startsWith('http') ? img : `${baseURL}${img.startsWith('/') ? '' : '/api/uploads/'}${img}`) : img} alt="" />
+                        <img src={img.startsWith("http") ? img : `${baseURL}/api/uploads/${img.replace(/^\/?(api\/uploads\/|uploads\/)/, "")}`} alt="" />
                         <button onClick={() => handleArrayUpdate("hero.slides", i, null, true)}>Remove</button>
                       </div>
                     ))}
@@ -421,7 +421,7 @@ const AdminLandingPages = () => {
                     <div className={Style.previewGrid}>
                       {(pageData.whyIntro?.images || []).map((img, i) => (
                         <div key={i} className={Style.previewImgCard}>
-                          <img src={img.startsWith('/') ? `${baseURL}${img}` : img} alt="" />
+                          <img src={img.startsWith("http") ? img : `${baseURL}/api/uploads/${img.replace(/^\/?(api\/uploads\/|uploads\/)/, "")}`} alt="" />
                           <button onClick={() => handleArrayUpdate("whyIntro.images", i, null, true)}>Remove</button>
                         </div>
                       ))}

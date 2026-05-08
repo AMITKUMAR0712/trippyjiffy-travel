@@ -37,7 +37,7 @@ export const addFaq = async (req, res) => {
       .json({ message: "FAQ added successfully", faqId: result.insertId });
   } catch (error) {
     console.error("Error adding FAQ:", error);
-    res.status(500).json({ message: "Server error", error });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -60,7 +60,7 @@ export const getAllFaqs = async (req, res) => {
     res.status(200).json(rows);
   } catch (error) {
     console.error("Error fetching FAQs:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -100,7 +100,7 @@ export const updateFaq = async (req, res) => {
     res.status(200).json({ message: "FAQ updated successfully" });
   } catch (error) {
     console.error("Error updating FAQ:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

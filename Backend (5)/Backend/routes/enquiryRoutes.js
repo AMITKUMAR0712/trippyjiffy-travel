@@ -5,6 +5,7 @@ import {
   getEnquiryById,
   updateEnquiry,
   deleteEnquiry,
+  sendAdminMessage,
 } from "../controller/enquiryController.js";
 import { verifyToken } from "../middlewares/authMiddleware.js";
 
@@ -16,5 +17,6 @@ router.get("/get", getEnquiries);
 router.get("/get/:id", getEnquiryById);
 router.put("/update/:id", updateEnquiry);
 router.delete("/delete/:id", deleteEnquiry);
+router.put("/send-admin-message/:id", sendAdminMessage);
 
 export default router;

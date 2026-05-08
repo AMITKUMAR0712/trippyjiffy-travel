@@ -224,7 +224,8 @@ const AdminTours = () => {
       fetchTours();
     } catch (error) {
       console.error("Error submitting tour:", error);
-      alert("Failed ❌");
+      const msg = error.response?.data?.message || error.message || "Failed ❌";
+      alert(msg);
     }
   };
 

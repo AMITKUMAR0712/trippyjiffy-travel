@@ -23,7 +23,7 @@ const addRegion = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Error adding region:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
 
@@ -38,7 +38,7 @@ const getRegions = async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error("❌ Error fetching regions:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
 
@@ -83,7 +83,7 @@ const updateRegion = async (req, res) => {
     res.json({ message: "Region updated successfully" });
   } catch (error) {
     console.error("❌ Error updating region:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
 

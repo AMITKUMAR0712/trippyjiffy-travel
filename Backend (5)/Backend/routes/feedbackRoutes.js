@@ -46,8 +46,8 @@ const upload = multer({ storage });
 // CRUD routes
 router.post("/add", upload.single("photo"), addFeedback);
 router.get("/get", getFeedbacks);
-router.get("/:id", getFeedbackById);
-router.put("/:id", upload.single("photo"), updateFeedback);
-router.delete("/:id", deleteFeedback);
+router.get("/get/:id", getFeedbackById);
+router.put("/update/:id", upload.single("photo"), updateFeedback);
+router.delete("/delete/:id", deleteFeedback);
 
 export default router;

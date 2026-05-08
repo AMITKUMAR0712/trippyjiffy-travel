@@ -135,3 +135,48 @@ export const removeFromCompare = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
+export const getDashboardStats = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+
+    // 1. Wishlist Count
+    const wishlistCount = await prisma.user_wishlist.count({
+      where: { user_id }
+    });
+
+    // 2. Booked Trips Count (from enquiries associated with this user)
+    const bookedTripsCount = await prisma.enquiries.count({
+      where: { user_id }
+    });
+
+    // 3. Recent Activities
+    const recentActivities = await prisma.enquiries.findMany({
+      where: { user_id },
+      orderBy: { created_at: 'desc' },
+      take: 5
+    });
+
+    // 4. Destinations (Fixed or can be based on something else)
+    const destinations = "Global";
+
+    // 5. Active Plan
+    const activePlan = "Free";
+
+    res.status(200).json({
+      success: true,
+      stats: {
+        wishlist: wishlistCount,
+        bookedTrips: bookedTripsCount,
+        destinations,
+        activePlan
+      },
+      recentActivities
+    });
+
+  } catch (error) {
+    console.error("Get dashboard stats error:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
