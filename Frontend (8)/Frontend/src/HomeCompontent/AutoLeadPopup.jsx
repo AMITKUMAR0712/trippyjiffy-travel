@@ -3,7 +3,7 @@ import axios from "axios";
 import { createPortal } from "react-dom";
 import Style from "../Style/AutoLeadPopup.module.scss";
 
-const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
+const AutoLeadPopup = ({ delay = 5000, context = "Homepage", forceShow = false, onClose = null }) => {
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -31,8 +31,11 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
   }, []);
 
   useEffect(() => {
-    // Clear old legacy key from previous version just in case
-    sessionStorage.removeItem("hasSeenLeadPopup");
+    if (forceShow) {
+      setShow(true);
+      document.body.style.overflow = "hidden";
+      return;
+    }
 
     // Check if successfully submitted in this session
     const hasFilled = sessionStorage.getItem("leadPopupFilled");
@@ -44,12 +47,12 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage" }) => {
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [delay, forceShow]);
 
   const handleClose = () => {
     setShow(false);
-    // REMOVED sessionStorage setter here so it continues to show on navigation if not filled
     document.body.style.overflow = "auto";
+    if (onClose) onClose();
   };
 
   const handleChange = (e) => {

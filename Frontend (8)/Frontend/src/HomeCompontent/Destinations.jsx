@@ -500,10 +500,10 @@ const Destinations = () => {
             ))}
         </Swiper>
 
-        {/* International Destinations */}
+        {/* Overseas Destinations */}
         <div className={Style.DestinationCardBlock}>
           <h2>
-            International <span>Destinations</span>
+            Overseas <span>Destinations</span>
           </h2>
         </div>
 

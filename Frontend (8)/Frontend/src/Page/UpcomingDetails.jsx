@@ -164,12 +164,7 @@ const UpcomingDetails = () => {
         </aside>
       </div>
 
-      {/* Mobile Action Bar */}
-      <div className={Style.mobileAction}>
-        <a href={`https://wa.me/919870210896}`} className={Style.waBtn} target="_blank" rel="noopener noreferrer">
-          <i className="fa-brands fa-whatsapp"></i>
-        </a>
-      </div>
+
 
 
       {/* Mobile Form Drawer */}

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Heart, Trash2, ExternalLink, CreditCard, X } from "lucide-react";
+import { Heart, Trash2, ExternalLink, CreditCard, X, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import Payment from "../../Page/Payment";
+import AutoLeadPopup from "../../HomeCompontent/AutoLeadPopup";
 import Style from "../Dashboard/Style/Announcements.module.scss";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
+  const [showContactPopup, setShowContactPopup] = useState(false);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const token = localStorage.getItem("token");
 
@@ -59,9 +61,14 @@ const Wishlist = () => {
             <p>Your saved destinations and tours for future trips.</p>
           </div>
         </div>
-        <button onClick={() => setShowPayment(true)} className={Style.payBtnHeader}>
-          <CreditCard size={18} /> Make a Payment
-        </button>
+        <div className={Style.headerActions} style={{ display: 'flex', gap: '10px' }}>
+          <button onClick={() => setShowContactPopup(true)} className={Style.payBtnHeader} style={{ background: '#3b82f6' }}>
+            <MessageSquare size={18} /> Contact Us
+          </button>
+          <button onClick={() => setShowPayment(true)} className={Style.payBtnHeader}>
+            <CreditCard size={18} /> Make a Payment
+          </button>
+        </div>
       </div>
 
       <div className={Style.mainGrid}>
@@ -122,6 +129,13 @@ const Wishlist = () => {
           </div>
         </div>
       )}
+
+      {/* AutoLeadPopup Modal */}
+      <AutoLeadPopup 
+        forceShow={showContactPopup} 
+        onClose={() => setShowContactPopup(false)} 
+        context="Wishlist Dashboard" 
+      />
     </div>
   );
 };
