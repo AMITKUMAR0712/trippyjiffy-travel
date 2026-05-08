@@ -97,32 +97,43 @@ const UpcomingDetails = () => {
             <p className={Style.description}>{trip.description}</p>
           </section>
 
-          {/* ADVANCE GALLERY - ONLY ONE FORM REMAINS IN SIDEBAR */}
+          {/* Gallery Highlights - 5 Images Grid */}
           {images.length > 0 && (
-            <section className={`${Style.glassCard} ${Style.gallerySection} ${Style.desktopOnly}`}>
-              <h2>Gallery <span>Highlights</span></h2>
-              <div className={Style.tinyGrid}>
+            <section className={Style.glassCard}>
+              <div className={Style.galleryHeader}>
+                <h2>Gallery <span>Highlights</span></h2>
+                <p>Capturing the essence of your next adventure.</p>
+              </div>
+              <div className={Style.highlightsGrid}>
                 {images.slice(0, 5).map((img, idx) => (
-                  <div key={idx} className={Style.tinyPic}>
-                    <img src={getImgUrl(img)} alt={idx} loading="lazy" />
+                  <div key={idx} className={`${Style.galleryItem} ${Style[`item${idx + 1}`]}`}>
+                    <img src={getImgUrl(img)} alt={`Highlight ${idx + 1}`} loading="lazy" />
                   </div>
                 ))}
               </div>
-              <div className={Style.miniSwiperWrap}>
+              
+              {/* Swipeable Carousel for all images on mobile */}
+              <div className={Style.mobileCarousel}>
                 <Swiper
-                  modules={[Autoplay]} spaceBetween={5} slidesPerView={3.5}
-                  autoplay={{ delay: 2500 }} grabCursor={true}
-                  breakpoints={{ 480: { slidesPerView: 5.5 } }}
+                  modules={[Autoplay, Navigation]} 
+                  spaceBetween={10} 
+                  slidesPerView={1.2}
+                  autoplay={{ delay: 3000 }} 
+                  grabCursor={true}
+                  loop={true}
                 >
                   {images.map((img, idx) => (
                     <SwiperSlide key={idx}>
-                      <div className={Style.microCard}><img src={getImgUrl(img)} alt={idx} /></div>
+                      <div className={Style.carouselCard}>
+                        <img src={getImgUrl(img)} alt={`Slide ${idx + 1}`} />
+                      </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
             </section>
           )}
+
 
           {/* Luxury Timeline Itinerary */}
           {itinerary.length > 0 && (
@@ -158,8 +169,8 @@ const UpcomingDetails = () => {
         <a href={`https://wa.me/919870210896}`} className={Style.waBtn} target="_blank" rel="noopener noreferrer">
           <i className="fa-brands fa-whatsapp"></i>
         </a>
-        <button className={Style.enquireBtn} onClick={() => setShowMobileForm(true)}>Enquire Now</button>
       </div>
+
 
       {/* Mobile Form Drawer */}
       {showMobileForm && (

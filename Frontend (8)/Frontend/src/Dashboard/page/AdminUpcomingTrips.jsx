@@ -76,7 +76,15 @@ const AdminUpcomingTrips = () => {
     setFormData({ ...formData, details: newDetails });
   };
 
-  const handleImageChange = (e) => setImageFiles(Array.from(e.target.files));
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      alert("Maximum 5 gallery images allowed. Only the first 5 will be selected.");
+      setImageFiles(files.slice(0, 5));
+    } else {
+      setImageFiles(files);
+    }
+  };
   const handleBannerChange = (e) => setBannerFile(e.target.files[0]);
 
   const handleSubmit = async (e) => {
