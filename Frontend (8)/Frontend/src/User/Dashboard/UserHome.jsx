@@ -28,9 +28,7 @@ const UserdHome = () => {
       {/* Sidebar with AnimatePresence for mobile */}
       <div style={{ display: "contents" }}>
         {(isSidebarOpen || !isMobile) && (
-          <div>
-            className={Style.dashboardLayoutLeft}
-          >
+          <div className={Style.dashboardLayoutLeft}>
             <Sidebar
               isOpen={isSidebarOpen}
               toggleSidebar={toggleSidebar}
