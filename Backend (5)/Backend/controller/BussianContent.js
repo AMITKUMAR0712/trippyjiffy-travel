@@ -1,13 +1,5 @@
 import pool from "../config/db.js";
-import nodemailer from "nodemailer";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASS,
-  },
-});
+import sendMail from "../utils/mailService.js";
 
 export const addBusinessContact = async (req, res) => {
   try {
@@ -68,10 +60,22 @@ export const addBusinessContact = async (req, res) => {
       `,
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) console.error("Email send error:", err);
-      else console.log("Email sent:", info.response);
-    });
+    const userSubject = "Business Inquiry Confirmation - TrippyJiffy";
+    const userMessage = `
+      <h3>Dear ${full_name},</h3>
+      <p>Thank you for your business inquiry. Our team has received your details and will contact you within 24 hours.</p>
+      <p><b>Company:</b> ${company_name}</p>
+      <br/>
+      <p>Best Regards,<br/>TrippyJiffy Business Desk</p>
+    `;
+
+    // Send emails
+    try {
+      await sendMail(process.env.ADMIN_EMAIL, mailOptions.subject, mailOptions.html);
+      await sendMail(email, userSubject, userMessage);
+    } catch (emailError) {
+      console.error("⚠️ Business email error:", emailError);
+    }
 
     res.status(201).json({
       success: true,

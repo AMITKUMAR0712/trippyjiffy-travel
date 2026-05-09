@@ -11,7 +11,7 @@ const Choose = lazy(() => import("./HomeCompontent/Choose"));
 const Homepage = () => {
   return (
     <div>
-      <SEO 
+      <SEO
         title="Family Tours | India Tour Sites, Travelling Packages in India & Vacation Packages"
         description="Book affordable family tours and vacation packages with TrippyJiffy. Explore top India tour sites and the best travelling packages in India for an unforgettable trip."
         keywords="family tours, india tour sites, travelling packages in india, vacation packages, TrippyJiffy"
@@ -31,8 +31,8 @@ const Homepage = () => {
       <AutoLeadPopup delay={4500} context="Homepage" />
 
       <Banner />
-      
-      <Suspense fallback={<div style={{height: '50vh'}}></div>}>
+
+      <Suspense fallback={<div style={{ height: '50vh' }}></div>}>
         <Destinations />
         <Testimonials />
         <Blog />

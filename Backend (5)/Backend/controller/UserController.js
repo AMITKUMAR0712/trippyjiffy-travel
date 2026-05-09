@@ -5,7 +5,7 @@ import pool from "../config/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import multer from "multer";
-import { sendEmailToAdmin } from "../utils/contentSendToAdmin.js";
+import sendMail from "../utils/mailService.js";
 
 // ================= TOKEN =================
 const generateToken = (user) => {
@@ -59,14 +59,13 @@ export const registerUser = async (req, res) => {
 
     // Email to admin (non-blocking)
     try {
-      await sendEmailToAdmin(
-        "🆕 New User Registered",
-        `<h3>New User Registration</h3>
+      const subject = "🆕 New User Registered";
+      const html = `<h3>New User Registration</h3>
          <p><b>Name:</b> ${name}</p>
          <p><b>Email:</b> ${email}</p>
          <p><b>Mobile:</b> ${mobile}</p>
-         <p><b>Country:</b> ${country}</p>`
-      );
+         <p><b>Country:</b> ${country}</p>`;
+      await sendMail(process.env.ADMIN_EMAIL, subject, html);
     } catch (err) {
       console.log("Email error:", err.message);
     }

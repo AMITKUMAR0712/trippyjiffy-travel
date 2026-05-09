@@ -1,5 +1,5 @@
 import pool from "../config/db.js";
-import contactSend from "../utils/contactToAdmin.js";
+import sendMail from "../utils/mailService.js";
 
 export const addContact = async (req, res) => {
   const {
@@ -58,9 +58,19 @@ export const addContact = async (req, res) => {
       </ul>
     `;
 
-    // Send email but don't block contact submission if it fails
+    const userSubject = "We received your message - TrippyJiffy";
+    const userMessage = `
+      <h3>Hi ${full_name},</h3>
+      <p>Thank you for reaching out to TrippyJiffy. We have received your message and will get back to you shortly.</p>
+      <p><b>Your Message:</b> ${message || "N/A"}</p>
+      <br/>
+      <p>Best Regards,<br/>TrippyJiffy Team</p>
+    `;
+
+    // Send emails but don't block contact submission if it fails
     try {
-      await contactSend(subject, emailMessage, email);
+      await sendMail(process.env.ADMIN_EMAIL, subject, emailMessage);
+      await sendMail(email, userSubject, userMessage);
     } catch (emailError) {
       console.error("⚠️ Email sending failed but contact saved:", emailError);
     }

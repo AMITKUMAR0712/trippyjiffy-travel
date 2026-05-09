@@ -5,6 +5,7 @@ import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
 import pool from "../config/db.js";
+import sendMail from "../utils/mailService.js";
 
 dotenv.config();
 const router = express.Router();
@@ -97,6 +98,24 @@ router.post("/payment-details", upload.single("screenshot"), async (req, res) =>
       "INSERT INTO payments (name, email, phone, transactionId, screenshot, currency, time) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [name, email, phone, transactionId, screenshot, currency, time]
     );
+
+    // Email to admin
+    try {
+      const subject = `💰 New Manual Payment from ${name}`;
+      const html = `
+        <h3>Manual Payment Details Received</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Transaction ID:</b> ${transactionId}</p>
+        <p><b>Currency:</b> ${currency}</p>
+        <p><b>Time:</b> ${time}</p>
+        <p>Check admin panel for screenshot.</p>
+      `;
+      await sendMail(process.env.ADMIN_EMAIL, subject, html);
+    } catch (err) {
+      console.log("Payment email error:", err.message);
+    }
 
     res.json({ success: true, message: "Payment details saved" });
   } catch (error) {

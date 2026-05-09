@@ -86,6 +86,13 @@ const Footer = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
+  const handleLinkClick = (e, link) => {
+    if (link.isPopup) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent("openLeadPopup"));
+    }
+  };
+
   return (
     <footer className={Style.Footer}>
       {/* Animated Airplane Crossing */}
@@ -128,7 +135,13 @@ const Footer = () => {
             <ul>
               {usefulLinks.map((link, i) => (
                 <li key={i}>
-                  <Link to={link.path}>{link.name}</Link>
+                  <Link 
+                    to={link.path} 
+                    onClick={(e) => handleLinkClick(e, link)}
+                    className={link.isFeatured ? Style.featuredLink : ""}
+                  >
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -197,6 +210,14 @@ const Footer = () => {
                   <span>Sector 1, Vikas Nagar Lucknow 226022 (India)</span>
                 </li>
               </ul>
+              <div style={{ marginTop: '20px' }}>
+                <Link 
+                  to="/customize-your-holiday-plan" 
+                  className={Style.featuredLink}
+                >
+                  Customize Your Holiday
+                </Link>
+              </div>
             </address>
           </div>
         </div>

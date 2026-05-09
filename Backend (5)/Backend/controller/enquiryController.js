@@ -1,5 +1,5 @@
 import pool from "../config/db.js";
-import enquirySend from "../utils/enquirySend.js";
+import sendMail from "../utils/mailService.js";
 
 export const addEnquiry = async (req, res) => {
   try {
@@ -65,8 +65,8 @@ export const addEnquiry = async (req, res) => {
 
     // Send emails but don't block enquiry if they fail
     try {
-      await enquirySend(adminSubject, adminMessage, process.env.ADMIN_EMAIL);
-      await enquirySend(userSubject, userMessage, email);
+      await sendMail(process.env.ADMIN_EMAIL, adminSubject, adminMessage);
+      await sendMail(email, userSubject, userMessage);
     } catch (emailError) {
       console.error("⚠️ Email sending failed but enquiry saved:", emailError);
     }

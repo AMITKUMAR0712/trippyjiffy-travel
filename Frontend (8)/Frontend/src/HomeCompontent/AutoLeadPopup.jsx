@@ -96,13 +96,13 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage", forceShow = false, 
 
   return createPortal(
     <div className={Style.overlay} onClick={handleClose}>
-      <div 
-        className={Style.popupCard} 
+      <div
+        className={Style.popupCard}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
       >
         <button className={Style.closeBtn} onClick={handleClose}>&times;</button>
-        
+
         <div className={Style.imageSection}>
           <div className={Style.badge}>Exclusive Offer</div>
           <h3>Plan Your Dream Vacation</h3>

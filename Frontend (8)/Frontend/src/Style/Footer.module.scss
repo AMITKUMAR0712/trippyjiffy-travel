@@ -370,6 +370,40 @@
     }
   }
 
+  .featuredLink {
+    color: var(--primary-color, $primary) !important;
+    font-weight: 700 !important;
+    background: rgba(211, 84, 0, 0.1);
+    padding: 4px 10px !important;
+    border-radius: 6px;
+    display: inline-block;
+    margin-left: 0;
+    border: 1px dashed rgba(211, 84, 0, 0.4);
+    animation: pulseHighlight 2s infinite ease-in-out;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 13px;
+
+    &::before {
+      display: none !important; // Hide the arrow for the featured link
+    }
+
+    &:hover {
+      background: var(--primary-color, $primary) !important;
+      color: #fff !important;
+      padding-left: 14px !important;
+      transform: translateY(-2px) scale(1.05);
+      border-style: solid;
+      box-shadow: 0 4px 12px rgba(211, 84, 0, 0.3);
+    }
+  }
+
+  @keyframes pulseHighlight {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 84, 0, 0.2); }
+    50% { transform: scale(1.03); box-shadow: 0 0 15px 0 rgba(211, 84, 0, 0.1); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 84, 0, 0); }
+  }
+
   /* ── Footer Bottom Bar ── */
   .FooterBottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);

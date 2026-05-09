@@ -1,4 +1,5 @@
 import pool from "../config/db.js";
+import sendMail from "../utils/mailService.js";
 const addFeedback = async (req, res) => {
   try {
     const { name, destination, rating, review, origin } = req.body;
@@ -16,6 +17,22 @@ const addFeedback = async (req, res) => {
       "INSERT INTO feedback (name, photo, destination, rating, review, origin) VALUES (?, ?, ?, ?, ?, ?)",
       [name, photo, destination || null, rating, review, origin || null]
     );
+
+    // Email to admin
+    try {
+      const subject = `New Customer Feedback from ${name}`;
+      const html = `
+        <h3>New Feedback Received</h3>
+        <p><b>Customer:</b> ${name}</p>
+        <p><b>Destination:</b> ${destination || "N/A"}</p>
+        <p><b>Rating:</b> ${rating} Stars</p>
+        <p><b>Review:</b> ${review}</p>
+        <p><b>Origin:</b> ${origin || "N/A"}</p>
+      `;
+      await sendMail(process.env.ADMIN_EMAIL, subject, html);
+    } catch (err) {
+      console.log("Feedback email error:", err.message);
+    }
 
     res.status(201).json({ message: "Feedback added successfully", id: result.insertId, photo });
   } catch (error) {

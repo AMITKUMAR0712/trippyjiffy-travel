@@ -510,7 +510,7 @@ const LandingTourPage = () => {
                     <h2>{contactData.heading}</h2>
                     <p>{contactData.subtitle}</p>
                   </div>
-                  
+
                   <div className={Style.infoGrid}>
                     <div className={Style.infoCard}>
                       <div className={Style.iconBox}><FaPhoneAlt /></div>
@@ -521,7 +521,7 @@ const LandingTourPage = () => {
                         ))}
                       </div>
                     </div>
-                    
+
                     <div className={Style.infoCard}>
                       <div className={Style.iconBox}><FaEnvelope /></div>
                       <div>
@@ -531,7 +531,7 @@ const LandingTourPage = () => {
                         </a>
                       </div>
                     </div>
- 
+
                     <div className={Style.infoCard}>
                       <div className={Style.iconBox}><FaMapMarkerAlt /></div>
                       <div>
@@ -541,7 +541,7 @@ const LandingTourPage = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className={Style.contactForm}>
                   <div className={Style.formCard}>
                     <h3>{contactData.formTitle}</h3>
