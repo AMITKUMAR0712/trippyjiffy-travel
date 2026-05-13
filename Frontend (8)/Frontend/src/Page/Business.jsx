@@ -14,7 +14,7 @@ const Business = () => {
     email: "",
     phone: "",
     website_links: "",
-    office_address: "", l
+    office_address: "",
     city: "",
     country: "",
   });
