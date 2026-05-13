@@ -14,7 +14,7 @@ const Business = () => {
     email: "",
     phone: "",
     website_links: "",
-    office_address: "",
+    office_address: "", l
     city: "",
     country: "",
   });
@@ -72,22 +72,22 @@ const Business = () => {
   return (
     <div className={Style.Business}>
       {/* ⭐ Helmet for Dynamic Title & SEO */}
-   <Helmet>
-  <title>Business With Us | TrippyJiffy</title>
+      <Helmet>
+        <title>Business With Us | TrippyJiffy</title>
 
-  <meta
-    name="description"
-    content="Partner with TrippyJiffy to grow your travel business. Submit your details to collaborate with India's leading travel company."
-  />
+        <meta
+          name="description"
+          content="Partner with TrippyJiffy to grow your travel business. Submit your details to collaborate with India's leading travel company."
+        />
 
-  <meta
-    name="keywords"
-    content="business, travel agency, partner, trippyjiffy, tourism, collaboration"
-  />
+        <meta
+          name="keywords"
+          content="business, travel agency, partner, trippyjiffy, tourism, collaboration"
+        />
 
-  {/* ✅ CANONICAL URL */}
-  <link rel="canonical" href="https://trippyjiffy.com/business-with-us" />
-</Helmet>
+        {/* ✅ CANONICAL URL */}
+        <link rel="canonical" href="https://trippyjiffy.com/business-with-us" />
+      </Helmet>
 
 
       {/* Banner */}
