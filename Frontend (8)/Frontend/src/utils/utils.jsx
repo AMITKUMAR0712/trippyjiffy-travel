@@ -96,3 +96,47 @@ export const renderBlocks = (paragraphs) => {
     }
   });
 };
+
+export const getPlainText = (data, maxLen = 120) => {
+  if (!data) return "";
+  try {
+    // Unwrap double/triple encoded JSON
+    let parsed = data;
+    for (let i = 0; i < 3; i++) {
+      if (typeof parsed === "object" && parsed !== null) break;
+      if (typeof parsed === "string") {
+        try { parsed = JSON.parse(parsed); } catch { break; }
+      }
+    }
+    if (parsed?.blocks?.length) {
+      const text = parsed.blocks
+        .map((b) => {
+          if (b.type === "paragraph" || b.type === "header") {
+            return (b.data?.text || "").replace(/<[^>]*>/g, "");
+          }
+          if (b.type === "list") {
+            return (b.data?.items || [])
+              .map((item) =>
+                typeof item === "string"
+                  ? item.replace(/<[^>]*>/g, "")
+                  : (item?.content || "").replace(/<[^>]*>/g, "")
+              )
+              .join(", ");
+          }
+          if (b.type === "checklist") {
+            return (b.data?.items || [])
+              .map((item) => (item?.text || "").replace(/<[^>]*>/g, ""))
+              .join(", ");
+          }
+          return "";
+        })
+        .filter(Boolean)
+        .join(" ");
+      return text.length > maxLen ? text.slice(0, maxLen) + "..." : text;
+    }
+  } catch {
+    // not JSON, treat as raw string
+  }
+  const raw = String(data).replace(/<[^>]*>/g, "").trim();
+  return raw.length > maxLen ? raw.slice(0, maxLen) + "..." : raw;
+};

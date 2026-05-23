@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SEO from "../HomeCompontent/SEO";
 import Style from "../Style/UpcomingLanding.module.scss";
 import { getImgUrl } from "../utils/getImgUrl";
+import { getPlainText } from "../utils/utils";
 import Loader from "../HomeCompontent/Loader.jsx";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
@@ -94,7 +95,7 @@ const UpcomingLanding = () => {
                 </div>
                 <div className={Style.cardContent}>
                   <h3>{trip.title}</h3>
-                  <p>{trip.description?.substring(0, 100)}...</p>
+                  <p>{getPlainText(trip.description)}</p>
                   <div className={Style.footer}>
                     <Link to={`/upcoming-best-tours/${trip.id}`} className={Style.btn}>View Details</Link>
                   </div>

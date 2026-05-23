@@ -56,12 +56,22 @@ const UpcomingDetails = () => {
   const hasValidData = (jsonString) => {
     if (!jsonString) return false;
     try {
-      const parsed = typeof jsonString === "string" ? JSON.parse(jsonString) : jsonString;
-      if (parsed?.blocks?.length === 1 && parsed.blocks[0].type === "paragraph") {
-        const text = parsed.blocks[0].data.text.replace(/<[^>]*>/g, "").trim().toLowerCase();
-        return text !== "not available" && text !== "n/a" && text !== "";
+      // Unwrap double/triple encoded JSON
+      let data = jsonString;
+      for (let i = 0; i < 3; i++) {
+        if (typeof data === "object" && data !== null) break;
+        if (typeof data === "string") {
+          try { data = JSON.parse(data); } catch { break; }
+        }
       }
-      return parsed?.blocks?.length > 0;
+      if (typeof data === "object" && data !== null && data.blocks) {
+        if (data.blocks.length === 1 && data.blocks[0].type === "paragraph") {
+          const text = data.blocks[0].data.text.replace(/<[^>]*>/g, "").trim().toLowerCase();
+          return text !== "not available" && text !== "n/a" && text !== "";
+        }
+        return data.blocks.length > 0;
+      }
+      return String(jsonString).replace(/<[^>]*>/g, "").trim().toLowerCase() !== "not available" && String(jsonString).trim() !== "";
     } catch {
       return String(jsonString).replace(/<[^>]*>/g, "").trim().toLowerCase() !== "not available" && String(jsonString).trim() !== "";
     }
@@ -71,7 +81,7 @@ const UpcomingDetails = () => {
     if (!jsonString) return null;
     const cleanContent = (str) => {
       if (typeof str !== 'string') return str;
-      return str.replace(/â—¼/g, "●").replace(/âœ/g, "✔").replace(/â€“/g, "—").replace(/â€™/g, "'").replace(/â\x97\xBC/g, "●").replace(/Â/g, "");
+      return str.replace(/â—¼/g, "●").replace(/âœ/g, "✔").replace(/â€"/g, "—").replace(/â€™/g, "'").replace(/â\x97\xBC/g, "●").replace(/Â/g, "");
     };
 
     const renderFinal = (content) => {
@@ -82,19 +92,27 @@ const UpcomingDetails = () => {
       return cleaned;
     };
 
-    try {
-      if (typeof jsonString === "object") {
-        if (jsonString.blocks) return renderBlocks(jsonString);
-        return renderFinal(JSON.stringify(jsonString));
+    // Unwrap potentially double/triple encoded JSON
+    let data = jsonString;
+    for (let i = 0; i < 3; i++) {
+      if (typeof data === "object" && data !== null) {
+        if (data.blocks) return renderBlocks(data);
+        return renderFinal(JSON.stringify(data));
       }
-      const parsed = JSON.parse(jsonString);
-      if (parsed && typeof parsed === "object" && parsed.blocks) {
-        return renderBlocks(parsed);
+      if (typeof data === "string") {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return renderFinal(data);
+        }
       }
-      return renderFinal(String(parsed));
-    } catch {
-      return renderFinal(jsonString);
     }
+
+    // Final check after unwrapping
+    if (typeof data === "object" && data !== null && data.blocks) {
+      return renderBlocks(data);
+    }
+    return renderFinal(String(data));
   };
 
   const safeTimelineRender = (jsonString) => {
@@ -117,8 +135,6 @@ const UpcomingDetails = () => {
     const fetchTrip = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/upcoming-trips/get/${id}`);
-        console.log("🔍 RAW trip.inclusion:", res.data.inclusion);
-        console.log("🔍 inclusion type:", typeof res.data.inclusion);
         setTrip(res.data);
       } catch (err) {
         console.error("Error fetching trip:", err);
