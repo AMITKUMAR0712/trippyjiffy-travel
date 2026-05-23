@@ -1,0 +1,24 @@
+import pool from './Backend (5)/Backend/config/db.js';
+
+async function alterTable() {
+  try {
+    console.log('Altering upcoming_trips table...');
+    const query = `
+      ALTER TABLE upcoming_trips 
+      ADD COLUMN inclusion TEXT NULL,
+      ADD COLUMN exclusion TEXT NULL,
+      ADD COLUMN routing VARCHAR(255) NULL,
+      ADD COLUMN duration VARCHAR(100) NULL,
+      ADD COLUMN supplementery TEXT NULL,
+      ADD COLUMN price VARCHAR(100) NULL;
+    `;
+    await pool.query(query);
+    console.log('Table altered successfully.');
+  } catch (error) {
+    console.error('Error altering table:', error.message);
+  } finally {
+    process.exit();
+  }
+}
+
+alterTable();

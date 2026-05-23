@@ -57,7 +57,7 @@ export const getUpcomingTripById = async (req, res) => {
 };
 
 export const addUpcomingTrip = async (req, res) => {
-  const { title, tags, link, is_visible, description, details } = req.body;
+  const { title, tags, link, is_visible, description, details, inclusion, exclusion, routing, duration, supplementery, price } = req.body;
   
   // Handle multiple images and a single banner image
   const images = [];
@@ -78,8 +78,8 @@ export const addUpcomingTrip = async (req, res) => {
 
   try {
     const [result] = await pool.query(
-      "INSERT INTO upcoming_trips (title, tags, link, images, banner_image, description, details, is_visible) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-      [title, tags, link, JSON.stringify(images), banner_image, description, details, visible]
+      "INSERT INTO upcoming_trips (title, tags, link, images, banner_image, description, details, is_visible, inclusion, exclusion, routing, duration, supplementery, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [title, tags, link, JSON.stringify(images), banner_image, description, details, visible, inclusion, exclusion, routing, duration, supplementery, price]
     );
 
     res.status(201).json({
@@ -91,6 +91,12 @@ export const addUpcomingTrip = async (req, res) => {
       banner_image: banner_image ? `${BASE_URL}/api/uploads/${banner_image}` : null,
       description,
       details,
+      inclusion,
+      exclusion,
+      routing,
+      duration,
+      supplementery,
+      price,
       is_visible: visible,
     });
   } catch (err) {
@@ -101,7 +107,7 @@ export const addUpcomingTrip = async (req, res) => {
 
 export const updateUpcomingTrip = async (req, res) => {
   const { id } = req.params;
-  const { title, tags, link, is_visible, description, details } = req.body;
+  const { title, tags, link, is_visible, description, details, inclusion, exclusion, routing, duration, supplementery, price } = req.body;
   
   const newImages = [];
   let newBannerImage = null;
@@ -139,7 +145,7 @@ export const updateUpcomingTrip = async (req, res) => {
     }
 
     const [result] = await pool.query(
-      "UPDATE upcoming_trips SET title = COALESCE(?, title), tags = COALESCE(?, tags), link = COALESCE(?, link), images = IF(? IS NOT NULL AND JSON_LENGTH(?) > 0, ?, images), banner_image = COALESCE(?, banner_image), description = COALESCE(?, description), details = COALESCE(?, details), is_visible = COALESCE(?, is_visible) WHERE id = ?",
+      "UPDATE upcoming_trips SET title = COALESCE(?, title), tags = COALESCE(?, tags), link = COALESCE(?, link), images = IF(? IS NOT NULL AND JSON_LENGTH(?) > 0, ?, images), banner_image = COALESCE(?, banner_image), description = COALESCE(?, description), details = COALESCE(?, details), is_visible = COALESCE(?, is_visible), inclusion = COALESCE(?, inclusion), exclusion = COALESCE(?, exclusion), routing = COALESCE(?, routing), duration = COALESCE(?, duration), supplementery = COALESCE(?, supplementery), price = COALESCE(?, price) WHERE id = ?",
       [
         title, 
         tags, 
@@ -150,7 +156,13 @@ export const updateUpcomingTrip = async (req, res) => {
         newBannerImage, 
         description, 
         details, 
-        is_visible, 
+        is_visible,
+        inclusion,
+        exclusion,
+        routing,
+        duration,
+        supplementery,
+        price,
         id
       ]
     );

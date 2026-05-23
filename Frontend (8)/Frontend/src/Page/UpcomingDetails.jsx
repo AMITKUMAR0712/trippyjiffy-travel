@@ -11,6 +11,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import { renderBlocks } from "../utils/utils";
 
 const UpcomingDetails = () => {
   const { id } = useParams();
@@ -44,6 +45,66 @@ const UpcomingDetails = () => {
   };
 
 
+
+  const hasValidData = (jsonString) => {
+    if (!jsonString) return false;
+    try {
+      const parsed = typeof jsonString === "string" ? JSON.parse(jsonString) : jsonString;
+      if (parsed?.blocks?.length === 1 && parsed.blocks[0].type === "paragraph") {
+        const text = parsed.blocks[0].data.text.replace(/<[^>]*>/g, "").trim().toLowerCase();
+        return text !== "not available" && text !== "n/a" && text !== "";
+      }
+      return parsed?.blocks?.length > 0;
+    } catch {
+      return String(jsonString).replace(/<[^>]*>/g, "").trim().toLowerCase() !== "not available" && String(jsonString).trim() !== "";
+    }
+  };
+
+  const safeRender = (jsonString) => {
+    if (!jsonString) return null;
+    const cleanContent = (str) => {
+      if (typeof str !== 'string') return str;
+      return str.replace(/â—¼/g, "●").replace(/âœ/g, "✔").replace(/â€“/g, "—").replace(/â€™/g, "'").replace(/â\x97\xBC/g, "●").replace(/Â/g, "");
+    };
+
+    const renderFinal = (content) => {
+      const cleaned = cleanContent(content);
+      if (typeof cleaned === "string" && /<[a-z][\s\S]*>/i.test(cleaned)) {
+        return <span dangerouslySetInnerHTML={{ __html: cleaned }} />;
+      }
+      return cleaned;
+    };
+
+    try {
+      if (typeof jsonString === "object") {
+        if (jsonString.blocks) return renderBlocks(jsonString);
+        return renderFinal(JSON.stringify(jsonString));
+      }
+      const parsed = JSON.parse(jsonString);
+      if (parsed && typeof parsed === "object" && parsed.blocks) {
+        return renderBlocks(parsed);
+      }
+      return renderFinal(String(parsed));
+    } catch {
+      return renderFinal(jsonString);
+    }
+  };
+
+  const safeTimelineRender = (jsonString) => {
+    if (!jsonString) return null;
+    try {
+      const parsed = typeof jsonString === "string" ? JSON.parse(jsonString) : jsonString;
+      if (!parsed.blocks || !parsed.blocks.length) return null;
+      return parsed.blocks.map((block, index) => (
+        <div key={index} className={Style.step}>
+          <span className={Style.stepNumber}>Day {index + 1}</span>
+          <div className={Style.stepText} dangerouslySetInnerHTML={{ __html: block.data.text }} />
+        </div>
+      ));
+    } catch {
+      return null;
+    }
+  };
 
   useEffect(() => {
     const fetchTrip = async () => {
@@ -92,10 +153,23 @@ const UpcomingDetails = () => {
       <div className={Style.mainGrid}>
         <div className={Style.contentArea}>
           {/* About */}
-          <section className={Style.glassCard}>
-            <h2>Overview</h2>
-            <p className={Style.description}>{trip.description}</p>
-          </section>
+          {hasValidData(trip.description) && (
+            <section className={Style.glassCard}>
+              <h2>Overview</h2>
+              <div className={Style.description}>{safeRender(trip.description)}</div>
+            </section>
+          )}
+
+          {/* Pricing & Duration */}
+          {(trip.duration || trip.price) && (
+            <section className={Style.glassCard}>
+              <h2>Trip Details</h2>
+              <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "10px" }}>
+                {trip.duration && <p><strong>Duration:</strong> {trip.duration}</p>}
+                {trip.price && <p><strong>Price:</strong> {trip.price}</p>}
+              </div>
+            </section>
+          )}
 
           {/* Gallery Highlights - 5 Images Grid */}
           {images.length > 0 && (
@@ -135,6 +209,16 @@ const UpcomingDetails = () => {
           )}
 
 
+          {/* Brief Itinerary (Routing) */}
+          {hasValidData(trip.routing) && (
+            <section className={Style.glassCard}>
+              <h2>Brief Itinerary</h2>
+              <div className={Style.itinerary}>
+                {safeTimelineRender(trip.routing)}
+              </div>
+            </section>
+          )}
+
           {/* Luxury Timeline Itinerary */}
           {itinerary.length > 0 && (
             <section className={Style.glassCard}>
@@ -147,6 +231,30 @@ const UpcomingDetails = () => {
                   </div>
                 ))}
               </div>
+            </section>
+          )}
+
+          {/* Inclusions */}
+          {hasValidData(trip.inclusion) && (
+            <section className={Style.glassCard}>
+              <h2>Inclusions</h2>
+              <div className={Style.description}>{safeRender(trip.inclusion)}</div>
+            </section>
+          )}
+
+          {/* Exclusions */}
+          {hasValidData(trip.exclusion) && (
+            <section className={Style.glassCard}>
+              <h2>Exclusions</h2>
+              <div className={Style.description}>{safeRender(trip.exclusion)}</div>
+            </section>
+          )}
+
+          {/* Supplemental Info */}
+          {hasValidData(trip.supplementery) && (
+            <section className={Style.glassCard}>
+              <h2>Supplementary Info</h2>
+              <div className={Style.description}>{safeRender(trip.supplementery)}</div>
             </section>
           )}
         </div>

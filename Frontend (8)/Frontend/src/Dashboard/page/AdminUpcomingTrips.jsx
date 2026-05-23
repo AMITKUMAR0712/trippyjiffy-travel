@@ -1,7 +1,30 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Style from "../Style/AdminUpcomingTrips.module.scss";
 import axios from "axios";
+import EditorJS from "@editorjs/editorjs";
+
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import Checklist from "@editorjs/checklist";
+import Quote from "@editorjs/quote";
+import Warning from "@editorjs/warning";
+import Marker from "@editorjs/marker";
+import CodeTool from "@editorjs/code";
+import Delimiter from "@editorjs/delimiter";
+import InlineCode from "@editorjs/inline-code";
+import LinkTool from "@editorjs/link";
+import Embed from "@editorjs/embed";
+import Table from "@editorjs/table";
+
+const safeParse = (data, fallback = { blocks: [] }) => {
+  if (!data) return fallback;
+  if (typeof data === "object") return data;
+  try {
+    return JSON.parse(data);
+  } catch {
+    return fallback;
+  }
+};
 
 const AdminUpcomingTrips = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -12,8 +35,14 @@ const AdminUpcomingTrips = () => {
     title: "",
     tags: "",
     link: "",
-    description: "",
-    details: [], // For itinerary
+    description: { blocks: [] },
+    details: [], // For itinerary highlights
+    inclusion: { blocks: [] },
+    exclusion: { blocks: [] },
+    routing: { blocks: [] },
+    duration: "",
+    supplementery: { blocks: [] },
+    price: "",
     images: [],
     banner_image: null,
     is_visible: 1,
@@ -21,6 +50,7 @@ const AdminUpcomingTrips = () => {
   const [imageFiles, setImageFiles] = useState([]);
   const [bannerFile, setBannerFile] = useState(null);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+  const editorsRef = useRef({});
 
   const getValidImageUrl = (img) => {
     if (!img) return null;
@@ -40,7 +70,15 @@ const AdminUpcomingTrips = () => {
   const fetchTrips = async () => {
     try {
       const res = await axios.get(`${baseURL}/api/upcoming-trips/get`);
-      setTrips(Array.isArray(res.data) ? res.data : []);
+      const parsedData = (Array.isArray(res.data) ? res.data : []).map(t => ({
+          ...t,
+          description: safeParse(t.description),
+          inclusion: safeParse(t.inclusion),
+          exclusion: safeParse(t.exclusion),
+          routing: safeParse(t.routing),
+          supplementery: safeParse(t.supplementery)
+      }));
+      setTrips(parsedData);
     } catch (err) {
       console.error("Fetch error:", err);
       setTrips([]);
@@ -52,7 +90,23 @@ const AdminUpcomingTrips = () => {
   }, []);
 
   const resetForm = () => {
-    setFormData({ id: null, title: "", tags: "", link: "", description: "", details: [], images: [], banner_image: null, is_visible: 1 });
+    setFormData({
+      id: null,
+      title: "",
+      tags: "",
+      link: "",
+      description: { blocks: [] },
+      details: [],
+      inclusion: { blocks: [] },
+      exclusion: { blocks: [] },
+      routing: { blocks: [] },
+      duration: "",
+      supplementery: { blocks: [] },
+      price: "",
+      images: [],
+      banner_image: null,
+      is_visible: 1,
+    });
     setImageFiles([]);
     setBannerFile(null);
     setIsEditing(false);
@@ -87,22 +141,80 @@ const AdminUpcomingTrips = () => {
   };
   const handleBannerChange = (e) => setBannerFile(e.target.files[0]);
 
+  useEffect(() => {
+    if (!showPopup) return;
+
+    const fields = [
+      "description",
+      "routing",
+      "inclusion",
+      "exclusion",
+      "supplementery",
+    ];
+
+    fields.forEach((field) => {
+      if (editorsRef.current[field]) {
+        editorsRef.current[field].destroy();
+        editorsRef.current[field] = null;
+      }
+
+      editorsRef.current[field] = new EditorJS({
+        holder: `${field}_editor`,
+        tools: {
+          header: Header,
+          list: List,
+          checklist: Checklist,
+          quote: Quote,
+          warning: Warning,
+          marker: Marker,
+          code: CodeTool,
+          delimiter: Delimiter,
+          inlineCode: InlineCode,
+          linkTool: LinkTool,
+          embed: Embed,
+          table: Table,
+        },
+        data: formData[field] || { blocks: [] },
+      });
+    });
+
+    return () => {
+      Object.keys(editorsRef.current).forEach((field) => {
+        if (editorsRef.current[field]) {
+          editorsRef.current[field].destroy();
+          editorsRef.current[field] = null;
+        }
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showPopup]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.title) return alert("Title is required");
 
-    const data = new FormData();
-    data.append("title", formData.title);
-    data.append("tags", formData.tags);
-    data.append("link", formData.link);
-    data.append("description", formData.description);
-    data.append("details", JSON.stringify(formData.details));
-    data.append("is_visible", formData.is_visible);
-    
-    imageFiles.forEach((file) => data.append("images", file));
-    if (bannerFile) data.append("banner_image", bannerFile);
-
     try {
+      const editorData = {};
+      for (const field in editorsRef.current) {
+        editorData[field] = await editorsRef.current[field].save();
+      }
+
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("tags", formData.tags);
+      data.append("link", formData.link);
+      data.append("details", JSON.stringify(formData.details));
+      data.append("duration", formData.duration);
+      data.append("price", formData.price);
+      data.append("is_visible", formData.is_visible);
+      
+      for (const field in editorData) {
+        data.append(field, JSON.stringify(editorData[field]));
+      }
+
+      imageFiles.forEach((file) => data.append("images", file));
+      if (bannerFile) data.append("banner_image", bannerFile);
+
       if (isEditing) {
         await axios.put(`${baseURL}/api/upcoming-trips/put/${formData.id}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
@@ -146,8 +258,14 @@ const AdminUpcomingTrips = () => {
       title: trip.title,
       tags: trip.tags || "",
       link: trip.link || "",
-      description: trip.description || "",
+      description: safeParse(trip.description),
       details: Array.isArray(details) ? details : [],
+      inclusion: safeParse(trip.inclusion),
+      exclusion: safeParse(trip.exclusion),
+      routing: safeParse(trip.routing),
+      duration: trip.duration || "",
+      supplementery: safeParse(trip.supplementery),
+      price: trip.price || "",
       images: trip.images || [],
       banner_image: trip.banner_image || null,
       is_visible: trip.is_visible ?? 1,
@@ -237,18 +355,66 @@ const AdminUpcomingTrips = () => {
                 placeholder="Trip Title (e.g. Kedarnath Trek)"
                 required
               />
-              
-              <label>Short Description (For Sub-page)</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Describe this trip beautifully..."
-                rows="3"
-                style={{ padding: '10px', marginBottom: '15px' }}
-              />
 
-              <label>Itinerary Highlights (Sub-page)</label>
+              <label>Tags & Link</label>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                  <input
+                    type="text"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleChange}
+                    placeholder="Tags (Comma separated, e.g. Adventure, Trekking)"
+                    style={{ flex: 1 }}
+                  />
+                  <input
+                    type="text"
+                    name="link"
+                    value={formData.link}
+                    onChange={handleChange}
+                    placeholder="External Link (Optional)"
+                    style={{ flex: 1 }}
+                  />
+              </div>
+
+              <label>Trip Details (Duration & Price)</label>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <input
+                  type="text"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleChange}
+                  placeholder="Duration (e.g. 5 Nights / 6 Days)"
+                  style={{ flex: 1 }}
+                />
+                <input
+                  type="text"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  placeholder="Price (e.g. Starts at ₹10,000)"
+                  style={{ flex: 1 }}
+                />
+              </div>
+
+              {[
+                { key: "description", label: "📝 Description" },
+                { key: "routing", label: "🛣️ Brief Itinerary (Routing)" },
+                { key: "inclusion", label: "✅ Inclusions" },
+                { key: "exclusion", label: "❌ Exclusions" },
+                { key: "supplementery", label: "➕ Supplementary Info" },
+              ].map((field) => (
+                <div key={field.key} style={{ marginBottom: "20px", marginTop: "10px" }}>
+                  <h3 style={{ fontSize: "16px", marginBottom: "8px", fontWeight: "600", color: "#444" }}>
+                    {field.label}
+                  </h3>
+                  <div
+                    id={`${field.key}_editor`}
+                    style={{ border: "1px solid #ddd", padding: "12px", minHeight: "150px", borderRadius: "8px", background: "#fafafa" }}
+                  />
+                </div>
+              ))}
+
+              <label>Itinerary Highlights (Sub-page list format)</label>
               <div style={{ marginBottom: '15px' }}>
                 {formData.details.map((step, idx) => (
                   <div key={idx} style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
@@ -264,22 +430,6 @@ const AdminUpcomingTrips = () => {
                 ))}
                 <button type="button" onClick={addItineraryStep} style={{ background: '#27ae60', padding: '5px 10px', fontSize: '0.8rem' }}>+ Add Step</button>
               </div>
-
-              <label>Tags & Link</label>
-              <input
-                type="text"
-                name="tags"
-                value={formData.tags}
-                onChange={handleChange}
-                placeholder="Tags (Comma separated, e.g. Adventure, Trekking)"
-              />
-              <input
-                type="text"
-                name="link"
-                value={formData.link}
-                onChange={handleChange}
-                placeholder="External Link (Optional)"
-              />
 
               <label>Banner Image (Large Top Image)</label>
               <div style={{ marginBottom: '10px' }}>

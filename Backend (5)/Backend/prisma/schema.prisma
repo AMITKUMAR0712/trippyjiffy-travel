@@ -291,11 +291,17 @@ model upcoming_trips {
   images       String?   @db.LongText
   banner_image String?   @db.VarChar(500)
   description  String?   @db.LongText
-  details      Json?
-  tags         String?   @db.VarChar(500)
-  link         String?   @db.VarChar(500)
-  is_visible   Boolean?  @default(true)
-  created_at   DateTime? @default(now()) @db.Timestamp(0)
+  details       Json?
+  tags          String?   @db.VarChar(500)
+  link          String?   @db.VarChar(500)
+  inclusion     String?   @db.Text
+  exclusion     String?   @db.Text
+  routing       String?   @db.Text
+  duration      String?   @db.VarChar(100)
+  supplementery String?   @db.Text
+  price         String?   @db.VarChar(100)
+  is_visible    Boolean?  @default(true)
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
 }
 
 model user_wishlist {
