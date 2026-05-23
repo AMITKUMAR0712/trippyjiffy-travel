@@ -266,7 +266,8 @@
     top: 10px;
     bottom: 10px;
     width: 2px;
-    background: #f1f5f9;
+    border-left: 2px dashed #cbd5e1;
+    background: transparent;
   }
 
   .step {
@@ -278,28 +279,33 @@
       position: absolute;
       left: -25px;
       top: 6px;
-      width: 10px;
-      height: 10px;
+      width: 14px;
+      height: 14px;
       background: white;
-      border: 3px solid #f97316;
+      border: 2px solid #cbd5e1;
       border-radius: 50%;
       z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    &.open::after {
+      background: #ea580c;
+      border-color: #ea580c;
     }
 
     .stepNumber {
-      font-size: 0.65rem;
-      font-weight: 900;
-      color: #f97316;
-      text-transform: uppercase;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #334155;
       display: block;
       margin-bottom: 2px;
     }
 
     .stepText {
-      font-weight: 700;
+      font-weight: 400;
       font-size: 0.95rem;
       color: #1e293b;
-      line-height: 1.4;
+      line-height: 1.6;
     }
   }
 }

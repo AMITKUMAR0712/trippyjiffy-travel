@@ -18,9 +18,16 @@ const UpcomingDetails = () => {
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showMobileForm, setShowMobileForm] = useState(false);
+  const [expandedDays, setExpandedDays] = useState([0]);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  const toggleDay = (idx) => {
+    setExpandedDays(prev => 
+      prev.includes(idx) ? prev.filter(day => day !== idx) : [...prev, idx]
+    );
+  };
 
   const handleAddToWishlist = async () => {
     if (!token) {
@@ -110,6 +117,8 @@ const UpcomingDetails = () => {
     const fetchTrip = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/upcoming-trips/get/${id}`);
+        console.log("🔍 RAW trip.inclusion:", res.data.inclusion);
+        console.log("🔍 inclusion type:", typeof res.data.inclusion);
         setTrip(res.data);
       } catch (err) {
         console.error("Error fetching trip:", err);
@@ -224,12 +233,41 @@ const UpcomingDetails = () => {
             <section className={Style.glassCard}>
               <h2>Full Itinerary</h2>
               <div className={Style.itinerary}>
-                {itinerary.map((step, idx) => (
-                  <div key={idx} className={Style.step}>
-                    <span className={Style.stepNumber}>Day {idx + 1}</span>
-                    <div className={Style.stepText}>{step}</div>
-                  </div>
-                ))}
+                {itinerary.map((step, idx) => {
+                  const isOpen = expandedDays.includes(idx);
+                  return (
+                    <div key={idx} className={`${Style.step} ${isOpen ? Style.open : ""}`}>
+                      <div 
+                        className={Style.stepHeader} 
+                        onClick={() => toggleDay(idx)}
+                        style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                      >
+                        <span className={Style.stepNumber} style={{ fontSize: '1.1rem', marginBottom: 0 }}>Day {idx + 1}:</span>
+                        <span style={{ 
+                          color: "#d97706", 
+                          transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                          transition: "transform 0.3s ease",
+                          fontSize: "1.2rem",
+                          display: "inline-block"
+                        }}>
+                          ▼
+                        </span>
+                      </div>
+                      <div 
+                        className={Style.stepText} 
+                        style={{ 
+                          maxHeight: isOpen ? "1000px" : "0", 
+                          overflow: "hidden", 
+                          transition: "max-height 0.3s ease",
+                          marginTop: isOpen ? "15px" : "0",
+                          opacity: isOpen ? 1 : 0
+                        }}
+                      >
+                        {safeRender(step)}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </section>
           )}

@@ -63,6 +63,34 @@ export const renderBlocks = (paragraphs) => {
           </div>
         );
 
+      case "checklist":
+        return (
+          <div key={index} style={{ display: "flex", flexDirection: "column", gap: "8px", margin: "10px 0" }}>
+            {block.data.items.map((item, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                <span style={{ 
+                  color: item.checked ? "#10b981" : "#94a3b8", 
+                  marginTop: "3px", 
+                  display: "flex", 
+                  alignItems: "center",
+                  justifyContent: "center",
+                  minWidth: "18px",
+                  flexShrink: 0
+                }}>
+                  {item.checked ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  ) : (
+                    <div style={{ width: "16px", height: "16px", border: "2px solid #cbd5e1", borderRadius: "3px" }}></div>
+                  )}
+                </span>
+                <span style={{ lineHeight: "1.6", color: "#475569" }} dangerouslySetInnerHTML={{ __html: item.text }} />
+              </div>
+            ))}
+          </div>
+        );
+
       default:
         return null;
     }
