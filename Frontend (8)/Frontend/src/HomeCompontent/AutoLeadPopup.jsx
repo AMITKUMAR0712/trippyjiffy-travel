@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { createPortal } from "react-dom";
 import Style from "../Style/AutoLeadPopup.module.scss";
 
-const AutoLeadPopup = ({ delay = 5000, context = "Homepage", forceShow = false, onClose = null }) => {
+const getInitialActiveUsers = () => Math.floor(Math.random() * 81) + 120;
+
+const AutoLeadPopup = ({
+  delay = 5000,
+  context = "Homepage",
+  forceShow = false,
+  onClose = null,
+  triggerAfterScrollPercent = null,
+}) => {
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -12,46 +20,82 @@ const AutoLeadPopup = ({ delay = 5000, context = "Homepage", forceShow = false, 
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 301) + 300);
+  const [activeUsers, setActiveUsers] = useState(getInitialActiveUsers);
+  const animationFrame = useRef(null);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "";
 
   useEffect(() => {
+    if (!show) return undefined;
+
     const interval = setInterval(() => {
       setActiveUsers(prev => {
-        const isBigJump = Math.random() > 0.8;
-        const jumpRange = isBigJump ? 15 : 5;
-        const change = Math.floor(Math.random() * (jumpRange * 2 + 1)) - jumpRange;
+        const change = Math.floor(Math.random() * 5) - 2;
         let newValue = prev + change;
-        if (newValue < 300) newValue = 300 + Math.floor(Math.random() * 20);
-        if (newValue > 600) newValue = 600 - Math.floor(Math.random() * 20);
+        if (newValue < 120) newValue = 120;
+        if (newValue > 220) newValue = 220;
         return newValue;
       });
-    }, 3500);
+    }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [show]);
+
+  useEffect(() => {
+    if (!show) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [show]);
 
   useEffect(() => {
     if (forceShow) {
       setShow(true);
-      document.body.style.overflow = "hidden";
       return;
     }
 
-    // Check if successfully submitted in this session
     const hasFilled = sessionStorage.getItem("leadPopupFilled");
     if (hasFilled) return;
 
+    if (typeof triggerAfterScrollPercent === "number") {
+      const handleScroll = () => {
+        if (animationFrame.current) return;
+
+        animationFrame.current = window.requestAnimationFrame(() => {
+          animationFrame.current = null;
+          const doc = document.documentElement;
+          const maxScroll = doc.scrollHeight - window.innerHeight;
+          const scrollPercent = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 100;
+
+          if (scrollPercent >= triggerAfterScrollPercent) {
+            setShow(true);
+            window.removeEventListener("scroll", handleScroll);
+          }
+        });
+      };
+
+      handleScroll();
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        if (animationFrame.current) {
+          window.cancelAnimationFrame(animationFrame.current);
+        }
+      };
+    }
+
     const timer = setTimeout(() => {
       setShow(true);
-      document.body.style.overflow = "hidden";
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [delay, forceShow]);
+  }, [delay, forceShow, triggerAfterScrollPercent]);
 
   const handleClose = () => {
     setShow(false);
-    document.body.style.overflow = "auto";
     if (onClose) onClose();
   };
 

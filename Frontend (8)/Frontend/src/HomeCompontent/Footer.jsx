@@ -23,34 +23,42 @@ const Footer = () => {
   const [asiaTours, setAsiaTours] = useState([]);
 
   useEffect(() => {
-    const fetchIndiaTours = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/api/category-india/get`);
-        setIndiaTours(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
-        console.error("Error fetching India Tours:", err);
-        setIndiaTours([]);
-      }
-    };
+    let cancelled = false;
 
-    const fetchAsiaTours = async () => {
+    const fetchFooterTours = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/asia/get`);
-        setAsiaTours(Array.isArray(res.data) ? res.data : []);
+        const [indiaRes, asiaRes] = await Promise.all([
+          axios.get(`${baseURL}/api/category-india/get`),
+          axios.get(`${baseURL}/api/asia/get`),
+        ]);
+
+        if (cancelled) return;
+        setIndiaTours(Array.isArray(indiaRes.data) ? indiaRes.data : []);
+        setAsiaTours(Array.isArray(asiaRes.data) ? asiaRes.data : []);
       } catch (err) {
-        console.error("Error fetching Asia Tours:", err);
+        console.error("Error fetching footer tours:", err);
+        setIndiaTours([]);
         setAsiaTours([]);
       }
     };
 
-    fetchIndiaTours();
-    fetchAsiaTours();
+    const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1800));
+    const idleId = runWhenIdle(fetchFooterTours);
+
+    return () => {
+      cancelled = true;
+      if (window.cancelIdleCallback) {
+        window.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
+    };
   }, [baseURL]);
 
   const socialLinks = [
     { icon: <FaInstagram aria-hidden="true" />, url: "https://www.instagram.com/trippy.jiffy?igsh=b3A2ZzIxcHdxZmVo&utm_source=qr", label: "Instagram" },
     { icon: <FaLinkedin aria-hidden="true" />, url: "https://www.linkedin.com/company/trippyjiffy/", label: "LinkedIn" },
-    { icon: <FaFacebookF aria-hidden="true" />, url: "https://www.facebook.com/share/1G1V1m7gCJ/?mibextid=wwXIfr", label: "Facebook" },
+    { icon: <FaFacebookF aria-hidden="true" />, url: "https://www.facebook.com/profile.php?id=61590639771522", label: "Facebook" },
     { icon: <FaYoutube aria-hidden="true" />, url: "https://youtube.com/@trippyjiffy?si=K9vr-sxTLp2LHYxg", label: "YouTube" },
   ];
 

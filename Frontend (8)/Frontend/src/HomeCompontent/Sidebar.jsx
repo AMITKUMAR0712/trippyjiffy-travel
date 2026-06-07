@@ -10,11 +10,15 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
   const [asiaTours, setAsiaTours] = useState([]);
   const [countriesData, setCountriesData] = useState([]);
   const [exclusivePages, setExclusivePages] = useState([]);
+  const [hasLoadedMenuData, setHasLoadedMenuData] = useState(false);
 
 
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
+    if (!menuOpen || hasLoadedMenuData) return;
+
+    let cancelled = false;
     const fetchData = async () => {
       try {
         const [indiaRes, asiaRes, countryRes, exclusivesRes] = await Promise.all([
@@ -23,6 +27,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
           axios.get(`${baseURL}/api/country/get`),
           axios.get(`${baseURL}/api/landing-pages/all`).catch(() => ({ data: [] }))
         ]);
+        if (cancelled) return;
         setIndiaTours(Array.isArray(indiaRes.data) ? indiaRes.data : []);
         setAsiaTours(Array.isArray(asiaRes.data) ? asiaRes.data : []);
         setCountriesData(Array.isArray(countryRes.data) ? countryRes.data : []);
@@ -33,6 +38,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
             path: `/family-trips/${p.slug}`
         }));
         setExclusivePages(formatted);
+        setHasLoadedMenuData(true);
 
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -40,7 +46,10 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
     };
 
     fetchData();
-  }, [baseURL]);
+    return () => {
+      cancelled = true;
+    };
+  }, [baseURL, hasLoadedMenuData, menuOpen]);
 
 
   // Close on escape key

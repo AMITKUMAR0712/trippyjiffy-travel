@@ -22,22 +22,23 @@ const Banner = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [hasLoadedSearchData, setHasLoadedSearchData] = useState(false);
 
   const navigate = useNavigate();
   const debouncedSearch = useDebounce(searchTerm, 500);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/api/combined-data`);
-        setCombinedData(res.data || []);
-      } catch (err) {
-        console.error("Error fetching combined data:", err.message);
-      }
-    };
-    fetchData();
-  }, [baseURL]);
+  const loadSearchData = async () => {
+    if (hasLoadedSearchData) return;
+
+    try {
+      const res = await axios.get(`${baseURL}/api/combined-data`);
+      setCombinedData(res.data || []);
+      setHasLoadedSearchData(true);
+    } catch (err) {
+      console.error("Error fetching combined data:", err.message);
+    }
+  };
 
   useEffect(() => {
     if (debouncedSearch.trim() === "") {
@@ -123,8 +124,12 @@ const Banner = () => {
                 type="text"
                 placeholder="Where do you want to go?"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  loadSearchData();
+                }}
                 onFocus={() => {
+                  loadSearchData();
                   if (searchTerm.trim() !== "") setShowDropdown(true);
                 }}
               />

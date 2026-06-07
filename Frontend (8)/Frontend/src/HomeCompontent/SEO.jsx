@@ -23,6 +23,8 @@ const SEO = ({
   const defaultDesc = "TrippyJiffy offers curated tour packages, customized itineraries, and unique travel experiences across India and Asia. Explore the 4th dimension of travel.";
   const defaultKeywords = "tour packages, holiday packages, travel packages, India tours, Asia travel, vacation planning, TrippyJiffy";
   const defaultOgImage = "https://trippyjiffy.com/og-banner.jpg"; 
+  const currentUrl = typeof window !== 'undefined' ? window.location.origin + window.location.pathname : "https://trippyjiffy.com/";
+  const currentHref = typeof window !== 'undefined' ? window.location.href : "https://trippyjiffy.com/";
 
   return (
     <Helmet>
@@ -30,7 +32,9 @@ const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description || defaultDesc} />
       <meta name="keywords" content={keywords || defaultKeywords} />
-      <link rel="canonical" href={canonical || (typeof window !== 'undefined' ? window.location.origin + window.location.pathname : '')} />
+      <meta name="robots" content="index, follow, max-image-preview:large" />
+      <meta name="author" content={siteName} />
+      <link rel="canonical" href={canonical || currentUrl} />
 
 
       {/* Open Graph / Facebook */}
@@ -38,7 +42,7 @@ const SEO = ({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description || defaultDesc} />
       <meta property="og:image" content={ogImage || defaultOgImage} />
-      <meta property="og:url" content={ogUrl || window.location.href} />
+      <meta property="og:url" content={ogUrl || currentHref} />
       <meta property="og:site_name" content={siteName} />
 
       {/* Twitter */}

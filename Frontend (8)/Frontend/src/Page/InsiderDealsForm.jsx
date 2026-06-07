@@ -4,6 +4,8 @@ import axios from "axios";
 import { User, Mail, Phone, ShieldCheck, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Style from "../Style/InsiderDealsForm.module.scss";
 
+const getInitialActiveUsers = () => Math.floor(Math.random() * 81) + 120;
+
 const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   const [formData, setFormData] = useState({
     name: "",
@@ -12,26 +14,19 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [activeUsers, setActiveUsers] = useState(Math.floor(Math.random() * 301) + 300);
+  const [activeUsers, setActiveUsers] = useState(getInitialActiveUsers);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "";
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveUsers(prev => {
-        // Organic fluctuation with occasional larger jumps
-        const isBigJump = Math.random() > 0.8;
-        const jumpRange = isBigJump ? 15 : 5;
-        const change = Math.floor(Math.random() * (jumpRange * 2 + 1)) - jumpRange;
-        
+        const change = Math.floor(Math.random() * 5) - 2;
         let newValue = prev + change;
-        
-        // Soft bounds enforcement to keep it between 300 and 600
-        if (newValue < 300) newValue = 300 + Math.floor(Math.random() * 20);
-        if (newValue > 600) newValue = 600 - Math.floor(Math.random() * 20);
-        
+        if (newValue < 120) newValue = 120;
+        if (newValue > 220) newValue = 220;
         return newValue;
       });
-    }, 3500);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 

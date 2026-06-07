@@ -1,13 +1,14 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import Style from "../Style/Header.module.scss";
 import logo from "../Img/trippylogo.png";
-import Enquiry from "../Page/Enquiry";
 import DropDown from "../HomeCompontent/DropDown.jsx";
 import axios from "axios";
+
+const Enquiry = lazy(() => import("../Page/Enquiry"));
 
 const ScrollProgressBar = () => {
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -85,32 +86,29 @@ const Header = () => {
     };
 
     useEffect(() => {
-        const fetchIndiaTours = async () => {
+        let cancelled = false;
+        const fetchNavigationData = async () => {
             try {
-                const res = await axios.get(`${baseURL}/api/category-india/get`);
-                const data = Array.isArray(res.data) ? res.data : [];
-                const formatted = data.map((item) => ({
+                const [indiaRes, asiaRes, exclusivesRes] = await Promise.all([
+                    axios.get(`${baseURL}/api/category-india/get`),
+                    axios.get(`${baseURL}/api/asia/get`),
+                    axios.get(`${baseURL}/api/landing-pages/all`).catch(() => ({ data: [] })),
+                ]);
+
+                if (cancelled) return;
+
+                const data = Array.isArray(indiaRes.data) ? indiaRes.data : [];
+                const indiaFormatted = data.map((item) => ({
                     id: item.id,
                     name: item.region_name,
                     path: `/india-tours/${item.region_name
                         .toLowerCase()
                         .replace(/\s+/g, "-")}`,
                 }));
-                setIndiaTours(formatted);
-            } catch (error) {
-                console.error("Error fetching India Tours:", error);
-                setIndiaTours([]);
-            }
-        };
-        fetchIndiaTours();
-    }, [baseURL]);
+                setIndiaTours(indiaFormatted);
 
-    useEffect(() => {
-        const fetchAsiaTours = async () => {
-            try {
-                const res = await axios.get(`${baseURL}/api/asia/get`);
-                const data = Array.isArray(res.data) ? res.data : [];
-                const formatted = data.map((item) => ({
+                const asiaData = Array.isArray(asiaRes.data) ? asiaRes.data : [];
+                const asiaFormatted = asiaData.map((item) => ({
                     id: item.id,
                     name: item.country_name,
                     path: `/asia-tours/${item.country_name
@@ -118,30 +116,32 @@ const Header = () => {
                         .replace(/\s+/g, "-")}`,
                     images: item.images || [],
                 }));
-                setAsiaTours(formatted);
+                setAsiaTours(asiaFormatted);
+
+                const pages = (exclusivesRes.data?.success ? exclusivesRes.data.data : (Array.isArray(exclusivesRes.data) ? exclusivesRes.data : []));
+                const exclusiveFormatted = pages.map(p => ({
+                    name: p.title,
+                    path: `/family-trips/${p.slug}`
+                }));
+                setExclusivePages(exclusiveFormatted);
             } catch (error) {
-                console.error("Error fetching Asia Tours:", error);
+                console.error("Error fetching navigation data:", error);
+                setIndiaTours([]);
                 setAsiaTours([]);
             }
         };
 
-        const fetchExclusives = async () => {
-            try {
-                const res = await axios.get(`${baseURL}/api/landing-pages/all`);
-                const pages = (res.data?.success ? res.data.data : (Array.isArray(res.data) ? res.data : []));
-                const formatted = pages.map(p => ({
-                    name: p.title,
-                    path: `/family-trips/${p.slug}`
-                }));
-                setExclusivePages(formatted);
+        const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1200));
+        const idleId = runWhenIdle(fetchNavigationData);
 
-            } catch (error) {
-                console.error("Error fetching exclusives:", error);
+        return () => {
+            cancelled = true;
+            if (window.cancelIdleCallback) {
+                window.cancelIdleCallback(idleId);
+            } else {
+                window.clearTimeout(idleId);
             }
         };
-
-        fetchAsiaTours();
-        fetchExclusives();
     }, [baseURL]);
 
 
@@ -228,7 +228,9 @@ const Header = () => {
                                             >
                                                 X
                                             </button>
-                                            <Enquiry isModal={true} />
+                                            <Suspense fallback={null}>
+                                                <Enquiry isModal={true} />
+                                            </Suspense>
                                         </div>
                                     </div>,
                                     document.body

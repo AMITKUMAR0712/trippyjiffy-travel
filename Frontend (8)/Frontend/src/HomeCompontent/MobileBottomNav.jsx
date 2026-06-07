@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Compass, CreditCard, MessageSquare, User } from "lucide-react";
+import { Home, Compass, CreditCard, User } from "lucide-react";
 import { createPortal } from "react-dom";
-import Enquiry from "../Page/Enquiry";
+
+const Enquiry = lazy(() => import("../Page/Enquiry"));
 
 const MobileBottomNav = () => {
   const location = useLocation();
@@ -87,7 +88,9 @@ const MobileBottomNav = () => {
               >
                 ✕
               </button>
-              <Enquiry isModal={true} />
+              <Suspense fallback={null}>
+                <Enquiry isModal={true} />
+              </Suspense>
             </div>
           </div>,
           document.body

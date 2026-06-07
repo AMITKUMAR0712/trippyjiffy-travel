@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../HomeCompontent/Header";
 import Footer from "../HomeCompontent/Footer";
@@ -9,24 +9,34 @@ import MobileBottomNav from "../HomeCompontent/MobileBottomNav";
 import axios from "axios";
 
 import { LanguageProvider } from "../HomeCompontent/LanguageContext";
-import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "sonner";
 
 const App = () => {
-  const [theme, setTheme] = useState(null);
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
+    let cancelled = false;
     const fetchTheme = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/settings/get`);
-        setTheme(res.data);
+        if (cancelled) return;
         applyTheme(res.data);
       } catch (err) {
         console.error("Error fetching theme:", err);
       }
     };
-    fetchTheme();
+
+    const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1200));
+    const idleId = runWhenIdle(fetchTheme);
+
+    return () => {
+      cancelled = true;
+      if (window.cancelIdleCallback) {
+        window.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
+    };
   }, [baseURL]);
 
   const applyTheme = (settings) => {
@@ -51,20 +61,18 @@ const App = () => {
   };
 
   return (
-    <HelmetProvider>
-      <LanguageProvider>
-        <ScrollToTop />
-        {/* Hide header top bar on mobile */}
-        <HeaderTop />
-        <Header />
-        <Outlet />
-        <Footer />
-        <WhatsappButton />
-        {/* Mobile-only bottom nav */}
-        <MobileBottomNav />
-        <Toaster position="top-right" richColors expand={true} />
-      </LanguageProvider>
-    </HelmetProvider>
+    <LanguageProvider>
+      <ScrollToTop />
+      {/* Hide header top bar on mobile */}
+      <HeaderTop />
+      <Header />
+      <Outlet />
+      <Footer />
+      <WhatsappButton />
+      {/* Mobile-only bottom nav */}
+      <MobileBottomNav />
+      <Toaster position="top-right" richColors expand={true} />
+    </LanguageProvider>
   );
 };
 

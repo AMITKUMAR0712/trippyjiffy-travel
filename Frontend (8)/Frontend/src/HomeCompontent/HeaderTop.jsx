@@ -15,9 +15,11 @@ const HeaderTop = () => {
   const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
+    let cancelled = false;
     const fetchSettings = async () => {
       try {
         const res = await axios.get(`${baseURL}/api/settings/get`);
+        if (cancelled) return;
         if (res.data && res.data.tickerMessages) {
           let parsed = typeof res.data.tickerMessages === 'string' ? JSON.parse(res.data.tickerMessages) : res.data.tickerMessages;
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -28,15 +30,24 @@ const HeaderTop = () => {
         console.error("Error fetching ticker settings:", err);
       }
     };
-    fetchSettings();
+
+    const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1500));
+    const idleId = runWhenIdle(fetchSettings);
+
+    return () => {
+      cancelled = true;
+      if (window.cancelIdleCallback) {
+        window.cancelIdleCallback(idleId);
+      } else {
+        window.clearTimeout(idleId);
+      }
+    };
   }, [baseURL]);
 
-  useEffect(() => {
-    // ⛔ Prevent multiple init
+  const loadTranslate = () => {
     if (initialized.current) return;
     initialized.current = true;
 
-    // ✅ Google Translate init
     window.googleTranslateElementInit = () => {
       if (
         window.google &&
@@ -54,7 +65,6 @@ const HeaderTop = () => {
       }
     };
 
-    // ✅ Load script only once
     if (!document.getElementById("google-translate-script")) {
       const script = document.createElement("script");
       script.id = "google-translate-script";
@@ -93,10 +103,11 @@ const HeaderTop = () => {
       }
     }, 200);
 
-    return () => clearInterval(interval);
-  }, []);
+    window.setTimeout(() => clearInterval(interval), 6000);
+  };
 
   const openTranslateDropdown = () => {
+    loadTranslate();
     const selectEl = document.querySelector(".goog-te-combo");
     if (selectEl) selectEl.focus();
   };

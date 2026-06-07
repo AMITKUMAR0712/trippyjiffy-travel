@@ -16,7 +16,7 @@ import UserProtectedRoute from "../User/UserProtectedRoute.jsx";
 import AdminProtectedRoute from "../Dashboard/Compontent/AdminProtectedRoute.jsx";
 
 // Main Pages
-import Homepage from "../Homepage.jsx";
+const Homepage = lazy(() => import("../Homepage.jsx"));
 const Destinations = lazy(() => import("../HomeCompontent/Destinations.jsx"));
 const LandingPage = lazy(() => import("../HomeCompontent/LandingPage.jsx"));
 const ThankYou = lazy(() => import("../HomeCompontent/ThankYou.jsx"));

@@ -23,6 +23,27 @@ const SLIDES = [
   },
 ];
 
+const loadRazorpay = () => {
+  if (window.Razorpay) return Promise.resolve(true);
+
+  return new Promise((resolve) => {
+    const existingScript = document.getElementById("razorpay-checkout-js");
+    if (existingScript) {
+      existingScript.addEventListener("load", () => resolve(true), { once: true });
+      existingScript.addEventListener("error", () => resolve(false), { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.id = "razorpay-checkout-js";
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
 /* ── Right-side Image Slider ── */
 const ImageSlider = () => {
   const [active, setActive] = useState(0);
@@ -140,6 +161,11 @@ const Payment = ({ isModal = false }) => {
       return toast.error("Please enter a valid amount");
 
     try {
+      const isRazorpayLoaded = await loadRazorpay();
+      if (!isRazorpayLoaded) {
+        return toast.error("Payment gateway failed to load. Please try again.");
+      }
+
       const res = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/payment/create-order`,
         {

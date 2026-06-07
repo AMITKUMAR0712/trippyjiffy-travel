@@ -28,10 +28,6 @@
 
     <!-- ✅ Preload Critical Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    </noscript>
 
     <!-- ✅ Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -47,39 +43,41 @@
     <meta property="twitter:description" content="Discover India & Asia with TrippyJiffy. Premium curated travel experiences for the modern traveler." />
     <meta property="twitter:image" content="https://trippyjiffy.com/og-banner.jpg" />
 
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-MHR3DXPV");
-    </script>
-    <!-- End Google Tag Manager -->
-
-    <!-- ✅ Google Ads -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17771713499"></script>
+    <!-- Analytics are loaded after first render to protect Core Web Vitals. -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "AW-17771713499");
-    </script>
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      window.gtag("js", new Date());
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSV86BKWEG"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XSV86BKWEG');
+      window.addEventListener("load", function () {
+        var loadThirdParty = function () {
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s),
+              dl = l != "dataLayer" ? "&l=" + l : "";
+            j.async = true;
+            j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, "script", "dataLayer", "GTM-MHR3DXPV");
+
+          var gtagScript = document.createElement("script");
+          gtagScript.async = true;
+          gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-DGEZY5NBY0";
+          document.head.appendChild(gtagScript);
+
+          window.gtag("config", "G-DGEZY5NBY0");
+          window.gtag("config", "G-XSV86BKWEG");
+          window.gtag("config", "AW-17771713499");
+        };
+
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(loadThirdParty, { timeout: 3000 });
+        } else {
+          window.setTimeout(loadThirdParty, 2500);
+        }
+      });
     </script>
 
     <!-- ✅ Global Structured Data -->
@@ -104,8 +102,8 @@
         "priceRange": "$$",
         "openingHours": "Mo-Su 09:00-21:00",
         "sameAs": [
-          "https://www.facebook.com/trippyjiffy",
-          "https://www.instagram.com/trippyjiffy",
+          "https://www.facebook.com/profile.php?id=61590639771522",
+          "https://www.instagram.com/trippy.jiffy",
           "https://twitter.com/trippyjiffy",
           "https://www.linkedin.com/company/trippyjiffy/",
           "https://www.youtube.com/@trippyjiffy"
@@ -203,7 +201,7 @@
         <div class="loader-container">
           <div class="loader-circle"></div>
           <div class="plane-icon">
-            <i class="fas fa-paper-plane"></i>
+            ✈
           </div>
         </div>
         <div class="loading-text">Exploring India's 4th Dimension...</div>
@@ -211,20 +209,5 @@
     </div>
     <script type="module" src="/src/main.jsx"></script>
     
-    <!-- ✅ Critical Scripts with defer -->
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest" defer></script>
-
-    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-
-    <!-- ✅ Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DGEZY5NBY0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-DGEZY5NBY0");
-    </script>
   </body>
 </html>
