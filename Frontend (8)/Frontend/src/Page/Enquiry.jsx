@@ -2,12 +2,28 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Style from "../Style/Enquiry.module.scss";
 import axios from "axios";
-import {
-  User, Mail, Phone, Navigation, MapPin,
-  CalendarDays, Hotel, Users, Baby,
-  MessageSquare, Send, CheckCircle2, Plane
-} from "lucide-react";
 import { toast } from "sonner";
+import {
+  User, Mail, MessageCircle, MapPin,
+  CalendarDays, Hotel, Users, Baby,
+  MessageSquare, Send, CheckCircle2, Plane,
+  Clock, DollarSign
+} from "lucide-react";
+
+const BOOKING_TIMELINE_OPTIONS = [
+  "Within 30 Days",
+  "Within 1–3 Months",
+  "Within 3–6 Months",
+  "More than 6 Months",
+  "Just Exploring Options",
+];
+
+const HOLIDAY_BUDGET_OPTIONS = [
+  "Under 1000 USD per person",
+  "1000-2000 USD",
+  "2000-3000 USD",
+  "Above 3000 USD",
+];
 
 const BG_IMAGES = [
   "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80",
@@ -19,7 +35,8 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "", email: "", phone: "",
-    origin: "", destination: "",
+    destination: "",
+    booking_timeline: "", holiday_budget: "",
     arrival_date: "", departure_date: "",
     hotel_category: "",
     no_of_adults: 1, no_of_children: 0,
@@ -40,7 +57,8 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
   const resetForm = () =>
     setFormData({
       name: "", email: "", phone: "",
-      origin: "", destination: "",
+      destination: "",
+      booking_timeline: "", holiday_budget: "",
       arrival_date: "", departure_date: "",
       hotel_category: "", no_of_adults: 1, no_of_children: 0, message: "",
     });
@@ -136,27 +154,45 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
                 value={formData.email} onChange={handleChange} required />
             </div>
             <div className={Style.Field}>
-              <label><Phone size={12} />Phone</label>
-              <input type="text" name="phone" placeholder="+91 98765 43210"
-                value={formData.phone} onChange={handleChange} required />
+              <label><MessageCircle size={12} />WhatsApp Number</label>
+              <input type="tel" name="phone" placeholder="WhatsApp Number (e.g. +91 98765 43210)"
+                value={formData.phone} onChange={handleChange} required
+                inputMode="tel" autoComplete="tel" />
             </div>
           </div>
 
-          {/* Row 2: Origin + Destination */}
-          <div className={Style.Grid2}>
-            <div className={Style.Field}>
-              <label><Navigation size={12} />From (Origin)</label>
-              <input type="text" name="origin" placeholder="City of Departure"
-                value={formData.origin} onChange={handleChange} required />
-            </div>
-            <div className={Style.Field}>
-              <label><MapPin size={12} />Destination</label>
-              <input type="text" name="destination" placeholder="Where to?"
-                value={formData.destination} onChange={handleChange} required />
-            </div>
+          {/* Row 2: Destination */}
+          <div className={Style.Field}>
+            <label><MapPin size={12} />Destination</label>
+            <input type="text" name="destination" placeholder="Where to?"
+              value={formData.destination} onChange={handleChange} required />
           </div>
 
-          {/* Row 3: Dates */}
+          {/* Row 3: Booking Timeline */}
+          <div className={Style.Field}>
+            <label><Clock size={12} />When are you planning to book your holiday? (Required)</label>
+            <select name="booking_timeline" value={formData.booking_timeline}
+              onChange={handleChange} required>
+              <option value="">Select...</option>
+              {BOOKING_TIMELINE_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Row 4: Holiday Budget */}
+          <div className={Style.Field}>
+            <label><DollarSign size={12} />Approximate Total Holiday Budget (Required)</label>
+            <select name="holiday_budget" value={formData.holiday_budget}
+              onChange={handleChange} required>
+              <option value="">Select...</option>
+              {HOLIDAY_BUDGET_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Row 5: Dates */}
           <div className={Style.Grid2}>
             <div className={Style.Field}>
               <label><CalendarDays size={12} />Arrival Date</label>
@@ -170,7 +206,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
             </div>
           </div>
 
-          {/* Row 4: Hotel + Adults + Children */}
+          {/* Row 6: Hotel + Adults + Children */}
           <div className={Style.Grid3}>
             <div className={Style.Field}>
               <label><Hotel size={12} />Hotel Category</label>

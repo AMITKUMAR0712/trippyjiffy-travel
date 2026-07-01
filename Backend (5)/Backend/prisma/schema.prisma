@@ -121,20 +121,22 @@ model doc {
 }
 
 model enquiries {
-  id             Int       @id @default(autoincrement())
-  user_id        Int?
-  name           String    @db.VarChar(100)
-  email          String    @db.VarChar(100)
-  phone          String    @db.VarChar(20)
-  origin         String    @db.VarChar(150)
-  destination    String    @db.VarChar(150)
-  arrival_date   DateTime  @db.Date
-  departure_date DateTime  @db.Date
-  hotel_category String?   @db.VarChar(100)
-  no_of_adults   Int       @default(1)
-  no_of_children Int?      @default(0)
-  message        String?   @db.Text
-  created_at     DateTime? @default(now()) @db.Timestamp(0)
+  id               Int       @id @default(autoincrement())
+  user_id          Int?
+  name             String    @db.VarChar(100)
+  email            String    @db.VarChar(100)
+  phone            String    @db.VarChar(20)
+  origin           String?   @db.VarChar(150)
+  destination      String    @db.VarChar(150)
+  booking_timeline String?   @db.VarChar(100)
+  holiday_budget   String?   @db.VarChar(100)
+  arrival_date     DateTime  @db.Date
+  departure_date   DateTime  @db.Date
+  hotel_category   String?   @db.VarChar(100)
+  no_of_adults     Int       @default(1)
+  no_of_children   Int?      @default(0)
+  message          String?   @db.Text
+  created_at       DateTime? @default(now()) @db.Timestamp(0)
 
   @@index([user_id], map: "fk_user")
 }

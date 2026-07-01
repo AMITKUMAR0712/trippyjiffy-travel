@@ -14,8 +14,9 @@ const AdminEnquiry = () => {
     name: "",
     email: "",
     phone: "",
-    origin: "",
     destination: "",
+    booking_timeline: "",
+    holiday_budget: "",
     arrival_date: "",
     departure_date: "",
     hotel_category: "",
@@ -83,8 +84,9 @@ const AdminEnquiry = () => {
         name: "",
         email: "",
         phone: "",
-        origin: "",
         destination: "",
+        booking_timeline: "",
+        holiday_budget: "",
         arrival_date: "",
         departure_date: "",
         hotel_category: "",
@@ -137,8 +139,9 @@ const AdminEnquiry = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Origin</th>
               <th>Destination</th>
+              <th>Booking Timeline</th>
+              <th>Budget</th>
               <th>Arrival</th>
               <th>Departure</th>
               <th>Hotel</th>
@@ -156,8 +159,9 @@ const AdminEnquiry = () => {
                 <td>{enq.name}</td>
                 <td>{enq.email}</td>
                 <td>{enq.phone}</td>
-                <td>{enq.origin}</td>
                 <td>{enq.destination}</td>
+                <td>{enq.booking_timeline || "-"}</td>
+                <td>{enq.holiday_budget || "-"}</td>
                 <td>{enq.arrival_date}</td>
                 <td>{enq.departure_date}</td>
                 <td>{enq.hotel_category}</td>
@@ -221,14 +225,6 @@ const AdminEnquiry = () => {
                 onChange={handleChange}
                 required
               />
-              <label>Origin</label>
-              <input
-                type="text"
-                name="origin"
-                value={form.origin}
-                onChange={handleChange}
-                required
-              />
               <label>Destination</label>
               <input
                 type="text"
@@ -237,6 +233,31 @@ const AdminEnquiry = () => {
                 onChange={handleChange}
                 required
               />
+              <label>Booking Timeline</label>
+              <select
+                name="booking_timeline"
+                value={form.booking_timeline}
+                onChange={handleChange}
+              >
+                <option value="">Select timeline</option>
+                <option value="Within 30 Days">Within 30 Days</option>
+                <option value="Within 1–3 Months">Within 1–3 Months</option>
+                <option value="Within 3–6 Months">Within 3–6 Months</option>
+                <option value="More than 6 Months">More than 6 Months</option>
+                <option value="Just Exploring Options">Just Exploring Options</option>
+              </select>
+              <label>Holiday Budget</label>
+              <select
+                name="holiday_budget"
+                value={form.holiday_budget}
+                onChange={handleChange}
+              >
+                <option value="">Select budget</option>
+                <option value="Under 1000 USD per person">Under 1000 USD per person</option>
+                <option value="1000-2000 USD">1000-2000 USD</option>
+                <option value="2000-3000 USD">2000-3000 USD</option>
+                <option value="Above 3000 USD">Above 3000 USD</option>
+              </select>
               <label>Arrival Date</label>
               <input
                 type="date"
@@ -307,8 +328,9 @@ const AdminEnquiry = () => {
                       name: "",
                       email: "",
                       phone: "",
-                      origin: "",
                       destination: "",
+                      booking_timeline: "",
+                      holiday_budget: "",
                       arrival_date: "",
                       departure_date: "",
                       hotel_category: "",

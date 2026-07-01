@@ -38,53 +38,17 @@ const MobileBottomNav = () => {
       {showEnquiry &&
         createPortal(
           <div
-            style={{
-              position: "fixed",
-              inset: 0,
-              background: "rgba(15,23,42,0.65)",
-              backdropFilter: "blur(10px)",
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "center",
-              paddingTop: "40px",
-              zIndex: 99999,
-              overflowY: "auto",
-            }}
+            className="enquiry-mobile-overlay"
             onClick={() => setShowEnquiry(false)}
           >
             <div
-              style={{
-                background: "#fff",
-                borderRadius: "20px",
-                padding: "32px 24px",
-                width: "95%",
-                maxWidth: "600px",
-                maxHeight: "90vh",
-                overflowY: "auto",
-                position: "relative",
-                boxShadow: "0 25px 50px rgba(0,0,0,0.25)",
-              }}
+              className="enquiry-mobile-content"
               onClick={(e) => e.stopPropagation()}
             >
               <button
+                className="enquiry-mobile-close"
                 onClick={() => setShowEnquiry(false)}
-                style={{
-                  position: "absolute",
-                  top: "16px",
-                  right: "16px",
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "50%",
-                  background: "#f1f5f9",
-                  border: "none",
-                  fontSize: "18px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#64748b",
-                  zIndex: 1,
-                }}
+                aria-label="Close enquiry form"
               >
                 ✕
               </button>

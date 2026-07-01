@@ -12,17 +12,27 @@
   justify-content: center;
   padding: 50px 20px;
   font-family: 'Inter', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px;
+  }
 
   @media (max-width: 768px) {
     padding: 24px 16px;
     align-items: flex-start;
     min-height: calc(100vh - 68px);
     background-attachment: scroll;
-    /* Performance */
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 12px;
   }
 }
 
@@ -131,10 +141,23 @@
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  box-sizing: border-box;
 
-  @media (max-width: 640px) {
-    padding: 20px 16px 18px;
-    border-radius: 18px;
+  @media (max-width: 1024px) {
+    max-width: 720px;
+    padding: 28px 28px 24px;
+    border-radius: 22px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 22px 18px 20px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 18px 14px 16px;
+    border-radius: 16px;
   }
 }
 
@@ -152,6 +175,9 @@
   padding: 0 !important;
   background: none !important;
   display: block !important;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 
   .BgOverlay,
   .Particles {
@@ -162,8 +188,10 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 10px 0 !important;
+    padding: 0 !important;
     max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
 
     // Use dark colors for modal text
     .CardTitle,
@@ -178,11 +206,19 @@
     .CardTitle {
       color: #1a1a1a !important;
       font-size: 20px;
+
+      @media (max-width: 480px) {
+        font-size: 17px !important;
+      }
     }
 
     .CardSubtitle {
       color: #64748b !important;
       font-size: 12px;
+
+      @media (max-width: 480px) {
+        font-size: 11px !important;
+      }
     }
 
     label {
@@ -240,6 +276,57 @@
       filter: none !important;
       opacity: 0.5;
     }
+
+    .RadioOption {
+      background: #f8fafc !important;
+      border-color: #cbd5e1 !important;
+      color: #334155 !important;
+
+      &:hover {
+        background: #f1f5f9 !important;
+        border-color: #94a3b8 !important;
+      }
+
+      &:has(input:checked) {
+        background: rgba($primary, 0.08) !important;
+        border-color: $primary !important;
+        color: #0f172a !important;
+      }
+    }
+  }
+
+  .CardHeader {
+    padding-right: 44px;
+
+    @media (max-width: 480px) {
+      padding-right: 36px;
+    }
+  }
+
+  .Form {
+    gap: 12px;
+  }
+
+  .Grid2,
+  .Grid3 {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .Field {
+    min-width: 0;
+
+    label {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+      min-height: 48px;
+    }
   }
 }
 
@@ -249,6 +336,11 @@
   align-items: flex-start;
   gap: 14px;
   margin-bottom: 18px;
+
+  @media (max-width: 480px) {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
 }
 
 .HeaderIcon {
@@ -262,6 +354,12 @@
   justify-content: center;
   color: #fff;
   box-shadow: 0 6px 16px rgba($primary, 0.45);
+
+  @media (max-width: 480px) {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
 }
 
 .CardTitle {
@@ -269,13 +367,26 @@
   font-weight: 800;
   color: #fff;
   margin: 0 0 4px;
+  line-height: 1.25;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+  }
 }
 
 .CardSubtitle {
   font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.45;
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 }
 
 .Divider {
@@ -289,29 +400,41 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    gap: 12px;
+  }
 }
 
 .Grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
+  width: 100%;
+  min-width: 0;
 
-  @media (max-width: 600px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
 .Grid3 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+  width: 100%;
+  min-width: 0;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1100px) {
     grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
@@ -325,18 +448,27 @@
 
   label {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 5px;
     font-size: 11px;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 0.8px;
+    line-height: 1.4;
+    flex-wrap: wrap;
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+      letter-spacing: 0.5px;
+    }
 
     svg {
       width: 12px;
       height: 12px;
       opacity: 0.75;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
   }
 
@@ -353,12 +485,24 @@
     outline: none;
     width: 100% !important;
     max-width: 100%;
+    min-width: 0;
     box-sizing: border-box !important;
     transition: all 0.2s ease;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
     box-shadow: none !important;
+
+    @media (max-width: 768px) {
+      padding: 13px 14px;
+      font-size: 16px;
+      min-height: 48px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 12px;
+      border-radius: 10px;
+    }
 
     &::placeholder {
       color: rgba(255, 255, 255, 0.35);
@@ -394,6 +538,60 @@
     resize: vertical;
     min-height: 90px;
     line-height: 1.55;
+
+    @media (max-width: 768px) {
+      min-height: 100px;
+    }
+  }
+}
+
+/* Radio option group */
+.RadioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.RadioOption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: none;
+  letter-spacing: 0;
+
+  input[type="radio"] {
+    width: 16px !important;
+    height: 16px;
+    min-width: 16px;
+    padding: 0;
+    margin: 0;
+    accent-color: $primary;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &:has(input:checked) {
+    background: rgba($primary, 0.2);
+    border-color: $primary;
+    color: #fff;
+  }
+
+  span {
+    line-height: 1.4;
   }
 }
 
@@ -429,7 +627,18 @@
   font-family: 'Inter', sans-serif;
   margin-top: 4px;
   min-height: 54px;
-  /* Touch-friendly */
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    font-size: 16px;
+    min-height: 52px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 14px;
+    min-height: 50px;
+  }
 
   &:hover:not(:disabled) {
     transform: translateY(-2px);
@@ -477,6 +686,10 @@
   color: #fff;
   text-align: center;
   margin: 0 0 12px;
+
+  @media (max-width: 480px) {
+    font-size: 22px;
+  }
 }
 
 .SuccessMsg {
@@ -484,7 +697,11 @@
   color: rgba(255, 255, 255, 0.7);
   text-align: center;
   line-height: 1.65;
-  margin: 0;
-  max-width: 480px;
   margin: 0 auto;
+  max-width: 480px;
+  padding: 0 8px;
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
 }
