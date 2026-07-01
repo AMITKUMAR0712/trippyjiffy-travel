@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Style from "../Style/Enquiry.module.scss";
 import axios from "axios";
 import { toast } from "sonner";
+import { apiPath } from "../utils/apiBase";
 import {
   User, Mail, MessageCircle, MapPin,
   CalendarDays, Hotel, Users, Baby,
@@ -44,7 +45,6 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   // Pick a random background
   const bg = BG_IMAGES[Math.floor(Math.random() * BG_IMAGES.length)];
@@ -63,9 +63,9 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
       hotel_category: "", no_of_adults: 1, no_of_children: 0, message: "",
     });
 
-  const postPublic = () => axios.post(`${baseURL}/api/enquiry/post`, formData);
+  const postPublic = () => axios.post(apiPath("/enquiry/post"), formData);
   const postAuth = (token) =>
-    axios.post(`${baseURL}/api/enquiry/post-auth`, formData, {
+    axios.post(apiPath("/enquiry/post-auth"), formData, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

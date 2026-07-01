@@ -146,8 +146,13 @@ export const addEnquiry = async (req, res) => {
       id: result.insertId,
     });
   } catch (err) {
-    console.error("Add enquiry error:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Add enquiry error:", err?.sqlMessage || err.message, err);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: process.env.NODE_ENV === "production"
+        ? "Could not save enquiry. Please try again or contact support."
+        : err?.sqlMessage || err.message,
+    });
   }
 };
 
