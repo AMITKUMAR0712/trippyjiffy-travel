@@ -237,10 +237,8 @@
     }
 
     input,
-    select,
     textarea {
-      background: #f8fafc !important;
-      /* Single solid light background */
+      background-color: #f8fafc !important;
       border: 1px solid #cbd5e1 !important;
       color: #0f172a !important;
       border-radius: 12px !important;
@@ -253,18 +251,33 @@
       }
 
       &:focus {
-        background: #fff !important;
+        background-color: #fff !important;
         border-color: $primary !important;
         box-shadow: none !important;
       }
     }
 
     select {
+      background-color: #f8fafc !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #0f172a !important;
+      border-radius: 12px !important;
+      box-shadow: none !important;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
       background-repeat: no-repeat !important;
-      background-position: right 10px center !important;
+      background-position: right 12px center !important;
       background-size: 14px !important;
-      padding-right: 30px !important;
+      padding-right: 36px !important;
+
+      &:focus {
+        background-color: #fff !important;
+        border-color: $primary !important;
+        box-shadow: none !important;
+      }
 
       option {
         background: #fff !important;
@@ -473,9 +486,8 @@
   }
 
   input,
-  select,
   textarea {
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border: 1.5px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     padding: 12px 14px;
@@ -509,18 +521,50 @@
     }
 
     &:focus {
-      background: rgba(255, 255, 255, 0.15);
+      background-color: rgba(255, 255, 255, 0.15);
       border-color: #fff;
     }
   }
 
   select {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 36px 12px 14px;
+    font-size: 14px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box !important;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
+    box-shadow: none !important;
     cursor: pointer;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
-    background-repeat: no-repeat;
-    background-position: right 12px center;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
     background-size: 14px !important;
+
+    @media (max-width: 768px) {
+      padding: 13px 36px 13px 14px;
+      font-size: 16px;
+      min-height: 48px;
+    }
+
+    @media (max-width: 480px) {
+      padding: 12px 36px 12px 12px;
+      border-radius: 10px;
+    }
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-color: #fff;
+    }
 
     option {
       background: #1e2030;

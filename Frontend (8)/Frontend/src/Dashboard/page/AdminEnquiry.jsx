@@ -254,9 +254,9 @@ const AdminEnquiry = () => {
               >
                 <option value="">Select budget</option>
                 <option value="Under 1000 USD per person">Under 1000 USD per person</option>
-                <option value="1000-2000 USD">1000-2000 USD</option>
-                <option value="2000-3000 USD">2000-3000 USD</option>
-                <option value="Above 3000 USD">Above 3000 USD</option>
+                <option value="1000-2000 USD per person">1000-2000 USD per person</option>
+                <option value="2000-3000 USD per person">2000-3000 USD per person</option>
+                <option value="Above 3000 USD per person">Above 3000 USD per person</option>
               </select>
               <label>Arrival Date</label>
               <input

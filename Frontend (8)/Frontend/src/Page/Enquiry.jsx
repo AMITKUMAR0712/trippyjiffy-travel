@@ -20,9 +20,9 @@ const BOOKING_TIMELINE_OPTIONS = [
 
 const HOLIDAY_BUDGET_OPTIONS = [
   "Under 1000 USD per person",
-  "1000-2000 USD",
-  "2000-3000 USD",
-  "Above 3000 USD",
+  "1000-2000 USD per person",
+  "2000-3000 USD per person",
+  "Above 3000 USD per person",
 ];
 
 const BG_IMAGES = [
@@ -170,7 +170,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
 
           {/* Row 3: Booking Timeline */}
           <div className={Style.Field}>
-            <label><Clock size={12} />When are you planning to book your holiday? (Required)</label>
+            <label><Clock size={12} />When are you planning to book your holiday?</label>
             <select name="booking_timeline" value={formData.booking_timeline}
               onChange={handleChange} required>
               <option value="">Select...</option>
@@ -182,7 +182,7 @@ const Enquiry = ({ isLandingPage = false, isModal = false }) => {
 
           {/* Row 4: Holiday Budget */}
           <div className={Style.Field}>
-            <label><DollarSign size={12} />Approximate Total Holiday Budget (Required)</label>
+            <label><DollarSign size={12} />Approximate Budget</label>
             <select name="holiday_budget" value={formData.holiday_budget}
               onChange={handleChange} required>
               <option value="">Select...</option>

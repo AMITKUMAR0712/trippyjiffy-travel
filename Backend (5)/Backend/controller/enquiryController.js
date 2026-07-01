@@ -11,9 +11,9 @@ const BOOKING_TIMELINE_OPTIONS = [
 
 const HOLIDAY_BUDGET_OPTIONS = [
   "Under 1000 USD per person",
-  "1000-2000 USD",
-  "2000-3000 USD",
-  "Above 3000 USD",
+  "1000-2000 USD per person",
+  "2000-3000 USD per person",
+  "Above 3000 USD per person",
 ];
 
 const validateEnquiryFields = (body, requireNewFields = false) => {
