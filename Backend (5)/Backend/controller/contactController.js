@@ -1,6 +1,23 @@
 import pool from "../config/db.js";
 import sendMail from "../utils/mailService.js";
 
+const escapeHtml = (value) =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const formatLineBreaks = (value) => escapeHtml(value).replace(/\n/g, "<br/>");
+
+const detailRow = (label, value) => `
+  <tr>
+    <td style="padding:10px 12px;border:1px solid #e5e7eb;background:#f8fafc;font-weight:600;">${escapeHtml(label)}</td>
+    <td style="padding:10px 12px;border:1px solid #e5e7eb;">${value || "Not provided"}</td>
+  </tr>
+`;
+
 export const addContact = async (req, res) => {
   const {
     full_name,
@@ -45,26 +62,43 @@ export const addContact = async (req, res) => {
 
     const subject = `New Contact Inquiry from ${full_name}`;
     const emailMessage = `
-      <h3>Contact Inquiry Details</h3>
-      <p><strong>Full Name:</strong> ${full_name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${normalizedCountryCode} ${phone}</p>
-      <p><strong>Message:</strong> ${message || "N/A"}</p>
-      <p><strong>Preferred Contact Method:</strong></p>
-      <ul>
-        <li>Email: ${contact_via_email ? "Yes" : "No"}</li>
-        <li>Call: ${contact_via_phone ? "Yes" : "No"}</li>
-        <li>WhatsApp: ${contact_via_whatsapp ? "Yes" : "No"}</li>
-      </ul>
+      <div style="font-family:Arial,sans-serif;max-width:720px;margin:0 auto;color:#111827;">
+        <div style="background:#0f172a;color:#ffffff;padding:24px 28px;border-radius:16px 16px 0 0;">
+          <h2 style="margin:0 0 8px;">New Contact Form Submission</h2>
+          <p style="margin:0;opacity:0.9;">A visitor submitted the website contact form.</p>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 16px 16px;padding:24px 28px;background:#ffffff;">
+          <table style="width:100%;border-collapse:collapse;">
+            ${detailRow("Full Name", escapeHtml(full_name))}
+            ${detailRow("Email Address", escapeHtml(email))}
+            ${detailRow("Phone Number", escapeHtml(`${normalizedCountryCode} ${phone}`))}
+            ${detailRow("Message", formatLineBreaks(message || "Not provided"))}
+            ${detailRow("Contact via Email", contact_via_email ? "Yes" : "No")}
+            ${detailRow("Contact via Call", contact_via_phone ? "Yes" : "No")}
+            ${detailRow("Contact via WhatsApp", contact_via_whatsapp ? "Yes" : "No")}
+          </table>
+        </div>
+      </div>
     `;
 
     const userSubject = "We received your message - TrippyJiffy";
     const userMessage = `
-      <h3>Hi ${full_name},</h3>
-      <p>Thank you for reaching out to TrippyJiffy. We have received your message and will get back to you shortly.</p>
-      <p><b>Your Message:</b> ${message || "N/A"}</p>
-      <br/>
-      <p>Best Regards,<br/>TrippyJiffy Team</p>
+      <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;color:#111827;">
+        <div style="background:#f97316;color:#ffffff;padding:24px 28px;border-radius:16px 16px 0 0;">
+          <h2 style="margin:0 0 8px;">Thank You for Contacting TrippyJiffy</h2>
+          <p style="margin:0;opacity:0.95;">Your message has been received successfully.</p>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 16px 16px;padding:24px 28px;background:#ffffff;">
+          <p style="margin-top:0;">Hi ${escapeHtml(full_name)},</p>
+          <p>Thanks for contacting us. Our team will get back to you shortly.</p>
+          <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+            ${detailRow("Email Address", escapeHtml(email))}
+            ${detailRow("Phone Number", escapeHtml(`${normalizedCountryCode} ${phone}`))}
+            ${detailRow("Your Message", formatLineBreaks(message || "Not provided"))}
+          </table>
+          <p style="margin-bottom:0;">Best regards,<br/>TrippyJiffy Team</p>
+        </div>
+      </div>
     `;
 
     // Send emails but don't block contact submission if it fails

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import Style from "../Style/AutoLeadPopup.module.scss";
+import { apiPath } from "../utils/apiBase";
 
 const getInitialActiveUsers = () => Math.floor(Math.random() * 81) + 120;
 
@@ -12,6 +14,7 @@ const AutoLeadPopup = ({
   onClose = null,
   triggerAfterScrollPercent = null,
 }) => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -22,8 +25,6 @@ const AutoLeadPopup = ({
   const [success, setSuccess] = useState(false);
   const [activeUsers, setActiveUsers] = useState(getInitialActiveUsers);
   const animationFrame = useRef(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "";
-
   useEffect(() => {
     if (!show) return undefined;
 
@@ -109,7 +110,7 @@ const AutoLeadPopup = ({
     setLoading(true);
 
     try {
-      await axios.post(`${baseURL}/api/enquiry/post`, {
+      await axios.post(apiPath("/enquiry/post"), {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -123,11 +124,10 @@ const AutoLeadPopup = ({
         message: `Quick Lead from ${context} pop-up.`,
       });
 
-      setSuccess(true);
       sessionStorage.setItem("leadPopupFilled", "true");
-      setTimeout(() => {
-        handleClose();
-      }, 3000); // close after 3s showing success
+      setSuccess(true);
+      handleClose();
+      navigate("/thankyou");
     } catch (err) {
       console.error("Popup submit error:", err);
       alert("Something went wrong. Please try again.");

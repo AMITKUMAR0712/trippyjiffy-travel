@@ -1,12 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { User, Mail, Phone, ShieldCheck, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Style from "../Style/InsiderDealsForm.module.scss";
+import { apiPath } from "../utils/apiBase";
 
 const getInitialActiveUsers = () => Math.floor(Math.random() * 81) + 120;
 
 const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -15,8 +18,6 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [activeUsers, setActiveUsers] = useState(getInitialActiveUsers);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "";
-
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveUsers(prev => {
@@ -40,7 +41,7 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
     setLoading(true);
 
     try {
-      await axios.post(`${baseURL}/api/enquiry/post`, {
+      await axios.post(apiPath("/enquiry/post"), {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -55,6 +56,7 @@ const InsiderDealsForm = ({ context = "Upcoming Trip" }) => {
       });
 
       setSuccess(true);
+      navigate("/thankyou");
     } catch (err) {
       console.error("Submit error:", err);
     } finally {

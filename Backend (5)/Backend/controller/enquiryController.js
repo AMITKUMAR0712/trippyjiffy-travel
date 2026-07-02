@@ -16,6 +16,93 @@ const HOLIDAY_BUDGET_OPTIONS = [
   "Above 3000 USD per person",
 ];
 
+const escapeHtml = (value) =>
+  String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const formatLineBreaks = (value) => escapeHtml(value).replace(/\n/g, "<br/>");
+
+const detailRow = (label, value) => `
+  <tr>
+    <td style="padding:10px 12px;border:1px solid #e5e7eb;background:#f8fafc;font-weight:600;">${escapeHtml(label)}</td>
+    <td style="padding:10px 12px;border:1px solid #e5e7eb;">${value || "Not provided"}</td>
+  </tr>
+`;
+
+const buildAdminEnquiryEmail = ({
+  name,
+  email,
+  phone,
+  origin,
+  destination,
+  booking_timeline,
+  holiday_budget,
+  arrival_date,
+  departure_date,
+  hotel_category,
+  no_of_adults,
+  no_of_children,
+  message,
+}) => `
+  <div style="font-family:Arial,sans-serif;max-width:720px;margin:0 auto;color:#111827;">
+    <div style="background:#0f172a;color:#ffffff;padding:24px 28px;border-radius:16px 16px 0 0;">
+      <h2 style="margin:0 0 8px;">New Travel Enquiry Received</h2>
+      <p style="margin:0;opacity:0.9;">A new lead has been submitted on the website.</p>
+    </div>
+    <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 16px 16px;padding:24px 28px;background:#ffffff;">
+      <table style="width:100%;border-collapse:collapse;">
+        ${detailRow("Full Name", escapeHtml(name))}
+        ${detailRow("Email Address", escapeHtml(email))}
+        ${detailRow("Phone / WhatsApp", escapeHtml(phone))}
+        ${detailRow("Lead Source", escapeHtml(origin || "Website enquiry form"))}
+        ${detailRow("Destination", escapeHtml(destination))}
+        ${detailRow("Booking Timeline", escapeHtml(booking_timeline || "Not provided"))}
+        ${detailRow("Holiday Budget", escapeHtml(holiday_budget || "Not provided"))}
+        ${detailRow("Arrival Date", escapeHtml(arrival_date))}
+        ${detailRow("Departure Date", escapeHtml(departure_date))}
+        ${detailRow("Hotel Category", escapeHtml(hotel_category))}
+        ${detailRow("Adults", escapeHtml(no_of_adults))}
+        ${detailRow("Children", escapeHtml(no_of_children ?? 0))}
+        ${detailRow("Special Requirements", formatLineBreaks(message || "Not provided"))}
+      </table>
+    </div>
+  </div>
+`;
+
+const buildUserEnquiryEmail = ({
+  name,
+  destination,
+  booking_timeline,
+  holiday_budget,
+  arrival_date,
+  departure_date,
+  hotel_category,
+}) => `
+  <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;color:#111827;">
+    <div style="background:#f97316;color:#ffffff;padding:24px 28px;border-radius:16px 16px 0 0;">
+      <h2 style="margin:0 0 8px;">Thank You for Reaching Out!</h2>
+      <p style="margin:0;opacity:0.95;">We have received your travel enquiry and our team will contact you shortly.</p>
+    </div>
+    <div style="border:1px solid #e5e7eb;border-top:none;border-radius:0 0 16px 16px;padding:24px 28px;background:#ffffff;">
+      <p style="margin-top:0;">Hi ${escapeHtml(name)},</p>
+      <p>Thanks for sharing your trip details with TrippyJiffy. Here is a quick summary of your request:</p>
+      <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+        ${detailRow("Destination", escapeHtml(destination))}
+        ${detailRow("Booking Timeline", escapeHtml(booking_timeline || "Not provided"))}
+        ${detailRow("Holiday Budget", escapeHtml(holiday_budget || "Not provided"))}
+        ${detailRow("Travel Dates", `${escapeHtml(arrival_date)} to ${escapeHtml(departure_date)}`)}
+        ${detailRow("Preferred Stay", escapeHtml(hotel_category))}
+      </table>
+      <p style="margin-bottom:0;">Our travel expert will connect with you soon with the best options.</p>
+      <p style="margin-bottom:0;">Best regards,<br/>TrippyJiffy Team</p>
+    </div>
+  </div>
+`;
+
 const validateEnquiryFields = (body, requireNewFields = false) => {
   const {
     name,
@@ -106,33 +193,31 @@ export const addEnquiry = async (req, res) => {
       ]
     );
     const adminSubject = `New Travel Enquiry from ${name}`;
-    const adminMessage = `
-      <h3>Enquiry Details</h3>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      ${origin ? `<p><strong>Origin:</strong> ${origin}</p>` : ""}
-      <p><strong>Destination:</strong> ${destination}</p>
-      ${booking_timeline ? `<p><strong>Booking Timeline:</strong> ${booking_timeline}</p>` : ""}
-      ${holiday_budget ? `<p><strong>Holiday Budget:</strong> ${holiday_budget}</p>` : ""}
-      <p><strong>Arrival Date:</strong> ${arrival_date}</p>
-      <p><strong>Departure Date:</strong> ${departure_date}</p>
-      <p><strong>Hotel Category:</strong> ${hotel_category}</p>
-      <p><strong>No. of Adults:</strong> ${no_of_adults}</p>
-      <p><strong>No. of Children:</strong> ${no_of_children}</p>
-      <p><strong>Message:</strong> ${message}</p>
-    `;
+    const adminMessage = buildAdminEnquiryEmail({
+      name,
+      email,
+      phone,
+      origin,
+      destination,
+      booking_timeline,
+      holiday_budget,
+      arrival_date,
+      departure_date,
+      hotel_category,
+      no_of_adults,
+      no_of_children,
+      message,
+    });
     const userSubject = "Enquiry Confirmation - Travel Desk";
-    const userMessage = `
-      <h3>Thank you for your enquiry, ${name}!</h3>
-      <p>We have received your enquiry and will get back to you shortly.</p>
-      <p><strong>Destination:</strong> ${destination}</p>
-      ${booking_timeline ? `<p><strong>Booking Timeline:</strong> ${booking_timeline}</p>` : ""}
-      ${holiday_budget ? `<p><strong>Holiday Budget:</strong> ${holiday_budget}</p>` : ""}
-      <p><strong>Travel Dates:</strong> ${arrival_date} to ${departure_date}</p>
-      <br/>
-      <p>Best Regards,<br/>Travel Team</p>
-    `;
+    const userMessage = buildUserEnquiryEmail({
+      name,
+      destination,
+      booking_timeline,
+      holiday_budget,
+      arrival_date,
+      departure_date,
+      hotel_category,
+    });
 
     try {
       await sendMail(process.env.ADMIN_EMAIL, adminSubject, adminMessage);

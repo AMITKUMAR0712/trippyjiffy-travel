@@ -5,6 +5,7 @@ import { FaUser, FaPhoneAlt, FaEnvelope, FaPlaneDeparture, FaMapMarkerAlt, FaChe
 import SEO from "../HomeCompontent/SEO";
 import Style from "../Style/CustomizeTrip.module.scss";
 import Banner from "../Img/Banner3.jpg";
+import { apiPath } from "../utils/apiBase";
 
 const CustomizeTrip = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +16,6 @@ const CustomizeTrip = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "";
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,7 +27,7 @@ const CustomizeTrip = () => {
     setLoading(true);
 
     try {
-      await axios.post(`${baseURL}/api/enquiry/post`, {
+      await axios.post(apiPath("/enquiry/post"), {
         ...formData,
         origin: "Dedicated Page",
         arrival_date: new Date().toISOString().split("T")[0],
@@ -39,10 +38,7 @@ const CustomizeTrip = () => {
         message: formData.message || "Custom Trip Request from dedicated page.",
       });
 
-      setSuccess(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 5000);
+      navigate("/thankyou");
     } catch (err) {
       console.error("Submit error:", err);
       alert("Something went wrong. Please try again.");
@@ -98,88 +94,79 @@ const CustomizeTrip = () => {
             </div>
 
             <div className={Style.formContainer}>
-              {success ? (
-                <div className={Style.successCard}>
-                  <div className={Style.successIcon}>✓</div>
-                  <h2>Request Received!</h2>
-                  <p>Our travel specialist will reach out to you within 24 hours with a custom plan.</p>
-                  <button onClick={() => navigate("/")} className={Style.homeBtn}>Back to Home</button>
+              <div className={Style.formCard}>
+                <div className={Style.formHeader}>
+                  <h3>Get a Free Quote</h3>
+                  <p>Tell us where you want to go!</p>
                 </div>
-              ) : (
-                <div className={Style.formCard}>
-                  <div className={Style.formHeader}>
-                    <h3>Get a Free Quote</h3>
-                    <p>Tell us where you want to go!</p>
+                
+                <form onSubmit={handleSubmit} className={Style.form}>
+                  <div className={Style.inputGroup}>
+                    <label><FaUser /> Name</label>
+                    <input 
+                      type="text" 
+                      name="name" 
+                      placeholder="Your full name" 
+                      value={formData.name}
+                      onChange={handleChange}
+                      required 
+                    />
                   </div>
-                  
-                  <form onSubmit={handleSubmit} className={Style.form}>
+
+                  <div className={Style.grid}>
                     <div className={Style.inputGroup}>
-                      <label><FaUser /> Name</label>
+                      <label><FaPhoneAlt /> Phone</label>
                       <input 
-                        type="text" 
-                        name="name" 
-                        placeholder="Your full name" 
-                        value={formData.name}
+                        type="tel" 
+                        name="phone" 
+                        placeholder="Contact number" 
+                        value={formData.phone}
                         onChange={handleChange}
                         required 
                       />
                     </div>
-
-                    <div className={Style.grid}>
-                      <div className={Style.inputGroup}>
-                        <label><FaPhoneAlt /> Phone</label>
-                        <input 
-                          type="tel" 
-                          name="phone" 
-                          placeholder="Contact number" 
-                          value={formData.phone}
-                          onChange={handleChange}
-                          required 
-                        />
-                      </div>
-                      <div className={Style.inputGroup}>
-                        <label><FaEnvelope /> Email</label>
-                        <input 
-                          type="email" 
-                          name="email" 
-                          placeholder="Email address" 
-                          value={formData.email}
-                          onChange={handleChange}
-                          required 
-                        />
-                      </div>
-                    </div>
-
                     <div className={Style.inputGroup}>
-                      <label><FaMapMarkerAlt /> Destination</label>
+                      <label><FaEnvelope /> Email</label>
                       <input 
-                        type="text" 
-                        name="destination" 
-                        placeholder="Where do you want to go?" 
-                        value={formData.destination}
+                        type="email" 
+                        name="email" 
+                        placeholder="Email address" 
+                        value={formData.email}
                         onChange={handleChange}
                         required 
                       />
                     </div>
+                  </div>
 
-                    <div className={Style.inputGroup}>
-                      <label><FaPlaneDeparture /> Special Requests (Optional)</label>
-                      <textarea 
-                        name="message" 
-                        rows="3" 
-                        placeholder="Any specific preferences or requirements?"
-                        value={formData.message}
-                        onChange={handleChange}
-                      ></textarea>
-                    </div>
+                  <div className={Style.inputGroup}>
+                    <label><FaMapMarkerAlt /> Destination</label>
+                    <input 
+                      type="text" 
+                      name="destination" 
+                      placeholder="Where do you want to go?" 
+                      value={formData.destination}
+                      onChange={handleChange}
+                      required 
+                    />
+                  </div>
 
-                    <button type="submit" className={Style.submitBtn} disabled={loading}>
-                      {loading ? "Processing..." : "Get My Free Plan"}
-                    </button>
-                    <p className={Style.formFooter}>No spam. No hidden costs. Just pure travel magic.</p>
-                  </form>
-                </div>
-              )}
+                  <div className={Style.inputGroup}>
+                    <label><FaPlaneDeparture /> Special Requests (Optional)</label>
+                    <textarea 
+                      name="message" 
+                      rows="3" 
+                      placeholder="Any specific preferences or requirements?"
+                      value={formData.message}
+                      onChange={handleChange}
+                    ></textarea>
+                  </div>
+
+                  <button type="submit" className={Style.submitBtn} disabled={loading}>
+                    {loading ? "Processing..." : "Get My Free Plan"}
+                  </button>
+                  <p className={Style.formFooter}>No spam. No hidden costs. Just pure travel magic.</p>
+                </form>
+              </div>
             </div>
           </div>
         </div>
