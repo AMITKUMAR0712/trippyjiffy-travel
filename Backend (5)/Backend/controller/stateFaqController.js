@@ -43,18 +43,45 @@ export const addFaq = async (req, res) => {
 
 export const getAllFaqs = async (req, res) => {
   try {
-    const [rows] = await pool.query(
-      `SELECT f.id, f.question, f.answer, f.state_id, f.tour_id, s.state_name, t.title AS tour_title
+    const { state_id, tour_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (state_id) {
+      conditions.push("f.state_id = ?");
+      values.push(state_id);
+    }
+
+    if (tour_id) {
+      conditions.push("f.tour_id = ?");
+      values.push(tour_id);
+    }
+
+    let query = `SELECT f.id, f.question, f.answer, f.state_id, f.tour_id, s.state_name, t.title AS tour_title
        FROM tours_faq f
        LEFT JOIN state s ON f.state_id = s.id
-       LEFT JOIN tours t ON f.tour_id = t.id
-       ORDER BY 
+       LEFT JOIN tours t ON f.tour_id = t.id`;
+
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+
+    query += ` ORDER BY 
          CASE 
            WHEN f.id = 1 THEN 0
            WHEN f.id = 2 THEN 1
            ELSE 2
          END ASC,
-         f.id DESC`
+         f.id DESC`;
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(
+      query,
+      values
     );
 
     res.status(200).json(rows);

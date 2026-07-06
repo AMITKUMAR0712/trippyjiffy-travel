@@ -19,6 +19,7 @@ import { Heart } from "lucide-react";
 import { toast } from "sonner";
 // ----------------- HELMET -----------------
 import SEO from "../HomeCompontent/SEO";
+import { apiPath } from "../utils/apiBase";
 
 const TourDetails = () => {
   const { tourId } = useParams();
@@ -28,7 +29,6 @@ const TourDetails = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [states, setStates] = useState([]);
   const [allTours, setAllTours] = useState([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -39,7 +39,7 @@ const TourDetails = () => {
       return;
     }
     try {
-      const res = await axios.post(`${baseURL}/api/user-features/wishlist`, {
+      const res = await axios.post(apiPath("/user-features/wishlist"), {
         item_id: tour.id,
         item_type: "india",
         title: tour.tour_name || "Tour",
@@ -97,81 +97,96 @@ const TourDetails = () => {
     }
   };
 
-  // 🟢 Fetch Tour
   useEffect(() => {
+    let cancelled = false;
     const fetchTourData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${baseURL}/api/tours/get`);
-        const tours = res.data || [];
-        const foundTour = tours.find((t) => Number(t.id) === Number(tourId));
-        setTour(foundTour || null);
+        const tourRes = await axios.get(apiPath(`/tours/get/${tourId}`));
+        const foundTour = tourRes.data || null;
+        if (cancelled) return;
+        setTour(foundTour);
+
+        if (!foundTour?.state_id) {
+          setFaqs([]);
+          setStates([]);
+          setAllTours([]);
+          return;
+        }
+
+        const stateRes = await axios.get(apiPath("/state/get"), {
+          params: { id: foundTour.state_id, limit: 1 },
+        });
+        const currentState = Array.isArray(stateRes.data) ? stateRes.data[0] : null;
+        if (cancelled) return;
+
+        let relatedStates = [];
+        let relatedTours = [];
+        let tourFaqs = [];
+
+        const requests = [
+          axios.get(apiPath("/faq/get"), { params: { tour_id: foundTour.id } }),
+        ];
+
+        if (currentState?.category_id) {
+          requests.push(
+            axios.get(apiPath("/state/get"), {
+              params: { category_id: currentState.category_id },
+            })
+          );
+        }
+
+        const [faqRes, relatedStatesRes] = await Promise.all(requests);
+        if (cancelled) return;
+
+        tourFaqs = Array.isArray(faqRes.data) ? faqRes.data : [];
+        relatedStates = Array.isArray(relatedStatesRes?.data) ? relatedStatesRes.data : currentState ? [currentState] : [];
+
+        const sidebarStateIds = relatedStates
+          .filter((state) => Number(state.id) !== Number(foundTour.state_id))
+          .map((state) => state.id);
+
+        if (sidebarStateIds.length) {
+          const relatedToursRes = await axios.get(apiPath("/tours/get"), {
+            params: {
+              state_id: sidebarStateIds.join(","),
+              exclude_id: foundTour.id,
+            },
+          });
+          if (cancelled) return;
+          relatedTours = Array.isArray(relatedToursRes.data) ? relatedToursRes.data : [];
+        }
+
+        setFaqs(
+          tourFaqs
+            .map((faq) => ({
+              ...faq,
+              lowerQ: (faq.question || "").toLowerCase(),
+            }))
+            .sort((a, b) => {
+              const createdDiff = new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+              if (createdDiff !== 0) return createdDiff;
+              const priority = (q) => (q.includes("asia") ? 1 : q.includes("note") ? 3 : 2);
+              return priority(a.lowerQ) - priority(b.lowerQ);
+            })
+        );
+        setStates(relatedStates);
+        setAllTours(relatedTours);
       } catch (err) {
         console.error("Error fetching tours:", err);
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
+
     fetchTourData();
-  }, [tourId, baseURL]);
 
-  // 🟢 Fetch FAQs
-  useEffect(() => {
-    if (!tour) return;
-    const fetchFaqs = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/api/faq/get`);
-        const tourFaqs = Array.isArray(res.data)
-          ? res.data.filter((faq) => Number(faq.tour_id) === Number(tour.id))
-          : [];
-
-        const sortedFaqs = tourFaqs
-          .map((faq) => ({
-            ...faq,
-            lowerQ: (faq.question || "").toLowerCase(),
-          }))
-          .sort((a, b) => {
-            const createdDiff =
-              new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
-            if (createdDiff !== 0) return createdDiff;
-            const priority = (q) =>
-              q.includes("asia") ? 1 : q.includes("note") ? 3 : 2;
-            return priority(a.lowerQ) - priority(b.lowerQ);
-          });
-
-        setFaqs(sortedFaqs);
-      } catch (err) {
-        console.error("Error fetching FAQs:", err);
-      }
+    return () => {
+      cancelled = true;
     };
-    fetchFaqs();
-  }, [tour, baseURL]);
-
-  // 🟢 Fetch States
-  useEffect(() => {
-    const fetchStates = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/api/state/get`);
-        setStates(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
-        console.error("Error fetching states:", err);
-      }
-    };
-    fetchStates();
-  }, [baseURL]);
-
-  // 🟢 Fetch All Tours
-  useEffect(() => {
-    const fetchTours = async () => {
-      try {
-        const res = await axios.get(`${baseURL}/api/tours/get`);
-        setAllTours(Array.isArray(res.data) ? res.data : []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchTours();
-  }, [baseURL]);
+  }, [tourId]);
 
   const safeRender = (jsonString) => {
     if (!jsonString) return null;

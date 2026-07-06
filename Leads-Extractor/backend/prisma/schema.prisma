@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @id @default(uuid())
+  email         String          @unique
+  password      String
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  searchHistory SearchHistory[]
+}
+
+model SearchHistory {
+  id          String     @id @default(uuid())
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  country     String
+  city        String
+  radius      Int?
+  maxResults  Int        @default(50)
+  categories  String[]
+  totalFound  Int        @default(0)
+  status      String     @default("pending")
+  createdAt   DateTime   @default(now())
+  completedAt DateTime?
+  companies   Company[]
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Company {
+  id              String         @id @default(uuid())
+  placeId         String         @unique
+  name            String
+  email           String         @default("Not Available")
+  phone           String?
+  website         String?
+  address         String?
+  city            String
+  country         String
+  latitude        Float?
+  longitude       Float?
+  googleRating    Float?
+  googleMapsUrl   String?
+  category        String
+  status          String         @default("completed")
+  searchHistoryId String?
+  searchHistory   SearchHistory? @relation(fields: [searchHistoryId], references: [id], onDelete: SetNull)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([searchHistoryId])
+  @@index([country, city])
+  @@index([category])
+  @@index([createdAt])
+}

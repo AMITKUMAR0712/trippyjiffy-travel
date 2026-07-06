@@ -47,6 +47,7 @@ const LandingPage = () => {
   );
 
   const [activeSlide, setActiveSlide] = useState(0);
+  const [loadedSlides, setLoadedSlides] = useState(() => new Set([0, 1]));
 
   useEffect(() => window.scrollTo(0, 0), []);
 
@@ -56,6 +57,15 @@ const LandingPage = () => {
     }, 3500);
     return () => clearInterval(t);
   }, [slides.length]);
+
+  useEffect(() => {
+    setLoadedSlides((prev) => {
+      const next = new Set(prev);
+      next.add(activeSlide);
+      next.add((activeSlide + 1) % slides.length);
+      return next;
+    });
+  }, [activeSlide, slides.length]);
 
   const scrollToId = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -199,8 +209,10 @@ const LandingPage = () => {
                   {slides.map((s, idx) => (
                     <img
                       key={idx}
-                      src={s.img}
+                      src={loadedSlides.has(idx) ? s.img : undefined}
                       alt={s.tag}
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      decoding={idx === 0 ? "sync" : "async"}
                       className={`${Style.tjHeroImage} ${idx === activeSlide ? Style.isActive : Style.isHidden
                         }`}
                     />
@@ -215,8 +227,9 @@ const LandingPage = () => {
                       onClick={() => setActiveSlide(i)}
                       type="button"
                       aria-label={`Slide ${i + 1}`}
+                      title={s.tag}
                     >
-                      <img src={s.img} alt={s.tag} />
+                      <span>{i + 1}</span>
                     </button>
                   ))}
                 </div>
@@ -233,12 +246,12 @@ const LandingPage = () => {
 
                   <div className={Style.enquiryMedia}>
                     <div className={Style.mediaTop}>
-                      <img src={enquiryImages[0].src} alt={enquiryImages[0].alt} />
+                      <img src={enquiryImages[0].src} alt={enquiryImages[0].alt} loading="lazy" decoding="async" />
                     </div>
 
                     <div className={Style.mediaBottom}>
-                      <img src={enquiryImages[1].src} alt={enquiryImages[1].alt} />
-                      <img src={enquiryImages[2].src} alt={enquiryImages[2].alt} />
+                      <img src={enquiryImages[1].src} alt={enquiryImages[1].alt} loading="lazy" decoding="async" />
+                      <img src={enquiryImages[2].src} alt={enquiryImages[2].alt} loading="lazy" decoding="async" />
                     </div>
 
                     <div className={Style.mediaCaption}>
@@ -357,10 +370,10 @@ const LandingPage = () => {
 
             <div className={Style.certsGrid}>
               <div className={Style.certCard}>
-                <img className={Style.certImg} src={Certificates1} alt="Certificate 1" />
+                <img className={Style.certImg} src={Certificates1} alt="Certificate 1" loading="lazy" decoding="async" />
               </div>
               <div className={Style.certCard}>
-                <img className={Style.certImg} src={Certificates2} alt="Certificate 2" />
+                <img className={Style.certImg} src={Certificates2} alt="Certificate 2" loading="lazy" decoding="async" />
               </div>
             </div>
           </section>

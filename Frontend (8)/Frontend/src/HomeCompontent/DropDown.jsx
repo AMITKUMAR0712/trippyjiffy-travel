@@ -49,6 +49,10 @@ const CategoryItem = memo(
               </ul>
             )}
           </>
+        ) : cat.external ? (
+          <a href={cat.path} onClick={() => toggleDropdown(null)}>
+            {cat.name}
+          </a>
         ) : (
           <Link to={cat.path} onClick={() => toggleDropdown(null)}>
             {cat.name}

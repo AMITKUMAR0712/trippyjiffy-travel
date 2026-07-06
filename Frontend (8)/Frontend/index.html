@@ -22,10 +22,10 @@
     <link rel="preconnect" href="https://checkout.razorpay.com" />
     <link rel="preconnect" href="https://api.razorpay.com" />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-    
-    <!-- ✅ LCP Preload -->
-    <link rel="preload" as="image" href="/Banner_LCP.webp" fetchpriority="high" />
 
+    <!-- LCP: preload only the first hero image -->
+    <link rel="preload" as="image" href="/Banner_LCP.webp" fetchpriority="high" />
+    
     <!-- ✅ Preload Critical Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
 
@@ -196,17 +196,14 @@
       </div>
     </noscript>
 
-    <div id="root">
-      <div id="root-preloader">
-        <div class="loader-container">
-          <div class="loader-circle"></div>
-          <div class="plane-icon">
-            ✈
-          </div>
-        </div>
-        <div class="loading-text">Exploring India's 4th Dimension...</div>
+    <div id="root-preloader">
+      <div class="loader-container">
+        <div class="loader-circle"></div>
+        <div class="plane-icon">✈</div>
       </div>
+      <div class="loading-text">Exploring India's 4th Dimension...</div>
     </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     
   </body>

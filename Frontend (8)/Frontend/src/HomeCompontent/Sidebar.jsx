@@ -116,6 +116,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
       categories: [
         { name: "Business With Us", path: "/business-with-us" },
         { name: "Contact us", path: "/contact-us" },
+        { name: "Leads Panel", path: "/leads/", external: true },
       ],
     },
     { name: "About Us", path: "/about-us" },
@@ -251,6 +252,18 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                         {(menu.name === "Reach Us" ||
                           menu.name === "Explore" ||
                           menu.name === "Exclusives") && (
+                          cat.external ? (
+                            <a
+                              href={cat.path}
+                              className={Style.ReachUsLink}
+                              onClick={() => {
+                                toggleDropdown(null);
+                                handleClose();
+                              }}
+                            >
+                              {cat.name}
+                            </a>
+                          ) : (
                           <Link
                             to={cat.path}
                             className={Style.ReachUsLink}
@@ -261,6 +274,7 @@ const Sidebar = ({ menuOpen, setMenuOpen }) => {
                           >
                             {cat.name}
                           </Link>
+                          )
                         )}
                       </li>
                     );

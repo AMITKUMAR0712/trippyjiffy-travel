@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import Style from "../Style/Header.module.scss";
 import logo from "../Img/trippylogo.png";
 import DropDown from "../HomeCompontent/DropDown.jsx";
-import axios from "axios";
+import { getNavigationData } from "../utils/siteShellData";
 
 const Enquiry = lazy(() => import("../Page/Enquiry"));
 
@@ -54,7 +54,6 @@ const Header = () => {
         }
     }, []);
 
-    const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
     const [indiaTours, setIndiaTours] = useState([]);
     const [asiaTours, setAsiaTours] = useState([]);
     const [exclusivePages, setExclusivePages] = useState([]);
@@ -89,41 +88,11 @@ const Header = () => {
         let cancelled = false;
         const fetchNavigationData = async () => {
             try {
-                const [indiaRes, asiaRes, exclusivesRes] = await Promise.all([
-                    axios.get(`${baseURL}/api/category-india/get`),
-                    axios.get(`${baseURL}/api/asia/get`),
-                    axios.get(`${baseURL}/api/landing-pages/all`).catch(() => ({ data: [] })),
-                ]);
-
+                const { indiaTours, asiaTours, exclusivePages } = await getNavigationData();
                 if (cancelled) return;
-
-                const data = Array.isArray(indiaRes.data) ? indiaRes.data : [];
-                const indiaFormatted = data.map((item) => ({
-                    id: item.id,
-                    name: item.region_name,
-                    path: `/india-tours/${item.region_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`,
-                }));
-                setIndiaTours(indiaFormatted);
-
-                const asiaData = Array.isArray(asiaRes.data) ? asiaRes.data : [];
-                const asiaFormatted = asiaData.map((item) => ({
-                    id: item.id,
-                    name: item.country_name,
-                    path: `/asia-tours/${item.country_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`,
-                    images: item.images || [],
-                }));
-                setAsiaTours(asiaFormatted);
-
-                const pages = (exclusivesRes.data?.success ? exclusivesRes.data.data : (Array.isArray(exclusivesRes.data) ? exclusivesRes.data : []));
-                const exclusiveFormatted = pages.map(p => ({
-                    name: p.title,
-                    path: `/family-trips/${p.slug}`
-                }));
-                setExclusivePages(exclusiveFormatted);
+                setIndiaTours(indiaTours);
+                setAsiaTours(asiaTours);
+                setExclusivePages(exclusivePages);
             } catch (error) {
                 console.error("Error fetching navigation data:", error);
                 setIndiaTours([]);
@@ -131,18 +100,12 @@ const Header = () => {
             }
         };
 
-        const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1200));
-        const idleId = runWhenIdle(fetchNavigationData);
+        fetchNavigationData();
 
         return () => {
             cancelled = true;
-            if (window.cancelIdleCallback) {
-                window.cancelIdleCallback(idleId);
-            } else {
-                window.clearTimeout(idleId);
-            }
         };
-    }, [baseURL]);
+    }, []);
 
 
     useEffect(() => {
@@ -182,6 +145,7 @@ const Header = () => {
             categories: [
                 { name: "Business With Us", path: "/business-with-us" },
                 { name: "Contact us", path: "/contact-us" },
+                { name: "Leads Panel", path: "/leads/", external: true },
             ],
         },
         { name: "About Us", path: "/about-us" },

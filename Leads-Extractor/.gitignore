@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+coverage/
+.playwright/
+backend/node_modules/
+frontend/node_modules/
+frontend/dist/

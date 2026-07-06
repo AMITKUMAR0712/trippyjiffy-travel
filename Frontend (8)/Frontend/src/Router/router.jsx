@@ -46,6 +46,7 @@ const ExploreTours = lazy(() => import("../Page/ExploreTours.jsx"));
 const UpcomingLanding = lazy(() => import("../Page/UpcomingLanding.jsx"));
 const UpcomingDetails = lazy(() => import("../Page/UpcomingDetails.jsx"));
 const CustomizeTrip = lazy(() => import("../Page/CustomizeTrip.jsx"));
+const LeadsGateway = lazy(() => import("../Page/LeadsGateway.jsx"));
 
 // Admin Components
 const AdminLogin = lazy(() => import("../Admin/AdminLogin.jsx"));
@@ -115,6 +116,7 @@ const router = createBrowserRouter([
       { path: "upcoming-best-tours", element: <Suspense fallback={<PageLoader />}><UpcomingLanding /></Suspense> },
       { path: "upcoming-best-tours/:id", element: <Suspense fallback={<PageLoader />}><UpcomingDetails /></Suspense> },
       { path: "customize-your-holiday-plan", element: <Suspense fallback={<PageLoader />}><CustomizeTrip /></Suspense> },
+      { path: "leads", element: <Suspense fallback={<PageLoader />}><LeadsGateway /></Suspense> },
     ],
   },
   { path: "/landingpage", element: <Suspense fallback={<PageLoader />}><LandingPage /></Suspense> },

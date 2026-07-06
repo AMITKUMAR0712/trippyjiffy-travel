@@ -1,0 +1,28 @@
+{
+  "name": "travel-company-lead-extractor",
+  "version": "1.0.0",
+  "description": "Travel Company Lead Extractor - Search travel companies and extract business emails",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "db:generate": "cd backend && npx prisma generate",
+    "db:push": "cd backend && npx prisma db push",
+    "db:migrate": "cd backend && npx prisma migrate dev",
+    "db:studio": "cd backend && npx prisma studio",
+    "db:start": "docker-compose up -d",
+    "db:setup": "npm run db:start && timeout /t 5 /nobreak >nul 2>&1 & npm run db:push",
+    "build:prod": "cd frontend && npm run build",
+    "setup:env": "node -e \"const fs=require('fs');const c=[['.env.production.example','.env'],['.env.production.example','backend/.env'],['frontend/.env.production.example','frontend/.env.production']];for(const [s,t] of c){if(!fs.existsSync(t)&&fs.existsSync(s))fs.copyFileSync(s,t);}\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,27 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Style from "../Style/Payment.module.scss";
-import { ShieldCheck, Lock, CreditCard, MapPin, Star, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShieldCheck, Lock, CreditCard, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 import PayImg1 from "../Img/Payment-20260507T162434Z-3-001/Payment/1.webp";
-import PayImg2 from "../Img/Payment-20260507T162434Z-3-001/Payment/2.webp";
-import PayImg3 from "../Img/Payment-20260507T162434Z-3-001/Payment/3.webp";
-
-// Travel images for the right-side slider
-const SLIDES = [
-  {
-    img: PayImg1,
-    label: "Exclusive Getaways",
-  },
-  {
-    img: PayImg2,
-    label: "Seamless Travel",
-  },
-  {
-    img: PayImg3,
-    label: "Luxury Stays",
-  },
-];
+const FEATURE_IMAGE = {
+  img: PayImg1,
+  label: "Exclusive Getaways",
+};
 
 const loadRazorpay = () => {
   if (window.Razorpay) return Promise.resolve(true);
@@ -44,104 +30,38 @@ const loadRazorpay = () => {
   });
 };
 
-/* ── Right-side Image Slider ── */
+/* ── Right-side Feature Panel ── */
 const ImageSlider = () => {
-  const [active, setActive] = useState(0);
-  const [dir, setDir] = useState(1); // 1 = forward, -1 = backward
-  const timerRef = useRef(null);
-
-  const go = (newIdx, direction) => {
-    setDir(direction);
-    setActive((newIdx + SLIDES.length) % SLIDES.length);
-  };
-
-  const next = () => go(active + 1, 1);
-  const prev = () => go(active - 1, -1);
-
-  // Auto-advance every 4 seconds
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setDir(1);
-      setActive((i) => (i + 1) % SLIDES.length);
-    }, 4000);
-    return () => clearInterval(timerRef.current);
-  }, []);
-
-  const resetTimer = () => {
-    clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setDir(1);
-      setActive((i) => (i + 1) % SLIDES.length);
-    }, 4000);
-  };
-
-  const handleNext = () => { next(); resetTimer(); };
-  const handlePrev = () => { prev(); resetTimer(); };
-
-  const variants = {
-    enter: (d) => ({ x: d > 0 ? "100%" : "-100%", opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (d) => ({ x: d > 0 ? "-100%" : "100%", opacity: 0 }),
-  };
-
   return (
     <div className={Style.SliderPanel}>
-      {/* Slides */}
-      <div style={{ display: "contents" }}>
-        <div
-          key={active}
-          className={Style.Slide}
-          custom={dir}
-        >
-          <img
-            src={SLIDES[active].img}
-            alt={SLIDES[active].label}
-            className={Style.SlideImg}
-          />
-          <div className={Style.SlideOverlay} />
+      <div className={Style.Slide}>
+        <img
+          src={FEATURE_IMAGE.img}
+          alt={FEATURE_IMAGE.label}
+          className={Style.SlideImg}
+          loading="eager"
+          decoding="async"
+        />
+        <div className={Style.SlideOverlay} />
 
-          {/* Top branding */}
-          <div className={Style.TopBrand}>
-            <span className={Style.BrandLogo}>✈ TrippyJiffy</span>
-            <p className={Style.BrandTagline}>Your journey to extraordinary begins here</p>
-            <div className={Style.BrandLine} />
-          </div>
-
-          {/* Location label */}
-          <div className={Style.LocationLabel}>
-            <MapPin size={14} />
-            <span>{SLIDES[active].label}</span>
-          </div>
-
-          {/* Quote */}
-          <div className={Style.QuoteBox}>
-            <p className={Style.QuoteMark}>"</p>
-            <p className={Style.QuoteText}>
-              Travel is the only thing you buy that makes you richer
-            </p>
-            <p className={Style.QuoteAuthor}>— Anonymous Explorer</p>
-          </div>
+        <div className={Style.TopBrand}>
+          <span className={Style.BrandLogo}>✈ TrippyJiffy</span>
+          <p className={Style.BrandTagline}>Your journey to extraordinary begins here</p>
+          <div className={Style.BrandLine} />
         </div>
-      </div>
 
-      {/* Arrow controls */}
-      <button className={`${Style.Arrow} ${Style.ArrowLeft}`} onClick={handlePrev} aria-label="Previous">
-        <ChevronLeft size={20} />
-      </button>
-      <button className={`${Style.Arrow} ${Style.ArrowRight}`} onClick={handleNext} aria-label="Next">
-        <ChevronRight size={20} />
-      </button>
+        <div className={Style.LocationLabel}>
+          <MapPin size={14} />
+          <span>{FEATURE_IMAGE.label}</span>
+        </div>
 
-      {/* Dot indicators */}
-      <div className={Style.Dots}>
-        {SLIDES.map((_, i) => (
-          <button
-            key={i}
-            className={`${Style.Dot} ${i === active ? Style.DotActive : ""}`}
-            onClick={() => { go(i, i > active ? 1 : -1); resetTimer(); }}
-            aria-label={`Slide ${i + 1}`}
-          />
-        ))}
+        <div className={Style.QuoteBox}>
+          <p className={Style.QuoteMark}>"</p>
+          <p className={Style.QuoteText}>
+            Travel is the only thing you buy that makes you richer
+          </p>
+          <p className={Style.QuoteAuthor}>— Anonymous Explorer</p>
+        </div>
       </div>
     </div>
   );

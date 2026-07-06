@@ -2,11 +2,34 @@ import pool from "../config/db.js";
 
 export const getAllFaqs = async (req, res) => {
   try {
-    const [rows] = await pool.query(`
+    const { tour_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (tour_id) {
+      conditions.push("f.tour_id = ?");
+      values.push(tour_id);
+    }
+
+    let query = `
       SELECT f.id, f.question, f.answer, f.tour_id, f.created_at, f.updated_at
       FROM countrytours_faq f
-      ORDER BY f.id DESC
-    `);
+    `;
+
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+
+    query += " ORDER BY f.id DESC";
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(`
+      ${query}
+    `, values);
     res.json(rows);
   } catch (error) {
     console.error("Error in getAllFaqs:", error);

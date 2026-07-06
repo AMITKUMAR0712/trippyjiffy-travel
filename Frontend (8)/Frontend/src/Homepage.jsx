@@ -1,9 +1,9 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Banner from "./HomeCompontent/Banner";
+import Destinations from "./HomeCompontent/Destinations";
 import SEO from "./HomeCompontent/SEO";
 import AutoLeadPopup from "./HomeCompontent/AutoLeadPopup";
 
-const Destinations = lazy(() => import("./HomeCompontent/Destinations"));
 const Testimonials = lazy(() => import("./Page/Testimonials"));
 const Blog = lazy(() => import("./HomeCompontent/Blog"));
 const Choose = lazy(() => import("./HomeCompontent/Choose"));
@@ -11,6 +11,35 @@ const Choose = lazy(() => import("./HomeCompontent/Choose"));
 const SectionFallback = ({ minHeight = 420 }) => (
   <div aria-hidden="true" style={{ minHeight }} />
 );
+
+const DeferredSection = ({ children, minHeight, rootMargin = "200px" }) => {
+  const [shouldRender, setShouldRender] = useState(false);
+  const markerRef = useRef(null);
+
+  useEffect(() => {
+    const node = markerRef.current;
+    if (!node || shouldRender) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRender(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [rootMargin, shouldRender]);
+
+  return (
+    <div ref={markerRef}>
+      {shouldRender ? children : <SectionFallback minHeight={minHeight} />}
+    </div>
+  );
+};
 
 const Homepage = () => {
   return (
@@ -66,18 +95,23 @@ const Homepage = () => {
 
       <Banner />
 
-      <Suspense fallback={<SectionFallback minHeight={620} />}>
-        <Destinations />
-      </Suspense>
-      <Suspense fallback={<SectionFallback minHeight={520} />}>
-        <Testimonials />
-      </Suspense>
-      <Suspense fallback={<SectionFallback minHeight={460} />}>
-        <Blog />
-      </Suspense>
-      <Suspense fallback={<SectionFallback minHeight={420} />}>
-        <Choose />
-      </Suspense>
+      <Destinations />
+
+      <DeferredSection minHeight={520}>
+        <Suspense fallback={<SectionFallback minHeight={520} />}>
+          <Testimonials />
+        </Suspense>
+      </DeferredSection>
+      <DeferredSection minHeight={460}>
+        <Suspense fallback={<SectionFallback minHeight={460} />}>
+          <Blog />
+        </Suspense>
+      </DeferredSection>
+      <DeferredSection minHeight={420}>
+        <Suspense fallback={<SectionFallback minHeight={420} />}>
+          <Choose />
+        </Suspense>
+      </DeferredSection>
     </div>
   );
 };

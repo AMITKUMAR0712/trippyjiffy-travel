@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo, useCallback } from "react";
+import React, { useEffect, useState, memo, useCallback } from "react";
 import Style from "../Style/Testimonials.module.scss";
 import axios from "axios";
 import GoogleReviews from "../HomeCompontent/GoogleReviews.jsx";
@@ -6,20 +6,12 @@ import { createPortal } from "react-dom";
 
 // Full-resolution images for the background slider
 const travelImages = [
-  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1454372182658-c712e4c5a1db?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1533130061792-64b345e4a833?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1504150558240-0b4fd8946624?auto=format&fit=crop&w=1200&q=60",
-  "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=60",
+  "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=900&q=55",
+  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=55",
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=55",
+  "https://images.unsplash.com/photo-1454372182658-c712e4c5a1db?auto=format&fit=crop&w=900&q=55",
+  "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=55",
+  "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=900&q=55",
 ];
 
 const travelThumbs = travelImages.map((url) => url.replace("w=1200", "w=400").replace("q=60", "q=50"));
@@ -201,30 +193,12 @@ const HexFeedbackCard = memo(({ item, imgIndex, onOpen }) => {
    Background Slider
 ───────────────────────────────────────── */
 const BgSlider = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const timerRef = useRef(null);
-
-  useEffect(() => {
-    timerRef.current = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % travelImages.length);
-    }, 3000);
-    return () => clearInterval(timerRef.current);
-  }, []);
-
   return (
     <div className={Style.bgSlider} aria-hidden="true">
-      {travelImages.map((src, i) => {
-        // Only render active and adjacent slides for performance
-        const isVisible = i === activeIndex;
-        if (!isVisible) return null;
-        return (
-          <div
-            key={i}
-            className={`${Style.bgSlide} ${Style.bgSlideActive}`}
-            style={{ backgroundImage: `url(${src})` }}
-          />
-        );
-      })}
+      <div
+        className={`${Style.bgSlide} ${Style.bgSlideActive}`}
+        style={{ backgroundImage: `url(${travelImages[0]})` }}
+      />
       <div className={Style.bgOverlay} />
     </div>
   );

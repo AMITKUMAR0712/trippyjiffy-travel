@@ -41,7 +41,37 @@ export const createState = async (req, res) => {
 
 export const getStates = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM asiastate ORDER BY id DESC");
+    const { id, asia_id, exclude_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (id) {
+      conditions.push("id = ?");
+      values.push(id);
+    }
+
+    if (asia_id) {
+      conditions.push("asia_id = ?");
+      values.push(asia_id);
+    }
+
+    if (exclude_id) {
+      conditions.push("id != ?");
+      values.push(exclude_id);
+    }
+
+    let query = "SELECT * FROM asiastate";
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+    query += " ORDER BY id DESC";
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(query, values);
     const baseURL = getBaseURL(req);
     const data = rows.map((row) => ({
       ...row,

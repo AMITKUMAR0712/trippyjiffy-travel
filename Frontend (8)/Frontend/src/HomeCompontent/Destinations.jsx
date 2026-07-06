@@ -240,10 +240,10 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { getImgUrl } from "../utils/getImgUrl";
-import Loader from "../HomeCompontent/Loader.jsx";
-import { ArrowUpRight, MapPin, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+const AUTOPLAY_CONFIG = { delay: 4500, disableOnInteraction: true, pauseOnMouseEnter: true };
 
 const DestinationCard = memo(({ item, slugify, type }) => {
   const imageUrl = getImgUrl(item.images?.[0]) || "";
@@ -442,7 +442,7 @@ const Destinations = () => {
           spaceBetween={30}
           slidesPerView={4}
           navigation
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          autoplay={tours.length > 4 ? AUTOPLAY_CONFIG : false}
           speed={800}
           observer={true}
           observeParents={true}
@@ -455,9 +455,11 @@ const Destinations = () => {
           }}
         >
           {loading
-            ? (
-              <div style={{ width: '100%', padding: '40px 0' }}><Loader text="Sourcing trending trips..." /></div>
-            )
+            ? [...Array(4)].map((_, i) => (
+              <SwiperSlide key={`tour-skeleton-${i}`}>
+                <div className={Style.skeletonCard}></div>
+              </SwiperSlide>
+            ))
             : tours.map((item) => (
               <SwiperSlide key={item.id}>
                 <DestinationCard item={item} slugify={slugify} type="tour" />
@@ -477,7 +479,7 @@ const Destinations = () => {
           spaceBetween={30}
           slidesPerView={4}
           navigation
-          autoplay={{ delay: 2600, disableOnInteraction: false }}
+          autoplay={false}
           speed={800}
           observer={true}
           observeParents={true}
@@ -490,9 +492,11 @@ const Destinations = () => {
           }}
         >
           {loading
-            ? (
-              <div style={{ width: '100%', padding: '40px 0' }}><Loader text="Arranging India tours..." /></div>
-            )
+            ? [...Array(4)].map((_, i) => (
+              <SwiperSlide key={`india-skeleton-${i}`}>
+                <div className={Style.skeletonCard}></div>
+              </SwiperSlide>
+            ))
             : indiaCategory.map((item) => (
               <SwiperSlide key={item.id}>
                 <DestinationCard item={item} slugify={slugify} type="tour" />
@@ -512,7 +516,7 @@ const Destinations = () => {
           spaceBetween={30}
           slidesPerView={4}
           navigation
-          autoplay={{ delay: 2500, disableOnInteraction: false }}
+          autoplay={false}
           speed={800}
           observer={true}
           observeParents={true}
@@ -525,9 +529,11 @@ const Destinations = () => {
           }}
         >
           {loading
-            ? (
-              <div style={{ width: '100%', padding: '40px 0' }}><Loader text="Discovering popular spots..." /></div>
-            )
+            ? [...Array(4)].map((_, i) => (
+              <SwiperSlide key={`country-skeleton-${i}`}>
+                <div className={Style.skeletonCard}></div>
+              </SwiperSlide>
+            ))
             : countries.map((item) => (
               <SwiperSlide key={item.id}>
                 <DestinationCard item={item} slugify={slugify} type="country" />
@@ -549,7 +555,7 @@ const Destinations = () => {
               spaceBetween={30}
               slidesPerView={4}
               navigation
-              autoplay={{ delay: 2700, disableOnInteraction: false }}
+              autoplay={false}
               speed={800}
               observer={true}
               observeParents={true}

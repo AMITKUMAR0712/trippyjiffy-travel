@@ -1,6 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import {
   FaInstagram,
   FaLinkedin,
@@ -16,7 +15,7 @@ import {
 
 import Style from "../Style/Footer.module.scss";
 import Logo from "../Img/trippylogo.png";
-const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+import { getFooterToursData } from "../utils/siteShellData";
 
 const Footer = () => {
   const [indiaTours, setIndiaTours] = useState([]);
@@ -27,14 +26,10 @@ const Footer = () => {
 
     const fetchFooterTours = async () => {
       try {
-        const [indiaRes, asiaRes] = await Promise.all([
-          axios.get(`${baseURL}/api/category-india/get`),
-          axios.get(`${baseURL}/api/asia/get`),
-        ]);
-
+        const { indiaTours: nextIndiaTours, asiaTours: nextAsiaTours } = await getFooterToursData();
         if (cancelled) return;
-        setIndiaTours(Array.isArray(indiaRes.data) ? indiaRes.data : []);
-        setAsiaTours(Array.isArray(asiaRes.data) ? asiaRes.data : []);
+        setIndiaTours(nextIndiaTours);
+        setAsiaTours(nextAsiaTours);
       } catch (err) {
         console.error("Error fetching footer tours:", err);
         setIndiaTours([]);
@@ -42,18 +37,24 @@ const Footer = () => {
       }
     };
 
-    const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1800));
-    const idleId = runWhenIdle(fetchFooterTours);
+    const scheduleFooterFetch = () => {
+      if ("requestIdleCallback" in window) {
+        return window.requestIdleCallback(fetchFooterTours, { timeout: 1500 });
+      }
+      return window.setTimeout(fetchFooterTours, 300);
+    };
+
+    const idleId = scheduleFooterFetch();
 
     return () => {
       cancelled = true;
-      if (window.cancelIdleCallback) {
+      if ("requestIdleCallback" in window) {
         window.cancelIdleCallback(idleId);
       } else {
         window.clearTimeout(idleId);
       }
     };
-  }, [baseURL]);
+  }, []);
 
   const socialLinks = [
     { icon: <FaInstagram aria-hidden="true" />, url: "https://www.instagram.com/trippy.jiffy?igsh=b3A2ZzIxcHdxZmVo&utm_source=qr", label: "Instagram" },

@@ -33,11 +33,48 @@ export const addState = async (req, res) => {
 
 export const getStates = async (req, res) => {
   try {
-    const [rows] = await pool.query(
-      `SELECT s.id, s.state_name, s.category_id, s.image, s.is_visible, c.region_name 
+    const { id, category_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (id) {
+      conditions.push("s.id = ?");
+      values.push(id);
+    }
+
+    if (category_id) {
+      const categoryIds = String(category_id)
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (categoryIds.length === 1) {
+        conditions.push("s.category_id = ?");
+        values.push(categoryIds[0]);
+      } else if (categoryIds.length > 1) {
+        conditions.push(`s.category_id IN (${categoryIds.map(() => "?").join(", ")})`);
+        values.push(...categoryIds);
+      }
+    }
+
+    let query = `SELECT s.id, s.state_name, s.category_id, s.image, s.is_visible, c.region_name 
        FROM state s 
-       JOIN categoryindia c ON s.category_id = c.id
-       ORDER BY s.id DESC`
+       JOIN categoryindia c ON s.category_id = c.id`;
+
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+
+    query += " ORDER BY s.id DESC";
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(
+      query,
+      values
     );
 
     const data = rows.map((row) => ({

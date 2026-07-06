@@ -85,7 +85,6 @@ const LandingTourPage = () => {
 
   useEffect(() => {
     if (apiPageData) {
-      console.log("[DEBUG] Landing Page Data Updated:", apiPageData);
       setPage(apiPageData);
       // If we have recommended tours in JSON, use them primarily
       if (apiPageData.recommendedTours && apiPageData.recommendedTours.length > 0) {
@@ -261,7 +260,7 @@ const LandingTourPage = () => {
               <Swiper
                 modules={[Autoplay, EffectFade]}
                 effect="fade"
-                autoplay={{ delay: 3500, disableOnInteraction: false }}
+                autoplay={{ delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true }}
                 loop
                 key={JSON.stringify(page.hero?.slides || [])}
               >
@@ -329,7 +328,7 @@ const LandingTourPage = () => {
             <div className={Style.recommendSwiper}>
               <Swiper
                 modules={[Autoplay]}
-                autoplay={{ delay: 2800, disableOnInteraction: false }}
+                autoplay={recommended.length > 4 ? { delay: 4200, disableOnInteraction: true, pauseOnMouseEnter: true } : false}
                 spaceBetween={18}
                 slidesPerView={1.2}
                 breakpoints={{
@@ -435,7 +434,7 @@ const LandingTourPage = () => {
                 </button>
               </div>
               <div className={Style.introImageWrap}>
-                <img src={formatImageURL(page.intro.image)} alt={page.intro.heading} loading="lazy" />
+                <img src={formatImageURL(page.intro.image)} alt={page.intro.heading} loading="lazy" decoding="async" />
               </div>
             </div>
           </section>
@@ -447,11 +446,11 @@ const LandingTourPage = () => {
             <div className={Style.whyLayout}>
               <div className={Style.whyImages}>
                 <div className={Style.whyImageTall}>
-                  <img src={formatImageURL(page.whyIntro?.images?.[0])} alt="Why choose us" />
+                  <img src={formatImageURL(page.whyIntro?.images?.[0])} alt="Why choose us" loading="lazy" decoding="async" />
                 </div>
                 <div className={Style.whyImageStack}>
-                  <img src={formatImageURL(page.whyIntro?.images?.[1])} alt="Travel stay" />
-                  <img src={formatImageURL(page.whyIntro?.images?.[2])} alt="Travel experience" />
+                  <img src={formatImageURL(page.whyIntro?.images?.[1])} alt="Travel stay" loading="lazy" decoding="async" />
+                  <img src={formatImageURL(page.whyIntro?.images?.[2])} alt="Travel experience" loading="lazy" decoding="async" />
                 </div>
               </div>
 

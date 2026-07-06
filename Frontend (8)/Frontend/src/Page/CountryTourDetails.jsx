@@ -19,6 +19,7 @@ import Loader from "../HomeCompontent/Loader.jsx";
 import { Helmet } from "react-helmet-async";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
+import { apiPath } from "../utils/apiBase";
 
 const CountryTourDetails = () => {
   const { asiastateId } = useParams();
@@ -32,8 +33,6 @@ const CountryTourDetails = () => {
   const [faqs, setFaqs] = useState([]);
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedTours, setRelatedTours] = useState([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
-  const apiUrl = import.meta.env.VITE_API_URL || `${baseURL}/api`;
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -44,7 +43,7 @@ const CountryTourDetails = () => {
       return;
     }
     try {
-      const res = await axios.post(`${baseURL}/api/user-features/wishlist`, {
+      const res = await axios.post(apiPath("/user-features/wishlist"), {
         item_id: tour.id,
         item_type: "country",
         title: image?.state_name ? `${image.state_name} Tour` : "Country Tour",
@@ -174,39 +173,44 @@ const CountryTourDetails = () => {
 
     const fetchTour = async () => {
       try {
-        const asiaRes = await axios.get(`${baseURL}/api/asiaState/get`);
-        const asiaData = Array.isArray(asiaRes.data)
-          ? asiaRes.data
-          : asiaRes.data.data || [];
+        const [asiaRes, countryRes] = await Promise.all([
+          axios.get(apiPath(`/asiaState/get/${asiastateId}`)),
+          axios.get(apiPath("/country/get"), { params: { asiastate_id: asiastateId, limit: 1 } }),
+        ]);
 
-        let foundTour = asiaData.find(
-          (t) => Number(t.id) === Number(asiastateId)
-        );
-        setImage(foundTour);
+        const foundState = asiaRes.data || null;
+        let foundTour = foundState;
+        setImage(foundState);
 
-        const countryRes = await axios.get(`${baseURL}/api/country/get`);
         const countryData = Array.isArray(countryRes.data?.data)
           ? countryRes.data.data
           : Array.isArray(countryRes.data)
             ? countryRes.data
             : [];
 
-        const filteredCountry = countryData.filter(
-          (t) => String(t.asiastate_id) === String(asiastateId)
-        );
-
-        if (filteredCountry.length > 0) {
-          foundTour = { ...foundTour, ...filteredCountry[0] };
+        if (countryData.length > 0) {
+          foundTour = { ...foundState, ...countryData[0] };
         }
 
         if (foundTour) {
-          let related = asiaData.filter(
-            (t) => t?.asia_id === foundTour?.asia_id && Number(t?.id) !== Number(asiastateId)
-          );
+          let related = [];
 
-          // Fallback: If no tours in the same country, just show other popular asia tours
+          if (foundTour?.asia_id) {
+            const relatedRes = await axios.get(apiPath("/asiaState/get"), {
+              params: {
+                asia_id: foundTour.asia_id,
+                exclude_id: asiastateId,
+                limit: 6,
+              },
+            });
+            related = Array.isArray(relatedRes.data) ? relatedRes.data : [];
+          }
+
           if (related.length === 0) {
-            related = asiaData.filter((t) => Number(t?.id) !== Number(asiastateId)).slice(0, 5);
+            const fallbackRes = await axios.get(apiPath("/asiaState/get"), {
+              params: { exclude_id: asiastateId, limit: 5 },
+            });
+            related = Array.isArray(fallbackRes.data) ? fallbackRes.data : [];
           }
 
           setRelatedTours(related);
@@ -222,15 +226,17 @@ const CountryTourDetails = () => {
       }
     };
     fetchTour();
-  }, [asiastateId, baseURL, fromAsia]);
+  }, [asiastateId, fromAsia]);
 
   useEffect(() => {
     if (!tour || fromAsia) return;
     const fetchFaqs = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/countrytoursfaq/get`);
+        const res = await axios.get(apiPath("/countrytoursfaq/get"), {
+          params: { tour_id: tour.id },
+        });
         const filtered = Array.isArray(res.data)
-          ? res.data.filter((faq) => String(faq.tour_id) === String(tour?.id))
+          ? res.data
           : [];
         setFaqs(filtered);
       } catch (err) {
@@ -238,7 +244,7 @@ const CountryTourDetails = () => {
       }
     };
     fetchFaqs();
-  }, [tour, baseURL, fromAsia]);
+  }, [tour, fromAsia]);
 
   const safeTimelineRender = (jsonString) => {
     if (!jsonString) return <p>No routing available.</p>;

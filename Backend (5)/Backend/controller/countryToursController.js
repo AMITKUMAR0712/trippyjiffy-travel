@@ -10,7 +10,32 @@ const parseJSON = (val) => {
 
 export const getCountry = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM countrytours ORDER BY id DESC");
+    const { id, asiastate_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (id) {
+      conditions.push("id = ?");
+      values.push(id);
+    }
+
+    if (asiastate_id) {
+      conditions.push("asiastate_id = ?");
+      values.push(asiastate_id);
+    }
+
+    let query = "SELECT * FROM countrytours";
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+    query += " ORDER BY id DESC";
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(query, values);
 
     const cleaned = rows.map((r) => ({
       ...r,

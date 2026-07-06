@@ -10,7 +10,47 @@ const stringifyIfObject = (val) => {
 
 export const getAllTours = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM tours ORDER BY id DESC");
+    const { id, state_id, exclude_id, limit } = req.query;
+    const conditions = [];
+    const values = [];
+
+    if (id) {
+      conditions.push("id = ?");
+      values.push(id);
+    }
+
+    if (state_id) {
+      const stateIds = String(state_id)
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (stateIds.length === 1) {
+        conditions.push("state_id = ?");
+        values.push(stateIds[0]);
+      } else if (stateIds.length > 1) {
+        conditions.push(`state_id IN (${stateIds.map(() => "?").join(", ")})`);
+        values.push(...stateIds);
+      }
+    }
+
+    if (exclude_id) {
+      conditions.push("id != ?");
+      values.push(exclude_id);
+    }
+
+    let query = "SELECT * FROM tours";
+    if (conditions.length) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+    query += " ORDER BY id DESC";
+
+    if (limit && Number(limit) > 0) {
+      query += " LIMIT ?";
+      values.push(Number(limit));
+    }
+
+    const [rows] = await pool.query(query, values);
     res.json(rows);
   } catch (err) {
     console.error("Error fetching tours:", err);

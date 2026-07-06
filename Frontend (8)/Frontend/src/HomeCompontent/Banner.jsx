@@ -15,7 +15,9 @@ const Banner1 = "/Banner_LCP.webp";
 import Banner2 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/2.webp";
 import Banner3 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/3.webp";
 import Banner4 from "../Img/Hero section-20260507T162428Z-3-001/Hero section/4.webp";
+import { apiPath } from "../utils/apiBase";
 
+const HERO_SLIDES = [Banner1, Banner2, Banner3, Banner4];
 
 const Banner = () => {
   const [combinedData, setCombinedData] = useState([]);
@@ -26,13 +28,12 @@ const Banner = () => {
 
   const navigate = useNavigate();
   const debouncedSearch = useDebounce(searchTerm, 500);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   const loadSearchData = async () => {
     if (hasLoadedSearchData) return;
 
     try {
-      const res = await axios.get(`${baseURL}/api/combined-data`);
+      const res = await axios.get(apiPath("/combined-data"));
       setCombinedData(res.data || []);
       setHasLoadedSearchData(true);
     } catch (err) {
@@ -84,15 +85,15 @@ const Banner = () => {
         modules={[Navigation, Autoplay, EffectFade]}
         loop={true}
         effect="fade"
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 6500, disableOnInteraction: false }}
         speed={2000}
         className={Style.swiperContainer}
       >
-        {[Banner1, Banner2, Banner3, Banner4].map((img, idx) => (
+        {HERO_SLIDES.map((img, idx) => (
           <SwiperSlide key={idx}>
             <div className={Style.slide}>
               <img 
-                src={img} 
+                src={img}
                 alt={idx === 0 ? "Best family tours in India" : idx === 1 ? "India tour packages" : "Affordable travelling packages in India"} 
                 className={Style.bannerImage} 
                 loading={idx === 0 ? "eager" : "lazy"} 

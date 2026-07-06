@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { FaGlobe } from "react-icons/fa";
 import { Sparkles, Globe, Plane, Building2 } from "lucide-react";
-import axios from "axios";
 import Style from "../Style/HeaderTop.module.scss";
+import { getSettingsData } from "../utils/siteShellData";
 
 const HeaderTop = () => {
   const [language, setLanguage] = useState("Select Language →");
@@ -12,16 +12,15 @@ const HeaderTop = () => {
     "Premium Stays & Exclusive Deals Available Now"
   ]);
   const initialized = useRef(false);
-  const baseURL = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
 
   useEffect(() => {
     let cancelled = false;
     const fetchSettings = async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/settings/get`);
+        const res = await getSettingsData();
         if (cancelled) return;
-        if (res.data && res.data.tickerMessages) {
-          let parsed = typeof res.data.tickerMessages === 'string' ? JSON.parse(res.data.tickerMessages) : res.data.tickerMessages;
+        if (res && res.tickerMessages) {
+          let parsed = typeof res.tickerMessages === 'string' ? JSON.parse(res.tickerMessages) : res.tickerMessages;
           if (Array.isArray(parsed) && parsed.length > 0) {
             setMessages(parsed);
           }
@@ -31,18 +30,12 @@ const HeaderTop = () => {
       }
     };
 
-    const runWhenIdle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1500));
-    const idleId = runWhenIdle(fetchSettings);
+    fetchSettings();
 
     return () => {
       cancelled = true;
-      if (window.cancelIdleCallback) {
-        window.cancelIdleCallback(idleId);
-      } else {
-        window.clearTimeout(idleId);
-      }
     };
-  }, [baseURL]);
+  }, []);
 
   const loadTranslate = () => {
     if (initialized.current) return;
@@ -101,7 +94,7 @@ const HeaderTop = () => {
 
         clearInterval(interval);
       }
-    }, 200);
+    }, 500);
 
     window.setTimeout(() => clearInterval(interval), 6000);
   };
