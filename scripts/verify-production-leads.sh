@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Quick checks for /leads/ production issues — run on the VPS
 set -euo pipefail
 
-ROOT="${1:-/var/www/trippyjiffy}"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+DEPLOY_ROOT="${1:-$ROOT}"
 
 echo "=== Leads production checks ==="
-echo "Repo: $ROOT"
+echo "Repo: $DEPLOY_ROOT"
 echo ""
 
 check() {
@@ -16,10 +17,10 @@ check() {
   fi
 }
 
-check "$ROOT/leads-dist/index.html"
-check "$ROOT/frontend-dist/index.html"
-check "$ROOT/Leads-Extractor/backend/.env"
-check "$ROOT/Leads-Extractor/backend/src/server.js"
+check "$DEPLOY_ROOT/leads-dist/index.html"
+check "$DEPLOY_ROOT/frontend-dist/index.html"
+check "$DEPLOY_ROOT/Leads-Extractor/backend/.env"
+check "$DEPLOY_ROOT/Leads-Extractor/backend/src/server.js"
 
 echo ""
 echo "=== PM2 processes ==="
@@ -31,17 +32,14 @@ echo "=== Port listeners ==="
 
 echo ""
 echo "=== Leads API health ==="
-curl -fsS "http://127.0.0.1:5006/leads-api/health" && echo "" || echo "FAIL leads-api on 5006"
+curl -fsS "http://127.0.0.1:5006/leads-api/health" && echo "" || echo "FAIL leads-api on 5006 — run: pm2 logs trippyjiffy-leads-api"
 
 echo ""
-echo "=== Leads index via local nginx path ==="
-if [ -f "$ROOT/leads-dist/index.html" ]; then
-  head -n 5 "$ROOT/leads-dist/index.html"
+echo "=== TrippyJiffy API ==="
+curl -fsS "http://127.0.0.1:5005/api/settings" >/dev/null && echo "OK trippyjiffy-api on 5005" || echo "WARN could not reach 5005"
+
+echo ""
+if [ -f "$DEPLOY_ROOT/leads-dist/index.html" ]; then
+  echo "=== leads-dist/index.html (first lines) ==="
+  head -n 3 "$DEPLOY_ROOT/leads-dist/index.html"
 fi
-
-echo ""
-echo "If /leads/ shows main TrippyJiffy site:"
-echo "  1. npm run build:all  (in repo root)"
-echo "  2. Update nginx with deploy/nginx/trippyjiffy.conf"
-echo "  3. pm2 restart trippyjiffy-leads-api"
-echo "  4. sudo nginx -t && sudo systemctl reload nginx"

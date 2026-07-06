@@ -10,6 +10,7 @@ module.exports = {
       cwd: './Backend (5)/Backend',
       script: 'server.js',
       instances: 1,
+      exec_mode: 'fork',
       autorestart: true,
       max_memory_restart: '512M',
       env: {
@@ -21,7 +22,7 @@ module.exports = {
       cwd: './Leads-Extractor/backend',
       script: 'src/server.js',
       instances: 1,
-      autorestart: true,
+      exec_mode: 'fork',
       max_memory_restart: '768M',
       env: {
         NODE_ENV: 'production',
