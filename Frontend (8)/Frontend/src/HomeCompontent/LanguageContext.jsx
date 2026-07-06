@@ -36,7 +36,7 @@ export const LanguageProvider = ({ children }) => {
 
   useEffect(() => {
     if (!language) return;
-    
+
     const defaultTexts = {
       home: "Home",
       about: "About Us",
@@ -48,6 +48,12 @@ export const LanguageProvider = ({ children }) => {
       payNow: "Pay Now",
       feedback: "Feedback",
     };
+
+    if (language === "en") {
+      setTranslations(defaultTexts);
+      return;
+    }
+
     translateBatch(defaultTexts);
   }, [language, baseURL]);
 

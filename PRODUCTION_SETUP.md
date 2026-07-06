@@ -80,6 +80,30 @@ npm run deploy -- --pull
 | `npm run build:all` | Build both frontends only |
 | `npm run pm2:logs` | View API logs |
 | `npm run pm2:restart` | Restart both APIs |
+| `bash scripts/verify-production-leads.sh` | Diagnose `/leads/` issues on VPS |
+
+---
+
+## Troubleshooting `/leads/` shows main site
+
+This happens when Nginx serves TrippyJiffy `index.html` instead of the Leads app.
+
+**On server, run:**
+
+```bash
+cd /var/www/trippyjiffy
+npm run build:all
+sudo cp deploy/nginx/trippyjiffy.conf /etc/nginx/sites-available/trippyjiffy
+# Also add the same location blocks to your SSL (443) server block if using certbot
+sudo nginx -t && sudo systemctl reload nginx
+pm2 restart trippyjiffy-leads-api
+bash scripts/verify-production-leads.sh
+```
+
+Check:
+- `leads-dist/index.html` exists
+- PM2 shows `trippyjiffy-leads-api` running on port 5006
+- Nginx has `location ^~ /leads/` block **before** `location /`
 
 ---
 
