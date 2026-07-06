@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Style from "../Style/Payment.module.scss";
 import { ShieldCheck, Lock, CreditCard, MapPin } from "lucide-react";
 import { toast } from "sonner";
+import { apiPath } from "../utils/apiBase";
 
 import PayImg1 from "../Img/Payment-20260507T162434Z-3-001/Payment/1.webp";
 const FEATURE_IMAGE = {
@@ -86,14 +87,11 @@ const Payment = ({ isModal = false }) => {
         return toast.error("Payment gateway failed to load. Please try again.");
       }
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/payment/create-order`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: parseFloat(amount), currency }),
-        }
-      );
+      const res = await fetch(apiPath("/payment/create-order"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: parseFloat(amount), currency }),
+      });
 
       const order = await res.json();
       if (!order.id) return toast.error("Order creation failed. Please try again.");
@@ -108,7 +106,7 @@ const Payment = ({ isModal = false }) => {
         handler: function (response) {
           setTransactionId(response.razorpay_payment_id);
           setShowDetailsForm(true);
-          fetch(`${import.meta.env.VITE_API_BASE_URL}/api/payment/payment-success`, {
+          fetch(apiPath("/payment/payment-success"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -143,10 +141,10 @@ const Payment = ({ isModal = false }) => {
     if (screenshot) formData.append("screenshot", screenshot);
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/payment/payment-details`,
-        { method: "POST", body: formData }
-      );
+      const res = await fetch(apiPath("/payment/payment-details"), {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
       if (data.success) {
         toast.success("Details submitted successfully! ✅");

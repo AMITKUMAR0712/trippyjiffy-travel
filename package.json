@@ -14,7 +14,8 @@
     "pm2:logs": "pm2 logs",
     "fix:production": "bash scripts/fix-production.sh",
     "nginx:generate": "bash scripts/generate-nginx-config.sh",
-    "nginx:rollback": "bash scripts/generate-nginx-rollback.sh"
+    "nginx:rollback": "bash scripts/generate-nginx-rollback.sh",
+    "fix:ssl-api": "bash scripts/fix-ssl-and-api.sh"
   },
   "engines": {
     "node": ">=18.0.0"

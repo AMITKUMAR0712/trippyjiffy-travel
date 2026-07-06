@@ -9,9 +9,10 @@ import gal3 from "../Img/contact.jpg";
 import gal4 from "../Img/l1.jpeg";
 import gal5 from "../Img/people-doi-pha-tang-against-sky-sunrise_1048944-4357386.jpeg";
 import gal6 from "../Img/hiker-looking-mountains-from-great-wall-china-sunset_1048944-9830948.jpeg";
+import { uploadsUrl } from "./apiBase";
 
-const apiBase = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
-const baseURL_IMG = `${apiBase.replace(/\/$/, "")}/api/uploads`;
+const devApiBase = import.meta.env.VITE_API_BASE_URL || "https://trippyjiffy.com";
+const baseURL_IMG = import.meta.env.PROD ? "/api/uploads" : `${devApiBase.replace(/\/$/, "")}/api/uploads`;
 
 // Map exact db paths to actual Vite imported hashes
 const LOCAL_ASSET_MAP = {
@@ -56,13 +57,12 @@ export const getImgUrl = (url) => {
 
   // 4. Handle absolute URLs (that aren't our domain or are already full)
   if (typeof url === "string" && url.startsWith("http")) {
-    // If it's a localhost or old IP URL, redirect to production baseURL_IMG
     if (url.includes("localhost") || url.includes("127.0.0.1") || url.includes("187.127.139.99")) {
-       return `${baseURL_IMG}/${filename}`;
+      return uploadsUrl(filename);
     }
     return url;
   }
 
-  // 5. Default: Append to production uploads path
-  return `${baseURL_IMG}/${filename}`;
+  // 5. Default: same-origin uploads path in production
+  return uploadsUrl(filename);
 };

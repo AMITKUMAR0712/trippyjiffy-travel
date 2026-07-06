@@ -10,16 +10,16 @@ export const LanguageProvider = ({ children }) => {
   const [translations, setTranslations] = useState({});
 
   const translateBatch = async (texts) => {
-    // ❌ FIX: Check if baseURL is defined before making API call
-    if (!baseURL) {
-      console.warn("⚠️ VITE_API_BASE_URL is not defined. Translations disabled.");
+    if (language === "en") {
+      setTranslations(texts);
       return;
     }
 
     try {
-      const keys = Array.isArray(Object.keys(texts)) ? Object.keys(texts) : [];
+      const keys = Object.keys(texts);
+      const apiUrl = import.meta.env.PROD ? "/api/translate" : `${baseURL}/api/translate`;
       const promises = keys.map(async (key) => {
-        const res = await axios.post(`${baseURL}/api/translate`, {
+        const res = await axios.post(apiUrl, {
           text: texts[key],
           target: language,
         });
